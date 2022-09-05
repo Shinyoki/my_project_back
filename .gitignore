@@ -1,0 +1,7 @@
+# Project exclude paths
+/admin/target/
+/common/target/
+/system/target/
+
+
+.idea

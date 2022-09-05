@@ -1,0 +1,73 @@
+# 自定义配置
+senko:
+  # 版本
+  version: 0.0.1
+  # 项目名
+  projectName: project
+  # 项目描述
+  projectDescription: 项目描述
+  # 密码错误重试次数
+  retryLimit: 5
+  # 密码错误重试时间间隔  单位：秒
+  retryInterval: 300
+  # swagger启用
+  swaggerEnabled: true
+  # 作者
+  author:
+    # 作者名
+    name: Senko
+    # 作者邮箱
+    email: 1641801056@qq.com
+    # 作者
+    url: https://space.bilibili.com/1041337349
+
+# JWT Token
+token:
+  # 请求的Header Name
+  header: Authorization
+  # Token值的前缀
+  tokenPrefix: 'Bearer '
+  # 加密秘钥
+  secret: zheniantouqiminghennanmimagengbuyongshuo
+  # 令牌过期时间 单位：分
+  expireTime: 30
+
+# Spring配置
+spring:
+  # 配置选择
+  profiles:
+    - dev
+  # 缓存配置
+  cache:
+    redis:
+      time-to-live: 36000000  # ttl
+  # 上传图片大小限制
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 100MB
+
+# MyBatis-Plus配置
+mybatis-plus:
+  # 搜索指定包别名 实体类的路径（com.senko.common.core.domain.entity.SysUser，--> sysUser）
+  typeAliasesPackage: com.senko.**.entity
+  # 配置mapper的扫描，找到所有的mapper.xml映射文件
+  mapperLocations: classpath*:mapper/**/*Mapper.xml
+  # 加载全局的配置文件
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl # 指定 MyBatis 所用日志的具体实现
+    # insert语句获取主键值（只有支持主键自增的数据才能用）,
+    use-generated-keys: true # 允许 JDBC 支持自动生成主键
+    # sys_user ---> SysUser
+    map-underscore-to-camel-case: true # 驼峰式命名
+    default-executor-type: reuse # 配置默认的执行器
+  global-config:
+    db-config:
+      logic-delete-value: 1 # 逻辑已删除值(默认为 1)
+      logic-not-delete-value: 0 # 逻辑未删除值(默认为 0)
+      logic-delete-field: is_delete #逻辑删除字段名
+
+#服务
+server:
+  # 端口
+  port: 8888

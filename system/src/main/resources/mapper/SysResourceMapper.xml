@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.senko.system.mapper.ISysResourceMapper">
+
+    <resultMap id="nonAnonymousResourceRoelMap" type="com.senko.common.core.dto.ResourceRoleDTO">
+        <id column="id" property="id"/>
+        <result column="url" property="url"/>
+        <result column="method" property="method"/>
+        <collection property="roles" ofType="string">
+            <id column="role_label"/>
+        </collection>
+    </resultMap>
+
+    <select id="listNonAnonymousResourceRoles" resultMap="nonAnonymousResourceRoelMap">
+        SELECT res.id, res.url, res.method, tr.role_label
+        FROM (
+              SELECT id, url, method
+              FROM tb_resource
+              WHERE
+                    parent_id IS NOT NULL
+                AND
+                    is_anonymous = 0
+              ) res
+                 JOIN tb_resource_role trr ON trr.resource_id = res.id
+                 JOIN tb_role tr ON trr.role_id = tr.id
+    </select>
+
+</mapper>
+
