@@ -1,9 +1,11 @@
 package com.senko.controller.system;
 
+import com.senko.common.constants.HttpStatus;
 import com.senko.common.core.entity.Result;
 import com.senko.common.core.vo.UserLoginVO;
 import com.senko.common.core.vo.UserRegisterVO;
 import com.senko.framework.web.core.service.ISysUserService;
+import com.senko.framework.web.service.TokenService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 
@@ -28,7 +31,22 @@ public class SysUserController {
     private final Logger logger = org.slf4j.LoggerFactory.getLogger(SysUserController.class);
 
     @Autowired
+    private TokenService tokenService;
+
+    @Autowired
     private ISysUserService sysUserService;
+
+    @ApiOperation("验证Token有效性")
+    @PostMapping("/validToken")
+    public Result<?> validateToken(String token) {
+        logger.info("需要被验证的Token为：{}", token);
+        boolean flag = tokenService.validateToken(token);
+        if (flag) {
+            return Result.ok("Token有效");
+        } else {
+            return Result.error(4001, "Token无效");
+        }
+    }
 
     /**
      * 注册

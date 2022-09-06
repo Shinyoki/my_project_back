@@ -192,6 +192,8 @@ public class SysUserServiceImpl extends ServiceImpl<ISysUserMapper, SysUser> imp
 
         // 修改数据库中的UserInfo
         userInfoMapper.updateById(userInfo);
+        userInfo = userInfoMapper.selectOne(new LambdaQueryWrapper<SysUserInfo>()
+                .eq(SysUserInfo::getId, userInfoId));
 
         loginUser.setUserInfo(userInfo);
     }

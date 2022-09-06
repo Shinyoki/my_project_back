@@ -17,7 +17,7 @@ public class Result<T> {
      * 直接了断的返回状态
      * true or false
      */
-    private Boolean status;
+    private Boolean flag;
 
     /**
      * Http状态码

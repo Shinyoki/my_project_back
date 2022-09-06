@@ -70,8 +70,9 @@ public class TokenService {
 
     /**
      * 通过请求中携带的token获取缓存中存储的用户
-     * @param request       请求
-     * @return              用户
+     *
+     * @param request 请求
+     * @return 用户
      */
     public LoginUser getUserForRequest(HttpServletRequest request) {
 
@@ -86,8 +87,18 @@ public class TokenService {
         String uuid = (String) claims.get(RedisConstants.USER_TOKEN_TAG);
 
         // 获取缓存中的用户信息
-        return  (LoginUser) redisHandler.get(getUserCacheKey(uuid));
+        return (LoginUser) redisHandler.get(getUserCacheKey(uuid));
 
+    }
+
+    public boolean validateToken(String token) {
+        if (StringUtils.isBlank(token)) {
+            return false;
+        }
+        Claims claims = parseTokenStr(token);
+        String uuid = (String) claims.get(RedisConstants.USER_TOKEN_TAG);
+        String userCacheKey = getUserCacheKey(uuid);
+        return redisHandler.containsKey(userCacheKey);
     }
 
     /**
@@ -136,7 +147,8 @@ public class TokenService {
 
     /**
      * 合适的时间下会刷新缓存
-     * @param loginUser     用户信息
+     *
+     * @param loginUser 用户信息
      */
     public void tryRefreshToken(LoginUser loginUser) {
         Long expireMillis = loginUser.getExpireTime();
@@ -148,7 +160,8 @@ public class TokenService {
 
     /**
      * 刷新缓存的过期时间
-     * @param loginUser     用户信息
+     *
+     * @param loginUser 用户信息
      */
     public void refreshToken(LoginUser loginUser) {
         long curMillis = System.currentTimeMillis();

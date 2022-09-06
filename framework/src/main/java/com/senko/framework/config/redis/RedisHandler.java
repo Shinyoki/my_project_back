@@ -27,6 +27,15 @@ public class RedisHandler {
     // ===========键值对===============
 
     /**
+     * 是否存在
+     * @param key   键
+     * @return      是否存在
+     */
+    public Boolean containsKey(String key) {
+        return redisTemplate.hasKey(key);
+    }
+
+    /**
      * 缓存对象
      *
      * @param key   键

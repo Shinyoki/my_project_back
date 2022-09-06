@@ -91,7 +91,6 @@ public class FilterInvocationSecurityMetadataSourceImpl implements FilterInvocat
 
             }
 
-            return SecurityConfig.createList("unknown");
         }
 
         // 运行到这一步，说明这个资源是可以匿名访问的，于是返回null

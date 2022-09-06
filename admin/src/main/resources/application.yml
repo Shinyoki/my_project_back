@@ -36,7 +36,8 @@ token:
 spring:
   # 配置选择
   profiles:
-    - dev
+    # 激活配置
+    active: dev
   # 缓存配置
   cache:
     redis:
