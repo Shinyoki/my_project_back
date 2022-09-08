@@ -1,10 +1,14 @@
 package com.senko.framework.web.exception;
 
+import com.alibaba.fastjson.JSON;
+import com.senko.common.constants.HttpStatus;
 import com.senko.common.core.entity.Result;
 import com.senko.common.exceptions.service.ServiceException;
 import com.senko.common.exceptions.user.UserExistedException;
+import com.senko.common.exceptions.user.UserGetException;
 import com.senko.common.exceptions.user.UserPasswordRetryLimitException;
 import com.senko.common.exceptions.user.UsernamePasswordException;
+import com.senko.common.utils.http.ServletUtils;
 import org.apache.catalina.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -48,6 +52,13 @@ public class ControllerExceptionHandler {
         return handlerException(e, request, e.getMessage(), false);
     }
 
+    @ExceptionHandler(UserGetException.class)
+    public Result<?> userGetException(UserGetException e, HttpServletRequest request) {
+        logger.error("请求地址：\"{}\"，请求方式：\"{}\"\n，发生异常:\"{}\"", request.getRequestURI(), request.getMethod(), e.getMessage());
+        e.printStackTrace();
+        return Result.error(HttpStatus.UNAUTHORIZED, "用户状态异常，无法执行请求！");
+    }
+
     @ExceptionHandler(ServiceException.class)
     public Result<?> serviceException(ServiceException e, HttpServletRequest request) {
         return handlerException(e, request, "操作失败！", true);
@@ -70,10 +81,11 @@ public class ControllerExceptionHandler {
 
     /**
      * 异常处理
-     * @param e                     异常
-     * @param request               当前请求
-     * @param message               友好信息反馈
-     * @param printStackTrace       是否打印堆栈信息
+     *
+     * @param e               异常
+     * @param request         当前请求
+     * @param message         友好信息反馈
+     * @param printStackTrace 是否打印堆栈信息
      */
     public Result<?> handlerException(Exception e, HttpServletRequest request, String message, Boolean printStackTrace) {
         String method = request.getMethod();

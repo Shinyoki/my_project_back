@@ -1,11 +1,14 @@
 package com.senko.framework.config.security;
 
 
+import com.senko.common.exceptions.user.UserGetException;
 import com.senko.framework.web.service.LoginUser;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
+
+import java.util.Objects;
 
 /**
  * Spring Security工具类
@@ -36,16 +39,24 @@ public class SecurityUtils {
 
         Authentication authentication = getAuthentication();
         if (authentication instanceof AnonymousAuthenticationToken) {
-            // 匿名用户，返回null
-            return null;
+            // 需要的就是用户，没有则抛出异常
+            throw new UserGetException("获取用户失败，当前用户为匿名用户");
         }
 
-        Object principal = authentication.getPrincipal();
-        if (principal instanceof LoginUser) {
+        if (Objects.isNull(authentication)) {
+            throw new UserGetException("当前上下文中并没有存储用户");
+        }
+
+        try {
+            Object principal = authentication.getPrincipal();
+            if (Objects.isNull(principal)) {
+                throw new UserGetException("获取到的用户为空！");
+            }
             // 已登录用户
             return (LoginUser) principal;
+        } catch (ClassCastException e) {
+            throw new UserGetException("转型为登录用户失败！", e);
         }
-        return null;
 
     }
 

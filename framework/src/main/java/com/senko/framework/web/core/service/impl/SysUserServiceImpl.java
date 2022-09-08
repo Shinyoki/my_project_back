@@ -8,6 +8,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.senko.common.constants.CommonConstants;
 import com.senko.common.constants.RedisConstants;
+import com.senko.common.core.dto.LoginUserDTO;
 import com.senko.common.core.entity.SysUser;
 import com.senko.common.core.entity.SysUserInfo;
 import com.senko.common.core.entity.SysUserRole;
@@ -136,7 +137,7 @@ public class SysUserServiceImpl extends ServiceImpl<ISysUserMapper, SysUser> imp
      */
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public String doLogin(String username, String password) {
+    public LoginUserDTO doLogin(String username, String password) {
 
         // 基本参数校验（虽然多此一举）
         if (StringUtils.isEmpty(username) || StringUtils.isEmpty(password)) {
@@ -168,15 +169,6 @@ public class SysUserServiceImpl extends ServiceImpl<ISysUserMapper, SysUser> imp
         redisHandler.delete(retryCacheKey);
 
         // 因为是修改对象，会同步影响给Authentication中的UserDetails，所以可以在这里直接修改用户信息
-        updateLoginUserInfo(loginUser);
-
-        // TODO Log 登录成功
-
-        // 生成token
-        return tokenService.createToken(loginUser);
-    }
-
-    private void updateLoginUserInfo(@NotNull LoginUser loginUser) {
         HttpServletRequest request = ServletUtils.getRequest();
         UserAgent userAgent = UserAgentUtil.parse(request.getHeader("User-Agent"));
         Long userInfoId = loginUser.getUserInfoId();
@@ -196,6 +188,17 @@ public class SysUserServiceImpl extends ServiceImpl<ISysUserMapper, SysUser> imp
                 .eq(SysUserInfo::getId, userInfoId));
 
         loginUser.setUserInfo(userInfo);
+
+        // TODO Log 登录成功
+
+        String token = tokenService.createToken(loginUser);
+
+        return LoginUserDTO.builder()
+                .token(token)
+                .roles(loginUser.getRoles())
+                .nickname(userInfo.getNickname())
+                .avatar(userInfo.getAvatar())
+                .build();
     }
 
 }

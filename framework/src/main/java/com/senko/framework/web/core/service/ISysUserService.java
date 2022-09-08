@@ -2,6 +2,7 @@ package com.senko.framework.web.core.service;
 
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.senko.common.core.dto.LoginUserDTO;
 import com.senko.common.core.entity.SysUser;
 
 /**
@@ -25,6 +26,6 @@ public interface ISysUserService extends IService<SysUser> {
      * @param password  密码
      * @return          封装过的用户TOKEN
      */
-    String doLogin(String username, String password);
+    LoginUserDTO doLogin(String username, String password);
 
 }

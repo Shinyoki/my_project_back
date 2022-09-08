@@ -1,10 +1,13 @@
 package com.senko.common.core.dto;
 
 import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.Set;
 
 /**
  * 用户信息DTO
@@ -20,7 +23,27 @@ import lombok.NoArgsConstructor;
 public class LoginUserDTO {
 
     /**
-     * 用户
+     * 用户TOKEN
      */
-    // todo user dto
+    @ApiModelProperty("用户TOKEN")
+    private String token;
+
+    /**
+     * 用户角色
+     */
+    @ApiModelProperty("角色")
+    private Set<String> roles;
+
+    /**
+     * 用户昵称
+     */
+    @ApiModelProperty("昵称")
+    private String nickname;
+
+    /**
+     * 头像
+     */
+    @ApiModelProperty("头像")
+    private String avatar;
+
 }

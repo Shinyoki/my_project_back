@@ -2,6 +2,7 @@ package com.senko.framework.web.service;
 
 
 import com.alibaba.fastjson.annotation.JSONField;
+import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
 import com.senko.common.core.entity.SysUser;
 import com.senko.common.core.entity.SysUserInfo;
 import lombok.AllArgsConstructor;
@@ -10,6 +11,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -94,6 +96,18 @@ public class LoginUser implements UserDetails {
      * 权限
      */
     private Set<? extends GrantedAuthority> authorities;
+
+    /**
+     *  获取角色
+     */
+    public Set<String> getRoles() {
+        if (CollectionUtils.isNotEmpty(authorities)) {
+            Set<String> roles = new HashSet<>(authorities.size());
+            authorities.forEach(authority -> roles.add(authority.getAuthority()));
+            return roles;
+        }
+        return null;
+    }
 
     public void setUserInfo(SysUserInfo userInfo) {
         this.browser = userInfo.getBrowser();
