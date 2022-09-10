@@ -33,4 +33,19 @@ public class CommonConstants {
      */
     public static final String CT_APPLICATION_JSON = "application/json";
 
+    /**
+     * Page分页参数：current
+     */
+    public static final String PAGE_CURRENT = "current";
+
+    /**
+     * Page分页参数：size
+     */
+    public static final String PAGE_SIZE = "size";
+
+    /**
+     * Page分页默认值：size => 10
+     */
+    public static final Long PAGE_SIZE_VALUE = 10L;
+
 }

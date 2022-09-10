@@ -8,7 +8,7 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.METHOD})
 public @interface AccessLimit {
-    // TODO 限流
+
     /**
      * 每区间内可访问次数
      */

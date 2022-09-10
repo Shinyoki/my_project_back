@@ -3,6 +3,7 @@ package com.senko.framework.web.exception;
 import com.alibaba.fastjson.JSON;
 import com.senko.common.constants.HttpStatus;
 import com.senko.common.core.entity.Result;
+import com.senko.common.exceptions.service.PageRequestException;
 import com.senko.common.exceptions.service.ServiceException;
 import com.senko.common.exceptions.user.UserExistedException;
 import com.senko.common.exceptions.user.UserGetException;
@@ -31,6 +32,11 @@ import java.nio.file.AccessDeniedException;
 public class ControllerExceptionHandler {
 
     private final Logger logger = LoggerFactory.getLogger(ControllerExceptionHandler.class);
+
+    @ExceptionHandler(PageRequestException.class)
+    public Result<?> pageRequestException(PageRequestException e, HttpServletRequest request) {
+        return handlerException(e, request, e.getMessage(), false);
+    }
 
     @ExceptionHandler(AccessDeniedException.class)
     public Result<?> handleAccessDeniedException(AccessDeniedException e, HttpServletRequest request) {

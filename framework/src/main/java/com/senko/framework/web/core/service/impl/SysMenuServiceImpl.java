@@ -64,9 +64,7 @@ public class SysMenuServiceImpl extends ServiceImpl<ISysMenuMapper, SysMenu> imp
         // 记录第一层菜单
         List<SysMenusDTO> topCategories = rawMenus.stream()
                 // 是目录 并且 父ID为0或空
-                .filter(menu -> isCategory(menu.getMenuType()) && (
-                        menu.getParentId() == null || menu.getParentId() == 0
-                ))
+                .filter(menu -> menu.getParentId() == null || menu.getParentId() == 0)
                 .collect(Collectors.toList());
 
         return buildSubmenus(rawMenus, topCategories).stream()

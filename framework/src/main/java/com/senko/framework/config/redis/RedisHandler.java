@@ -91,18 +91,19 @@ public class RedisHandler {
     }
 
     /**
-     * 自增1，但超过1时会设置key的过期时间为ttl
-     * 适用于限流场景
+     * 限流用方法
+     *
+     * 第一次调用时，设置key的过期时间，之后调用不会刷新
      * @param key       键
      * @param ttl       超时时间 单位：秒
      * @return          自增后的值
      */
     public Long incrementAndExpire(String key, long ttl) {
 
-        // 自增
+        // 自增 得到自增后的值
         Long count = increment(key, 1);
-        // 是否超过1，超过则设置过期时间
-        if (Objects.nonNull(count) && count > 1) {
+        // count==1代表是第一次，这时设置key的过期时间
+        if (Objects.nonNull(count) && count == 1) {
             expire(key, ttl);
         }
         return count;

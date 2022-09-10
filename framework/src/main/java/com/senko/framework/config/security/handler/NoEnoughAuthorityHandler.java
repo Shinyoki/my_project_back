@@ -26,7 +26,7 @@ public class NoEnoughAuthorityHandler implements AuthenticationEntryPoint {
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
 
-        String message = MessageFormat.format("请求访问：{0}，认证失败，无法访问系统资源", request.getRequestURI());
+        String message = MessageFormat.format("请求访问：{0}失败，请尝试登录后访问！", request.getRequestURI());
         ServletUtils.renderJSONResult(
                 JSON.toJSONString(Result.error(HttpStatus.UNAUTHORIZED, message))
         );

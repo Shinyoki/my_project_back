@@ -29,4 +29,14 @@ public class RedisConstants {
      */
     public static final String USER_TOKEN_TAG = "user_login_token";
 
+    /**
+     * 限流 Prefix
+     */
+    public static final String ACCESS_LIMIT_PREFIX = "access:";
+
+    /**
+     * 重复提交 Prefix
+     */
+    public static final String REPEAT_SUBMIT_PREFIX = "repeat:";
+
 }

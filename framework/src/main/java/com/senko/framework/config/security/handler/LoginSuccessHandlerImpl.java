@@ -25,7 +25,6 @@ public class LoginSuccessHandlerImpl implements AuthenticationSuccessHandler {
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
 
         logger.info("登录成功后置处理：{}", authentication.getName());
-//        ServletUtils.renderJSONResult(JSON.toJSONString(Result.ok("登录成功")));
 
     }
 
