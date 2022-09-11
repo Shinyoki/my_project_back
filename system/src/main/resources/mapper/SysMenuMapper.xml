@@ -27,10 +27,11 @@
                m.parent_id
         FROM (select *
               FROM tb_user_role
-              WHERE user_id = #{userId}
-              ) ur
+              WHERE user_id = -1
+             ) ur
                  LEFT JOIN tb_menu_role mr ON mr.role_id = ur.role_id
                  LEFT JOIN tb_menu m ON m.id = mr.menu_id
+
     </select>
 </mapper>
 

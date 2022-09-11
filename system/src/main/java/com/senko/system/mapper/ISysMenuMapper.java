@@ -3,7 +3,9 @@ package com.senko.system.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.senko.common.core.dto.SysMenusDTO;
 import com.senko.common.core.entity.SysMenu;
+import com.senko.common.core.vo.RequestParamsVO;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 import java.util.Set;
@@ -20,8 +22,8 @@ public interface ISysMenuMapper extends BaseMapper<SysMenu> {
     /**
      * 查询当前用户所能访问的菜单
      * @param userId    用户ID
-     * @return      菜单列表
+     * @return          菜单列表
      */
-    List<SysMenusDTO> listMenusForCurUser(Long userId);
+    List<SysMenusDTO> listMenusForCurUser(@Param("userId") Long userId);
 
 }
