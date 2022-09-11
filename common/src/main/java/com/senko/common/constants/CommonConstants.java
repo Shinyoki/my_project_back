@@ -48,4 +48,9 @@ public class CommonConstants {
      */
     public static final Long PAGE_SIZE_VALUE = 10L;
 
+    /**
+     * 管理员的ID （role_id也是）
+     */
+    public static final Long ADMIN_ID = -1L;
+
 }

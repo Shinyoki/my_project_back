@@ -46,6 +46,7 @@ public class SysUserController {
     @Autowired
     private ISysMenuService menuService;
 
+
     @ApiOperation("验证Token有效性")
     @PostMapping("/validToken")
     public Result<?> validateToken(String token) {
@@ -99,20 +100,6 @@ public class SysUserController {
         LoginUser loginUser = SecurityUtils.getLoginUser();
         List<SysMenusDTO> result = menuService.listMenusForUser(loginUser.getId());
         return Result.ok("查询菜单成功！", result);
-
-    }
-
-    /**
-     * 获取后台路由信息
-     * @param requestParamsVO   请求参数
-     * @return                  路由信息
-     */
-    @ApiOperation("获取后台路由信息")
-    @GetMapping("/admin/menus")
-    public Result<List<SysMenusDTO>> listBackMenus(RequestParamsVO requestParamsVO) {
-
-            List<SysMenusDTO> result = menuService.listBackMenus(requestParamsVO);
-            return Result.ok("查询菜单成功！", result);
 
     }
 

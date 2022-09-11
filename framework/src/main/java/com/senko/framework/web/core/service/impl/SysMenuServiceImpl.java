@@ -2,17 +2,25 @@ package com.senko.framework.web.core.service.impl;
 
 import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.senko.common.constants.CommonConstants;
 import com.senko.common.core.dto.SysMenusDTO;
 import com.senko.common.core.entity.SysMenu;
+import com.senko.common.core.entity.SysMenuRole;
 import com.senko.common.core.vo.RequestParamsVO;
+import com.senko.common.exceptions.service.ServiceException;
+import com.senko.common.exceptions.user.UserGetException;
 import com.senko.common.utils.bean.BeanCopyUtils;
+import com.senko.framework.config.security.manager.FilterInvocationSecurityMetadataSourceImpl;
 import com.senko.framework.web.core.service.ISysMenuService;
 import com.senko.system.mapper.ISysMenuMapper;
+import com.senko.system.mapper.ISysMenuRoleMapper;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -30,6 +38,12 @@ public class SysMenuServiceImpl extends ServiceImpl<ISysMenuMapper, SysMenu> imp
 
     @Autowired
     private ISysMenuMapper menuMapper;
+
+    @Autowired
+    private ISysMenuRoleMapper menuRoleMapper;
+
+    @Autowired
+    private FilterInvocationSecurityMetadataSourceImpl filterInvocationSecurityMetadataSource;
 
     /**
      * 菜单的DESC 比较器
@@ -64,7 +78,18 @@ public class SysMenuServiceImpl extends ServiceImpl<ISysMenuMapper, SysMenu> imp
     @Override
     public List<SysMenusDTO> listMenusForUser(Long userId) {
 
-        List<SysMenusDTO> rawMenus = menuMapper.listMenusForCurUser(userId);
+        if (Objects.isNull(userId)) {
+            throw new UserGetException("用户ID不能为空");
+        }
+
+        List<SysMenusDTO> rawMenus = null;
+        if (Objects.equals(userId, CommonConstants.ADMIN_ID)) {
+            // 超级管理员
+            rawMenus = menuMapper.listMenusForAdmin();
+        } else {
+            // 普通用户
+            rawMenus = menuMapper.listMenusForCurUser(userId);
+        }
 
         // 记录第一层菜单
         List<SysMenusDTO> topCategories = rawMenus.stream()
@@ -86,13 +111,61 @@ public class SysMenuServiceImpl extends ServiceImpl<ISysMenuMapper, SysMenu> imp
      */
     @Override
     public List<SysMenusDTO> listBackMenus(RequestParamsVO requestParamsVO) {
+
         if (Objects.isNull(requestParamsVO)) {
             requestParamsVO = new RequestParamsVO();
         }
-        List<SysMenu> sysMenus = menuMapper.selectList(new LambdaQueryWrapper<SysMenu>()
-                .eq(Objects.nonNull(requestParamsVO.getIsHidden()), SysMenu::getIsHidden, requestParamsVO.getIsHidden())
-                .like(StringUtils.isNotBlank(requestParamsVO.getKeywords()), SysMenu::getName, requestParamsVO.getKeywords()));
-        return BeanCopyUtils.copyList(sysMenus, SysMenusDTO.class);
+        return menuMapper.listBackMenus(requestParamsVO.getKeywords(), requestParamsVO.getIsHidden());
+
+    }
+
+    /**
+     * 删除特定菜单
+     * <p>
+     * 删除目录也可以，但是为了省事，不做递归删除
+     *
+     * @param menuId 菜单ID
+     */
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public void deleteMenu(Long menuId) {
+
+        if (Objects.isNull(menuId)) {
+            throw new ServiceException("菜单ID不能为空");
+        }
+
+        SysMenu sysMenu = menuMapper.selectById(menuId);
+
+        if (Objects.nonNull(sysMenu)) {
+            if (isCategory(sysMenu)) {
+
+                // 是目录，则判断是否有子菜单
+                List<SysMenu> subMenus = menuMapper.selectList(new LambdaQueryWrapper<SysMenu>()
+                        .eq(SysMenu::getParentId, menuId));
+
+                if (Objects.nonNull(subMenus) && subMenus.size() > 0) {
+                    throw new ServiceException("目录下有子菜单，无法删除");
+                }
+
+            }
+
+            // 不管是不是目录都删除
+            List<Long> menuRoleList = menuRoleMapper
+                    .selectList(new LambdaQueryWrapper<SysMenuRole>().eq(SysMenuRole::getMenuId, menuId))
+                    .stream()
+                    .map(SysMenuRole::getId)
+                    .collect(Collectors.toList());
+            if (CollectionUtils.isNotEmpty(menuRoleList)) {
+                // 删除 菜单角色关联字段
+                menuRoleMapper.deleteBatchIds(menuRoleList);
+            }
+            // 删除菜单
+            menuMapper.deleteById(menuId);
+            // 清除菜单缓存
+            filterInvocationSecurityMetadataSource.clearResourceRolesCache();
+
+        }
+
     }
 
 

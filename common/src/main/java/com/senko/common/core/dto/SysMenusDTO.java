@@ -30,7 +30,6 @@ public class SysMenusDTO {
      * ID
      */
     @ApiModelProperty("菜单ID")
-    @TableId
     private Long id;
 
     /**
@@ -87,7 +86,24 @@ public class SysMenusDTO {
      * 子菜单/目录
      */
     @ApiModelProperty("子菜单")
-    @TableField(exist = false)
     private List<SysMenusDTO> children;
+
+    /**
+     * 角色集合
+     */
+    @ApiModelProperty("角色集合")
+    private Set<String> roles;
+
+    /**
+     * 创建时间
+     */
+    @ApiModelProperty
+    private LocalDateTime createTime;
+
+    /**
+     * 更新时间
+     */
+    @ApiModelProperty
+    private LocalDateTime updateTime;
 
 }

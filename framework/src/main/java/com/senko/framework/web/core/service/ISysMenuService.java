@@ -6,7 +6,6 @@ import com.senko.common.core.entity.SysMenu;
 import com.senko.common.core.vo.RequestParamsVO;
 
 import java.util.List;
-import java.util.Set;
 
 /**
  * 菜单Service
@@ -27,5 +26,13 @@ public interface ISysMenuService extends IService<SysMenu> {
      * @return                  路由信息
      */
     List<SysMenusDTO> listBackMenus(RequestParamsVO requestParamsVO);
+
+    /**
+     * 删除特定菜单
+     *
+     * 删除目录也可以，但是为了省事，不做递归删除
+     * @param menuId    菜单ID
+     */
+    void deleteMenu(Long menuId);
 
 }
