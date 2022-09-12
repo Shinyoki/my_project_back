@@ -2,6 +2,7 @@ package com.senko.framework.web.core.service;
 
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.senko.common.core.dto.SysRoleDTO;
 import com.senko.common.core.entity.SysRole;
 
 import java.util.List;
@@ -23,5 +24,12 @@ public interface ISysRoleService extends IService<SysRole> {
     /**
      * 获取角色标签集合
      */
-    List<String> listRoleLabels();
+    List<SysRoleDTO> listRoleLabels();
+
+    /**
+     * 查询菜单的角色标签集合
+     * @param menuId    菜单ID
+     */
+    List<SysRoleDTO> listMenuRoles(Long menuId);
+
 }

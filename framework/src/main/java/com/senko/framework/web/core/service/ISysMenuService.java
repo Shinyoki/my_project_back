@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.senko.common.core.dto.SysMenusDTO;
 import com.senko.common.core.entity.SysMenu;
 import com.senko.common.core.vo.RequestParamsVO;
+import com.senko.common.core.vo.SysMenuVO;
 
 import java.util.List;
 
@@ -35,6 +36,10 @@ public interface ISysMenuService extends IService<SysMenu> {
      */
     void deleteMenu(Long menuId);
 
-
+    /**
+     * 添加或更新菜单
+     * @param sysMenuVO   需要被添加或更新的菜单
+     */
+    void saveOrUpdateMenu(SysMenuVO sysMenuVO);
 
 }

@@ -53,4 +53,9 @@ public class CommonConstants {
      */
     public static final Long ADMIN_ID = -1L;
 
+    /**
+     * 管理员Label
+     */
+    public static final String ADMIN_LABEL = "admin";
+
 }

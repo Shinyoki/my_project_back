@@ -41,8 +41,8 @@ public class ControllerExceptionHandler {
     }
 
     @ExceptionHandler(AccessDeniedException.class)
-    public Result<?> handleAccessDeniedException(AccessDeniedException e, HttpServletRequest request) {
-        return handlerException(e, request, e.getMessage(), false);
+    public void handleAccessDeniedException(AccessDeniedException e, HttpServletRequest request) {
+        // ignored
     }
 
     @ExceptionHandler(UserPasswordRetryLimitException.class)

@@ -4,6 +4,7 @@ package com.senko.framework.web.core.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.senko.common.core.dto.SysRoleDTO;
 import com.senko.common.core.entity.SysRole;
 import com.senko.system.mapper.ISysRoleMapper;
 import com.senko.framework.web.core.service.ISysRoleService;
@@ -40,13 +41,28 @@ public class SysRoleServiceImpl extends ServiceImpl<ISysRoleMapper, SysRole> imp
 
     }
 
+    /**
+     * 查询菜单的角色标签集合
+     * @param menuId    菜单ID
+     */
     @Override
-    public List<String> listRoleLabels() {
+    public List<SysRoleDTO> listMenuRoles(Long menuId) {
+        // 查询菜单的角色标签集合
+        return roleMapper.listMenuRoles(menuId);
+    }
+
+    @Override
+    public List<SysRoleDTO> listRoleLabels() {
         // 通过roleMapper查询所有role的label，并去重
         return roleMapper.selectList(new QueryWrapper<SysRole>()
-                        .select("DISTINCT role_label"))
+                        .select("DISTINCT role_label, id"))
                 .stream()
-                .map(SysRole::getRoleLabel)
+                .map(sysRole -> {
+                    SysRoleDTO sysRoleDTO = new SysRoleDTO();
+                    sysRoleDTO.setRoleLabel(sysRole.getRoleLabel());
+                    sysRoleDTO.setId(sysRole.getId());
+                    return sysRoleDTO;
+                })
                 .collect(Collectors.toList());
     }
 

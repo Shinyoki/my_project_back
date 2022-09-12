@@ -12,6 +12,16 @@
         WHERE
             ur.user_id = #{userId}
     </select>
+    <select id="listMenuRoles" resultType="com.senko.common.core.dto.SysRoleDTO">
+        SELECT role_id id, role_label
+        FROM (
+                 SELECT role_id
+                 FROM tb_menu_role mr
+                 WHERE mr.menu_id = #{menuId}
+             ) mr
+                 JOIN tb_role r ON mr.role_id = r.id
+        WHERE r.is_disabled = 0
+    </select>
 
 </mapper>
 

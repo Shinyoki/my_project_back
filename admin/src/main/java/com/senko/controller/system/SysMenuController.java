@@ -1,17 +1,17 @@
 package com.senko.controller.system;
 
 import com.senko.common.core.dto.SysMenusDTO;
+import com.senko.common.core.dto.SysRoleDTO;
 import com.senko.common.core.entity.Result;
 import com.senko.common.core.vo.RequestParamsVO;
+import com.senko.common.core.vo.SysMenuVO;
 import com.senko.framework.web.core.service.ISysMenuService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 /**
@@ -55,6 +55,19 @@ public class SysMenuController {
 
         menuService.deleteMenu(menuId);
         return Result.ok("删除菜单成功！");
+
+    }
+
+    /**
+     * 添加或更新菜单
+     * @param sysMenuVO   需要被添加或更新的菜单
+     */
+    @ApiOperation("添加或更新菜单")
+    @PostMapping("/admin/menu")
+    public Result<?> saveOrUpdateMenu(@Valid @RequestBody SysMenuVO sysMenuVO) {
+
+        menuService.saveOrUpdateMenu(sysMenuVO);
+        return Result.ok("添加或更新菜单成功！");
 
     }
 

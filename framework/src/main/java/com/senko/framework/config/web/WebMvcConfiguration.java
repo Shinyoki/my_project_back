@@ -1,12 +1,17 @@
 package com.senko.framework.config.web;
 
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import com.senko.framework.config.web.interceptor.AccessLimitInterceptor;
 import com.senko.framework.config.web.interceptor.PageInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.jackson.Jackson2ObjectMapperBuilderCustomizer;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
+import java.math.BigInteger;
 
 /**
  * WebMvc的配置类
@@ -22,6 +27,18 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
 
     @Autowired
     private PageInterceptor pageInterceptor;
+
+    /**
+     * 把Long类型转换成String类型，
+     * 防止Axios接受的Long出现精度丢失
+     */
+    @Bean("jackson2ObjectMapperBuilderCustomizer")
+    public Jackson2ObjectMapperBuilderCustomizer jackson2ObjectMapperBuilderCustomizer(){
+        return jacksonObjectMapperBuilder -> jacksonObjectMapperBuilder
+                .serializerByType(BigInteger.class, ToStringSerializer.instance)
+                .serializerByType(Long.class,ToStringSerializer.instance)
+                .serializerByType(Long.TYPE,ToStringSerializer.instance);
+    }
 
     /**
      * 限流配置

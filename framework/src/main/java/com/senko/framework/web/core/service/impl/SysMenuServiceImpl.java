@@ -7,15 +7,18 @@ import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.senko.common.constants.CommonConstants;
 import com.senko.common.core.dto.SysMenusDTO;
+import com.senko.common.core.dto.SysRoleDTO;
 import com.senko.common.core.entity.SysMenu;
 import com.senko.common.core.entity.SysMenuRole;
 import com.senko.common.core.entity.SysRole;
 import com.senko.common.core.vo.RequestParamsVO;
+import com.senko.common.core.vo.SysMenuVO;
 import com.senko.common.exceptions.service.ServiceException;
 import com.senko.common.exceptions.user.UserGetException;
 import com.senko.common.utils.bean.BeanCopyUtils;
 import com.senko.framework.config.security.SecurityUtils;
 import com.senko.framework.config.security.manager.FilterInvocationSecurityMetadataSourceImpl;
+import com.senko.framework.web.core.service.ISysMenuRoleService;
 import com.senko.framework.web.core.service.ISysMenuService;
 import com.senko.system.mapper.ISysMenuMapper;
 import com.senko.system.mapper.ISysMenuRoleMapper;
@@ -48,6 +51,9 @@ public class SysMenuServiceImpl extends ServiceImpl<ISysMenuMapper, SysMenu> imp
 
     @Autowired
     private ISysRoleMapper roleMapper;
+
+    @Autowired
+    private ISysMenuRoleService menuRoleService;
 
     @Autowired
     private FilterInvocationSecurityMetadataSourceImpl filterInvocationSecurityMetadataSource;
@@ -174,6 +180,90 @@ public class SysMenuServiceImpl extends ServiceImpl<ISysMenuMapper, SysMenu> imp
 
         }
 
+    }
+
+    /**
+     * 添加或更新菜单
+     *
+     * @param sysMenuVO 需要被添加或更新的菜单
+     */
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public void saveOrUpdateMenu(SysMenuVO sysMenuVO) {
+        if (Objects.nonNull(sysMenuVO.getId())) {
+            // 有自己的ID，说明是更新
+            SysMenu sysMen = SysMenu.builder()
+                    .id(sysMenuVO.getId())
+                    .name(sysMenuVO.getName())
+                    .parentId(sysMenuVO.getParentId())
+                    .path(sysMenuVO.getPath())
+                    .component(sysMenuVO.getComponent())
+                    .icon(sysMenuVO.getIcon())
+                    .menuType(sysMenuVO.getMenuType())
+                    .isHidden(sysMenuVO.getIsHidden())
+                    .orderNum(sysMenuVO.getOrderNum())
+                    .build();
+
+            // 更新tb_menu
+            this.saveOrUpdate(sysMen);
+
+            // 更新 菜单角色映射
+            if (CollectionUtils.isNotEmpty(sysMenuVO.getRoles())) {
+                // 删除原有的
+                menuRoleMapper.delete(new LambdaQueryWrapper<SysMenuRole>()
+                        .eq(SysMenuRole::getMenuId, sysMenuVO.getId()));
+                // 添加新的
+                List<SysMenuRole> menuRoleList = sysMenuVO.getRoles().stream()
+                        .map(roleId -> SysMenuRole.builder()
+                                .menuId(sysMenuVO.getId())
+                                .roleId(roleId)
+                                .build())
+                        .collect(Collectors.toList());
+                menuRoleService.saveBatch(menuRoleList);
+            }
+
+
+        } else {
+            // 新增
+            if (Objects.isNull(sysMenuVO.getParentId()) ||
+                    sysMenuVO.getParentId() < 0) {
+                sysMenuVO.setParentId(0L);
+            }
+            Optional.ofNullable(menuMapper.selectOne(new QueryWrapper<SysMenu>().eq("path", sysMenuVO.getPath())))
+                    .ifPresent(menu -> {
+                        throw new ServiceException("菜单路径已存在，不可重复添加");
+                    });
+
+            // 构建POJO并自动获得插入后的iD
+            SysMenu newMenu = SysMenu.builder()
+                    .menuType(sysMenuVO.getMenuType())
+                    .name(sysMenuVO.getName())
+                    .component(sysMenuVO.getComponent())
+                    .isHidden(sysMenuVO.getIsHidden())
+                    .icon(sysMenuVO.getIcon())
+                    .orderNum(sysMenuVO.getOrderNum())
+                    .path(sysMenuVO.getPath())
+                    .parentId(sysMenuVO.getParentId())
+                    .build();
+            menuMapper.insert(newMenu);
+
+            // 添加菜单角色关联
+            if (CollectionUtils.isNotEmpty(sysMenuVO.getRoles())) {
+
+                if (!sysMenuVO.getRoles().contains(CommonConstants.ADMIN_ID)) {
+                    sysMenuVO.getRoles().add(CommonConstants.ADMIN_ID);
+                }
+
+                List<SysMenuRole> menuRoleList = sysMenuVO.getRoles().stream()
+                        .map(roleId -> SysMenuRole.builder()
+                                .menuId(newMenu.getId())
+                                .roleId(roleId)
+                                .build())
+                        .collect(Collectors.toList());
+
+                menuRoleService.saveBatch(menuRoleList);
+            }
+        }
     }
 
     /**
