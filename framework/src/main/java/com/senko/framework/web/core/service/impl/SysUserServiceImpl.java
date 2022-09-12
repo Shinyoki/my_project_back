@@ -13,6 +13,7 @@ import com.senko.common.core.entity.SysUser;
 import com.senko.common.core.entity.SysUserInfo;
 import com.senko.common.core.entity.SysUserRole;
 import com.senko.common.exceptions.service.ServiceException;
+import com.senko.common.exceptions.user.UserDisabledException;
 import com.senko.common.exceptions.user.UserExistedException;
 import com.senko.common.exceptions.user.UserPasswordRetryLimitException;
 import com.senko.common.exceptions.user.UsernamePasswordException;

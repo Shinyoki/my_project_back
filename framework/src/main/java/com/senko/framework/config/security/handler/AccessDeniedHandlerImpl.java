@@ -26,7 +26,7 @@ public class AccessDeniedHandlerImpl implements AccessDeniedHandler {
     @Override
     public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException accessDeniedException) throws IOException, ServletException {
 
-        ServletUtils.renderJSONResult(JSON.toJSONString(Result.error(HttpStatus.FORBIDDEN, MessageFormat.format("请求访问：{0} 失败，权限不足！", request.getRequestURI()))));
+        ServletUtils.renderJSONResult(JSON.toJSONString(Result.error(HttpStatus.FORBIDDEN, accessDeniedException.getMessage())));
 
     }
 

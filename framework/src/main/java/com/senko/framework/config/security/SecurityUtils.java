@@ -32,6 +32,18 @@ public class SecurityUtils {
         return getSecurityContext().getAuthentication();
     }
 
+    public static LoginUser getLoginUserIfHasLogin() {
+        Authentication authentication = getAuthentication();
+        if (authentication == null) {
+            return null;
+        }
+        Object principal = authentication.getPrincipal();
+        if (principal instanceof LoginUser) {
+            return (LoginUser) principal;
+        }
+        return null;
+    }
+
     /**
      * 获取登录用户，如是匿名用户或其他则返回null
      */
@@ -58,6 +70,27 @@ public class SecurityUtils {
             throw new UserGetException("转型为登录用户失败！", e);
         }
 
+    }
+
+    /**
+     * 获取登录用户ID
+     */
+    public static Long getUserAuthId() {
+        return getLoginUser().getId();
+    }
+
+    /**
+     * 获取用户名
+     */
+    public static String getUserName() {
+        return getLoginUser().getUsername();
+    }
+
+    /**
+     * 获取用户昵称
+     */
+    public static String getNickname() {
+        return getLoginUser().getNickname();
     }
 
     /**

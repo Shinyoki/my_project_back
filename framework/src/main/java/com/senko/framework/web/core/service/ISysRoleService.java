@@ -4,6 +4,8 @@ package com.senko.framework.web.core.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.senko.common.core.entity.SysRole;
 
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -14,5 +16,12 @@ import java.util.Set;
  */
 public interface ISysRoleService extends IService<SysRole> {
 
-    Set<String> getRolesById(Long id);
+    /**
+     * 查询 被禁止的角色集合
+     */
+    List<String> listDisabledRoles();
+    /**
+     * 获取角色标签集合
+     */
+    List<String> listRoleLabels();
 }

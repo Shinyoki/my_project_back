@@ -35,4 +35,6 @@ public interface ISysMenuService extends IService<SysMenu> {
      */
     void deleteMenu(Long menuId);
 
+
+
 }

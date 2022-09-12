@@ -2,20 +2,24 @@ package com.senko.framework.web.core.service.impl;
 
 import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.senko.common.constants.CommonConstants;
 import com.senko.common.core.dto.SysMenusDTO;
 import com.senko.common.core.entity.SysMenu;
 import com.senko.common.core.entity.SysMenuRole;
+import com.senko.common.core.entity.SysRole;
 import com.senko.common.core.vo.RequestParamsVO;
 import com.senko.common.exceptions.service.ServiceException;
 import com.senko.common.exceptions.user.UserGetException;
 import com.senko.common.utils.bean.BeanCopyUtils;
+import com.senko.framework.config.security.SecurityUtils;
 import com.senko.framework.config.security.manager.FilterInvocationSecurityMetadataSourceImpl;
 import com.senko.framework.web.core.service.ISysMenuService;
 import com.senko.system.mapper.ISysMenuMapper;
 import com.senko.system.mapper.ISysMenuRoleMapper;
+import com.senko.system.mapper.ISysRoleMapper;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,6 +45,9 @@ public class SysMenuServiceImpl extends ServiceImpl<ISysMenuMapper, SysMenu> imp
 
     @Autowired
     private ISysMenuRoleMapper menuRoleMapper;
+
+    @Autowired
+    private ISysRoleMapper roleMapper;
 
     @Autowired
     private FilterInvocationSecurityMetadataSourceImpl filterInvocationSecurityMetadataSource;
@@ -161,13 +168,13 @@ public class SysMenuServiceImpl extends ServiceImpl<ISysMenuMapper, SysMenu> imp
             }
             // 删除菜单
             menuMapper.deleteById(menuId);
+            logger.info("用户:'{}' 删除了菜单:'{}'", SecurityUtils.getUserName(), sysMenu.getName());
             // 清除菜单缓存
             filterInvocationSecurityMetadataSource.clearResourceRolesCache();
 
         }
 
     }
-
 
     /**
      * 是否为菜单

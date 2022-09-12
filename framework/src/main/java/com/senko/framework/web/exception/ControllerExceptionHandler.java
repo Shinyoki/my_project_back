@@ -5,10 +5,7 @@ import com.senko.common.constants.HttpStatus;
 import com.senko.common.core.entity.Result;
 import com.senko.common.exceptions.service.PageRequestException;
 import com.senko.common.exceptions.service.ServiceException;
-import com.senko.common.exceptions.user.UserExistedException;
-import com.senko.common.exceptions.user.UserGetException;
-import com.senko.common.exceptions.user.UserPasswordRetryLimitException;
-import com.senko.common.exceptions.user.UsernamePasswordException;
+import com.senko.common.exceptions.user.*;
 import com.senko.common.utils.http.ServletUtils;
 import org.apache.catalina.User;
 import org.slf4j.Logger;
@@ -32,6 +29,11 @@ import java.nio.file.AccessDeniedException;
 public class ControllerExceptionHandler {
 
     private final Logger logger = LoggerFactory.getLogger(ControllerExceptionHandler.class);
+
+    @ExceptionHandler(UserRoleDisabledException.class)
+    public Result<?> userRoleDisabledException(UserRoleDisabledException e, HttpServletRequest request) {
+        return Result.error(HttpStatus.FORBIDDEN, e.getMessage());
+    }
 
     @ExceptionHandler(PageRequestException.class)
     public Result<?> pageRequestException(PageRequestException e, HttpServletRequest request) {
@@ -83,6 +85,11 @@ public class ControllerExceptionHandler {
     @ExceptionHandler(HttpMediaTypeNotSupportedException.class)
     public Result<?> httpMediaTypeNotSupportedException(HttpMediaTypeNotSupportedException e, HttpServletRequest request) {
         return handlerException(e, request, "请求媒体类型不支持！" + e.getMessage(), false);
+    }
+
+    @ExceptionHandler({IgnoredUserException.class})
+    public Result<?> ignoredUserException(IgnoredUserException e, HttpServletRequest request) {
+        return handlerException(e, request, e.getMessage(), false);
     }
 
     /**

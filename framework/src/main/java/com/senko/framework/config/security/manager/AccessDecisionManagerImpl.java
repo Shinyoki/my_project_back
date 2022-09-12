@@ -1,15 +1,21 @@
 package com.senko.framework.config.security.manager;
 
+import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
+import com.senko.common.exceptions.user.UserRoleDisabledException;
+import com.senko.framework.config.security.SecurityUtils;
+import com.senko.framework.web.core.service.ISysRoleService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.AccessDecisionManager;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.access.ConfigAttribute;
 import org.springframework.security.authentication.InsufficientAuthenticationException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.web.FilterInvocation;
 import org.springframework.stereotype.Component;
 
-import java.util.Collection;
-import java.util.Set;
+import javax.annotation.PostConstruct;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -21,6 +27,20 @@ import java.util.stream.Collectors;
  */
 @Component
 public class AccessDecisionManagerImpl implements AccessDecisionManager {
+
+    private List<String> disabledRoles;
+
+    @Autowired
+    private ISysRoleService roleService;
+
+    @PostConstruct
+    private void listDisabledRoles() {
+        disabledRoles = roleService.listDisabledRoles();
+    }
+
+    public void clearDisabledRoles() {
+        disabledRoles = null;
+    }
 
     /**
      *
@@ -34,20 +54,41 @@ public class AccessDecisionManagerImpl implements AccessDecisionManager {
     @Override
     public void decide(Authentication authentication, Object object, Collection<ConfigAttribute> configAttributes) throws AccessDeniedException, InsufficientAuthenticationException {
 
-        // 用户的权限
-        Set<String> userAuthorities = authentication.getAuthorities().stream()
-                .map(GrantedAuthority::getAuthority)
-                .collect(Collectors.toSet());
-
-        // 筛选，有则return放行，没有则抛出AccessDeniedException异常
-        for (ConfigAttribute configAttribute : configAttributes) {
-            if (userAuthorities.contains(configAttribute.getAttribute())) {
-                return;
+        if (object instanceof FilterInvocation) {
+            FilterInvocation filterInvocation = (FilterInvocation) object;
+            if (CollectionUtils.isEmpty(disabledRoles)) {
+                listDisabledRoles();
             }
-        }
 
-        // 没有权限
-        throw new AccessDeniedException("用户没有权限访问该资源");
+            Optional.ofNullable(SecurityUtils.getLoginUserIfHasLogin()).ifPresent(loginUser -> {
+                Integer isDisabled = loginUser.getIsDisabled();
+                if (Objects.nonNull(isDisabled) && Objects.equals(isDisabled, 1)) {
+                    throw new AccessDeniedException("用户角色已被禁用");
+                }
+            });
+
+            // 用户的权限
+            Set<String> userAuthorities = authentication.getAuthorities().stream()
+                    .map(GrantedAuthority::getAuthority)
+                    .collect(Collectors.toSet());
+
+            // 筛选，有则return放行，没有则抛出AccessDeniedException异常
+            for (ConfigAttribute configAttribute : configAttributes) {
+                String curNeededRole = configAttribute.getAttribute();
+                if (userAuthorities.contains(curNeededRole)) {
+                    // 用户有角色
+                    if (disabledRoles.contains(curNeededRole)) {
+                        // 但是该角色被禁用了
+                        throw new AccessDeniedException("该用户的所在角色已被禁用，无法访问资源" + filterInvocation.getRequestUrl() + "，请尝试切换账号或联系管理员");
+                    }
+                    // 有权限，放行
+                    return;
+                }
+            }
+
+            // 没有权限
+            throw new AccessDeniedException("用户没有权限访问该资源：" + filterInvocation.getRequestUrl());
+        }
 
     }
 

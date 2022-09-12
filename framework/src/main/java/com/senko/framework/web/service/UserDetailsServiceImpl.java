@@ -9,6 +9,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.senko.common.core.entity.SysUser;
 import com.senko.common.core.entity.SysUserInfo;
 import com.senko.common.exceptions.service.ServiceException;
+import com.senko.common.exceptions.user.UserDisabledException;
 import com.senko.system.mapper.ISysRoleMapper;
 import com.senko.system.mapper.ISysUserInfoMapper;
 import com.senko.system.mapper.ISysUserMapper;

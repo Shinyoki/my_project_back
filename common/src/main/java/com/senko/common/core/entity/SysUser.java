@@ -48,6 +48,11 @@ public class SysUser {
     private String email;
 
     /**
+     * 禁用状态，0: 正常，1: 禁用
+     */
+    private Integer isDisabled;
+
+    /**
      * 创建时间
      */
     @TableField(fill = FieldFill.INSERT)

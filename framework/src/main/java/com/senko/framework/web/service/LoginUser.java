@@ -30,6 +30,11 @@ public class LoginUser implements UserDetails {
     private Long id;
 
     /**
+     * 是否被禁用 0：否 1：是
+     */
+    private Integer isDisabled;
+
+    /**
      * 用户信息ID
      */
     private Long userInfoId;
@@ -123,6 +128,7 @@ public class LoginUser implements UserDetails {
         this.password = user.getPassword();
         this.email = user.getEmail();
         this.userInfoId = user.getUserInfoId();
+        this.isDisabled = user.getIsDisabled();
     }
 
     public LoginUser(SysUser user, SysUserInfo userInfo, Set<? extends GrantedAuthority> authorities) {
