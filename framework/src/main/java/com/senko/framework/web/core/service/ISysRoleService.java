@@ -3,6 +3,7 @@ package com.senko.framework.web.core.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.senko.common.core.dto.SysRoleDTO;
+import com.senko.common.core.entity.PageResult;
 import com.senko.common.core.entity.SysRole;
 
 import java.util.List;
@@ -31,5 +32,27 @@ public interface ISysRoleService extends IService<SysRole> {
      * @param menuId    菜单ID
      */
     List<SysRoleDTO> listMenuRoles(Long menuId);
+
+    /**
+     * 查询后台角色集合
+     *
+     * @param roleName   角色名称
+     * @param roleLabel  角色标签
+     * @param isDisabled 是否被禁用
+     */
+    PageResult<SysRoleDTO> listBackRoleList(String roleName, String roleLabel, Integer isDisabled);
+
+    /**
+     * 更新角色禁用状态
+     * @param roleId           角色ID
+     * @param isDisabled       禁用状态
+     */
+    void updateRoleIsDisabled(Long roleId, Integer isDisabled);
+
+    /**
+     * 批量删除角色
+     * @param roleIds       角色ID集合
+     */
+    void deleteBathByIds(List<Long> roleIds);
 
 }

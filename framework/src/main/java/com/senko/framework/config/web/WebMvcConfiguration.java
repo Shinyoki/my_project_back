@@ -57,20 +57,27 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
     /**
      * 添加跨域的设置
      */
+//    @Override
+//    public void addCorsMappings(CorsRegistry registry) {
+//        // 为所有的请求地址添加相同的跨域规则
+//        registry.addMapping("/**")
+//                // 允许携带验证信息头
+//                .allowCredentials(true)
+//                // 允许的headers
+//                .allowedHeaders("*")
+//                // 允许的域
+//                .allowedOrigins("*")
+//                // 允许的方法
+//                .allowedMethods("*");
+//    }
+
     @Override
     public void addCorsMappings(CorsRegistry registry) {
-
-        // 为所有的请求地址添加相同的跨域规则
         registry.addMapping("/**")
-                // 允许携带验证信息头
-                .allowCredentials(true)
-                // 允许的headers
-                .allowedHeaders("*")
-                // 允许的域
-                .allowedOrigins("*")
-                // 允许的方法
-                .allowedMethods("*");
-
+                .allowedOriginPatterns("*") // SpringBoot2.4.0 [allowedOriginPatterns]代替[allowedOrigins]
+                .allowedMethods("*")
+                .maxAge(3600)
+                .allowCredentials(true);
     }
 
 }

@@ -10,8 +10,10 @@ import com.senko.common.utils.http.ServletUtils;
 import org.apache.catalina.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.HttpMediaTypeNotSupportedException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -37,6 +39,16 @@ public class ControllerExceptionHandler {
 
     @ExceptionHandler(PageRequestException.class)
     public Result<?> pageRequestException(PageRequestException e, HttpServletRequest request) {
+        return handlerException(e, request, e.getMessage(), false);
+    }
+
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    public Result<?> httpMessageNotReadableException(HttpMessageNotReadableException e, HttpServletRequest request) {
+        return handlerException(e, request, e.getMessage(), false);
+    }
+
+    @ExceptionHandler(MissingServletRequestParameterException.class)
+    public Result<?> missingServletRequestParameterException(MissingServletRequestParameterException e, HttpServletRequest request) {
         return handlerException(e, request, e.getMessage(), false);
     }
 

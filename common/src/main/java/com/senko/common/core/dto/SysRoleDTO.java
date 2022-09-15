@@ -7,6 +7,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -45,5 +46,23 @@ public class SysRoleDTO {
      */
     @ApiModelProperty("角色禁用状态，0: 禁用 1: 启用")
     private Integer isDisabled;
+
+    /**
+     * 创建时间
+     */
+    @ApiModelProperty("创建时间")
+    private LocalDateTime createTime;
+
+    /**
+     * 资源ID列表
+     */
+    @ApiModelProperty("角色资源id列表")
+    private List<Long> resourceIdList;
+
+    /**
+     * 角色菜单id列表
+     */
+    @ApiModelProperty("角色菜单id列表")
+    private List<Long> menuIdList;
 
 }
