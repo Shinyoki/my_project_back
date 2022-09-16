@@ -58,4 +58,14 @@ public class CommonConstants {
      */
     public static final String ADMIN_LABEL = "admin";
 
+    /**
+     * true 的数字形式
+     */
+    public static final Integer TRUE = 1;
+
+    /**
+     * false 的数字形式
+     */
+    public static final Integer FALSE = 0;
+
 }

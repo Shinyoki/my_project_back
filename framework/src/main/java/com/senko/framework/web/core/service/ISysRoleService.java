@@ -3,12 +3,11 @@ package com.senko.framework.web.core.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.senko.common.core.dto.SysRoleDTO;
+import com.senko.common.core.dto.SysRoleMenuResourceDTO;
 import com.senko.common.core.entity.PageResult;
 import com.senko.common.core.entity.SysRole;
 
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 /**
  * 角色服务
@@ -55,4 +54,16 @@ public interface ISysRoleService extends IService<SysRole> {
      */
     void deleteBathByIds(List<Long> roleIds);
 
+    /**
+     * 获取角色的菜单封装
+     *
+     * @param roleId 角色ID
+     */
+    SysRoleMenuResourceDTO listRoleBackMenus(Long roleId);
+
+    /**
+     * 获取角色的资源封装
+     * @param roleId    角色ID
+     */
+    SysRoleMenuResourceDTO listRoleBackResources(Long roleId);
 }

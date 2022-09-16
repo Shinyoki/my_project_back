@@ -1,6 +1,7 @@
 package com.senko.controller.system;
 
 import com.senko.common.core.dto.SysRoleDTO;
+import com.senko.common.core.dto.SysRoleMenuResourceDTO;
 import com.senko.common.core.entity.PageResult;
 import com.senko.common.core.entity.Result;
 import com.senko.common.core.vo.RequestParamsVO;
@@ -43,8 +44,8 @@ public class SysRoleController {
             @ApiImplicitParam(name = "roleLabel", value = "角色标签", dataType = "String", paramType = "query"),
             @ApiImplicitParam(name = "isDisabled", value = "是否被禁用，0：正常，1：禁用", dataType = "Integer", paramType = "query")
     })
-    public Result<PageResult<SysRoleDTO>> listBackRoleList(@RequestParam(value = "name", required = false) String roleName,
-                                                           @RequestParam(value = "label", required = false) String roleLabel,
+    public Result<PageResult<SysRoleDTO>> listBackRoleList(@RequestParam(value = "roleName", required = false) String roleName,
+                                                           @RequestParam(value = "roleLabel", required = false) String roleLabel,
                                                            @RequestParam(value = "isDisabled", required = false) Integer isDisabled) {
 
         PageResult<SysRoleDTO> roleDTOS = roleService.listBackRoleList(roleName, roleLabel, isDisabled);
@@ -72,15 +73,9 @@ public class SysRoleController {
 
     /**
      * 更新角色的禁用状态
-     * @param roleId        角色ID
-     * @param isDisabled    角色禁用状态
      */
     @ApiOperation("更新角色的禁用状态")
     @PutMapping("/admin/role/disable")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "roleId", required = true, value = "角色ID", dataType = "Long", paramType = "query"),
-            @ApiImplicitParam(name = "isDisabled", required = true, value = "是否被禁用，0：正常，1：禁用", dataType = "Integer", paramType = "query")
-    })
     public Result<?> updateRoleIsDisabled(@RequestBody @Valid RoleIsDisabledVO roleIsDisabledVO) {
         roleService.updateRoleIsDisabled(roleIsDisabledVO.getRoleId(), roleIsDisabledVO.getIsDisabled());
         return Result.ok("更新角色的禁用状态成功！");
@@ -96,6 +91,24 @@ public class SysRoleController {
     public Result<?> deleteBathByIds(@RequestBody @NotNull(message = "不能为null") List<Long> roleIds) {
         roleService.deleteBathByIds(roleIds);
         return Result.ok("删除角色成功！");
+    }
+
+    /**
+     * 获取角色的菜单封装
+     * @param roleId        角色ID
+     */
+    @ApiOperation("获取角色的菜单封装")
+    @GetMapping("/admin/role/menus/{roleId}")
+    public Result<SysRoleMenuResourceDTO> listRoleBackMenus(@PathVariable("roleId") Long roleId) {
+        SysRoleMenuResourceDTO roleMenuResourceDTOS = roleService.listRoleBackMenus(roleId);
+        return Result.ok("查询角色的菜单封装成功！", roleMenuResourceDTOS);
+    }
+
+    @ApiOperation("获取角色的资源封装")
+    @GetMapping("/admin/role/resources/{roleId}")
+    public Result<SysRoleMenuResourceDTO> listRoleBackResources(@PathVariable("roleId") Long roleId) {
+        SysRoleMenuResourceDTO roleMenuResourceDTOS = roleService.listRoleBackResources(roleId);
+        return Result.ok("查询角色的资源封装成功！", roleMenuResourceDTOS);
     }
     // TODO 删除  更新Disabled状态
 
