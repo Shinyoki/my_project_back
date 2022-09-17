@@ -6,6 +6,7 @@ import com.senko.common.core.dto.SysRoleDTO;
 import com.senko.common.core.dto.SysRoleMenuResourceDTO;
 import com.senko.common.core.entity.PageResult;
 import com.senko.common.core.entity.SysRole;
+import com.senko.common.core.vo.SysRoleVO;
 
 import java.util.List;
 
@@ -66,4 +67,10 @@ public interface ISysRoleService extends IService<SysRole> {
      * @param roleId    角色ID
      */
     SysRoleMenuResourceDTO listRoleBackResources(Long roleId);
+
+    /**
+     * 新增或修改角色，包括其可访资源/菜单
+     */
+    void saveOrUpdateRole(SysRoleVO roleVO);
+
 }

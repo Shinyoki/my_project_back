@@ -3,15 +3,19 @@ package com.senko.framework.web.core.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.senko.common.core.entity.SysMenuTree;
 import com.senko.common.core.dto.SysRoleDTO;
 import com.senko.common.core.dto.SysRoleMenuResourceDTO;
 import com.senko.common.core.entity.*;
+import com.senko.common.core.vo.SysRoleVO;
 import com.senko.common.exceptions.service.ServiceException;
 import com.senko.common.utils.bean.BeanCopyUtils;
 import com.senko.common.utils.page.PageUtils;
+import com.senko.framework.web.core.service.ISysMenuRoleService;
+import com.senko.framework.web.core.service.ISysResourceRoleService;
 import com.senko.system.mapper.*;
 import com.senko.framework.web.core.service.ISysRoleService;
 import org.apache.commons.lang3.StringUtils;
@@ -51,6 +55,12 @@ public class SysRoleServiceImpl extends ServiceImpl<ISysRoleMapper, SysRole> imp
     @Autowired
     private ISysResourceRoleMapper resourceRoleMapper;
 
+    @Autowired
+    private ISysResourceRoleService resourceRoleService;
+
+    @Autowired
+    private ISysMenuRoleService menuRoleService;
+
     private final Logger logger = LoggerFactory.getLogger(SysRoleServiceImpl.class);
 
     /**
@@ -70,7 +80,8 @@ public class SysRoleServiceImpl extends ServiceImpl<ISysRoleMapper, SysRole> imp
 
     /**
      * 查询菜单的角色标签集合
-     * @param menuId    菜单ID
+     *
+     * @param menuId 菜单ID
      */
     @Override
     public List<SysRoleDTO> listMenuRoles(Long menuId) {
@@ -99,8 +110,9 @@ public class SysRoleServiceImpl extends ServiceImpl<ISysRoleMapper, SysRole> imp
 
     /**
      * 更新角色禁用状态
-     * @param roleId           角色ID
-     * @param isDisabled       禁用状态
+     *
+     * @param roleId     角色ID
+     * @param isDisabled 禁用状态
      */
     @Transactional(rollbackFor = Exception.class)
     @Override
@@ -113,14 +125,15 @@ public class SysRoleServiceImpl extends ServiceImpl<ISysRoleMapper, SysRole> imp
 
     /**
      * 批量删除角色
-     * @param roleIds       角色ID集合
+     *
+     * @param roleIds 角色ID集合
      */
     @Transactional(rollbackFor = Exception.class)
     @Override
     public void deleteBathByIds(List<Long> roleIds) {
         Long count = userRoleMapper.selectCount(new LambdaQueryWrapper<SysUserRole>()
                 .in(SysUserRole::getRoleId, roleIds));
-        if (Objects.nonNull(count) && count > 0)  {
+        if (Objects.nonNull(count) && count > 0) {
             throw new ServiceException("角色已被用户绑定，无法删除");
         }
         roleMapper.deleteBatchIds(roleIds);
@@ -128,7 +141,8 @@ public class SysRoleServiceImpl extends ServiceImpl<ISysRoleMapper, SysRole> imp
 
     /**
      * 获取角色的资源封装
-     * @param roleId    角色ID
+     *
+     * @param roleId 角色ID
      */
     @Override
     public SysRoleMenuResourceDTO listRoleBackResources(Long roleId) {
@@ -156,6 +170,93 @@ public class SysRoleServiceImpl extends ServiceImpl<ISysRoleMapper, SysRole> imp
                 .roleId(roleId)
                 .checkedIds(checkedIds)
                 .build();
+    }
+
+    /**
+     * 新增或修改角色，包括其可访资源/菜单
+     */
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public void saveOrUpdateRole(SysRoleVO roleVO) {
+        if (Objects.isNull(roleVO.getId())) {
+            // 新增
+            SysRole entityToInsert = SysRole.builder()
+                    .isDisabled(roleVO.getIsDisabled())
+                    .roleName(roleVO.getRoleName())
+                    .roleLabel(roleVO.getRoleLabel())
+                    .build();
+            roleMapper.insert(entityToInsert);
+            // 新增角色资源关联
+            if (CollectionUtils.isNotEmpty(roleVO.getCheckedResourceIds())) {
+                List<SysResourceRole> resourceRoles = roleVO.getCheckedResourceIds().stream()
+                        .map(resourceId -> SysResourceRole.builder()
+                                .resourceId(resourceId)
+                                .roleId(entityToInsert.getId())
+                                .build())
+                        .collect(Collectors.toList());
+                // 批量插入
+                resourceRoleService.saveBatch(resourceRoles);
+            }
+            // 新增角色菜单关联
+            if (CollectionUtils.isNotEmpty(roleVO.getCheckedMenuIds())) {
+                List<SysMenuRole> menuRoles = roleVO.getCheckedMenuIds().stream()
+                        .map(menuId -> SysMenuRole.builder()
+                                .menuId(menuId)
+                                .roleId(entityToInsert.getId())
+                                .build())
+                        .collect(Collectors.toList());
+                // 批量插入
+                menuRoleService.saveBatch(menuRoles);
+            }
+        } else {
+            // 修改
+            SysRole entityToUpdate = SysRole.builder()
+                    .id(roleVO.getId())
+                    .isDisabled(roleVO.getIsDisabled())
+                    .roleName(roleVO.getRoleName())
+                    .roleLabel(roleVO.getRoleLabel())
+                    .build();
+            roleMapper.updateById(entityToUpdate);
+
+            switch (roleVO.getOperateMode()) {
+                case 3:
+                    // 编辑角色可访菜单
+                    // 删除角色菜单关联
+                    menuRoleMapper.delete(new LambdaQueryWrapper<SysMenuRole>()
+                            .eq(SysMenuRole::getRoleId, entityToUpdate.getId()));
+                    if (CollectionUtils.isNotEmpty(roleVO.getCheckedMenuIds())) {
+
+                        // 新增角色菜单关联
+                        List<SysMenuRole> menuRoles = roleVO.getCheckedMenuIds().stream()
+                                .map(menuId -> SysMenuRole.builder()
+                                        .menuId(menuId)
+                                        .roleId(entityToUpdate.getId())
+                                        .build())
+                                .collect(Collectors.toList());
+                        // 批量插入
+                        menuRoleService.saveBatch(menuRoles);
+                    }
+                    break;
+                case 4:
+                    // 编辑角色可访资源
+                    // 删除角色资源关联
+                    resourceRoleMapper.delete(new LambdaQueryWrapper<SysResourceRole>()
+                            .eq(SysResourceRole::getRoleId, entityToUpdate.getId()));
+                    if (CollectionUtils.isNotEmpty(roleVO.getCheckedResourceIds())) {
+                        // 新增角色资源关联
+                        List<SysResourceRole> resourceRoles = roleVO.getCheckedResourceIds().stream()
+                                .map(resourceId -> SysResourceRole.builder()
+                                        .resourceId(resourceId)
+                                        .roleId(entityToUpdate.getId())
+                                        .build())
+                                .collect(Collectors.toList());
+                        // 批量插入
+                        resourceRoleService.saveBatch(resourceRoles);
+                    }
+                    break;
+            }
+
+        }
     }
 
     private List<SysResourceTree> buildResourceTree(List<SysResourceTree> allResources) {
@@ -213,6 +314,7 @@ public class SysRoleServiceImpl extends ServiceImpl<ISysRoleMapper, SysRole> imp
     }
 
     // =============================================================TODO 成功的树操作案例
+
     /**
      * 获取角色的菜单封装
      *

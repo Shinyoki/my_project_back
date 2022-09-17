@@ -6,6 +6,7 @@ import com.senko.common.core.entity.PageResult;
 import com.senko.common.core.entity.Result;
 import com.senko.common.core.vo.RequestParamsVO;
 import com.senko.common.core.vo.RoleIsDisabledVO;
+import com.senko.common.core.vo.SysRoleVO;
 import com.senko.framework.web.core.service.ISysRoleService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -109,6 +110,16 @@ public class SysRoleController {
     public Result<SysRoleMenuResourceDTO> listRoleBackResources(@PathVariable("roleId") Long roleId) {
         SysRoleMenuResourceDTO roleMenuResourceDTOS = roleService.listRoleBackResources(roleId);
         return Result.ok("查询角色的资源封装成功！", roleMenuResourceDTOS);
+    }
+
+    /**
+     * 新增或修改角色，包括其可访资源/菜单
+     */
+    @ApiOperation("新增或修改角色，包括其可访资源/菜单")
+    @PostMapping("/admin/role")
+    public Result<?> saveOrUpdateRole(@Valid @RequestBody SysRoleVO roleVO) {
+        roleService.saveOrUpdateRole(roleVO);
+        return Result.ok("操作成功！");
     }
     // TODO 删除  更新Disabled状态
 
