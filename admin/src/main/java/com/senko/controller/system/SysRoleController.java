@@ -2,9 +2,11 @@ package com.senko.controller.system;
 
 import com.senko.common.core.dto.SysRoleDTO;
 import com.senko.common.core.dto.SysRoleMenuResourceDTO;
+import com.senko.common.core.dto.SysUserAssignmentDTO;
 import com.senko.common.core.entity.PageResult;
 import com.senko.common.core.entity.Result;
 import com.senko.common.core.vo.RequestParamsVO;
+import com.senko.common.core.vo.RoleAssignmentVO;
 import com.senko.common.core.vo.RoleIsDisabledVO;
 import com.senko.common.core.vo.SysRoleVO;
 import com.senko.framework.web.core.service.ISysRoleService;
@@ -121,6 +123,15 @@ public class SysRoleController {
         roleService.saveOrUpdateRole(roleVO);
         return Result.ok("操作成功！");
     }
-    // TODO 删除  更新Disabled状态
+
+    /**
+     * 获取授权角色 集合
+     * @param assignmentVO  参数：角色ID，用户名、昵称、状态、、
+     */
+    @ApiOperation("获取授权的角色")
+    @GetMapping("/admin/role/assignment")
+    public Result<PageResult<SysUserAssignmentDTO>> listSysUserAssignmentDTOs(@Valid RoleAssignmentVO assignmentVO) {
+        return Result.ok(roleService.listRoleAssignmentList(assignmentVO));
+    }
 
 }

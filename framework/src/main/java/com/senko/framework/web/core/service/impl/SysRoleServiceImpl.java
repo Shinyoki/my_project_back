@@ -1,19 +1,23 @@
 package com.senko.framework.web.core.service.impl;
 
 
+import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.senko.common.core.dto.SysUserAssignmentDTO;
 import com.senko.common.core.entity.SysMenuTree;
 import com.senko.common.core.dto.SysRoleDTO;
 import com.senko.common.core.dto.SysRoleMenuResourceDTO;
 import com.senko.common.core.entity.*;
+import com.senko.common.core.vo.RoleAssignmentVO;
 import com.senko.common.core.vo.SysRoleVO;
 import com.senko.common.exceptions.service.ServiceException;
 import com.senko.common.utils.bean.BeanCopyUtils;
 import com.senko.common.utils.page.PageUtils;
+import com.senko.framework.config.security.manager.AccessDecisionManagerImpl;
 import com.senko.framework.web.core.service.ISysMenuRoleService;
 import com.senko.framework.web.core.service.ISysResourceRoleService;
 import com.senko.system.mapper.*;
@@ -60,6 +64,12 @@ public class SysRoleServiceImpl extends ServiceImpl<ISysRoleMapper, SysRole> imp
 
     @Autowired
     private ISysMenuRoleService menuRoleService;
+
+    @Autowired
+    private AccessDecisionManagerImpl accessDecisionManager;
+
+    @Autowired
+    private ISysUserMapper userMapper;
 
     private final Logger logger = LoggerFactory.getLogger(SysRoleServiceImpl.class);
 
@@ -136,6 +146,7 @@ public class SysRoleServiceImpl extends ServiceImpl<ISysRoleMapper, SysRole> imp
         if (Objects.nonNull(count) && count > 0) {
             throw new ServiceException("角色已被用户绑定，无法删除");
         }
+        accessDecisionManager.clearDisabledRoles();
         roleMapper.deleteBatchIds(roleIds);
     }
 
@@ -256,7 +267,36 @@ public class SysRoleServiceImpl extends ServiceImpl<ISysRoleMapper, SysRole> imp
                     break;
             }
 
+            accessDecisionManager.clearDisabledRoles();
+
         }
+    }
+
+    /**
+     * 获取授权角色 集合
+     * @param assignmentVO  参数：角色ID，用户名、昵称、状态、、
+     */
+    @Override
+    public PageResult<SysUserAssignmentDTO> listRoleAssignmentList(RoleAssignmentVO assignmentVO) {
+        Optional.ofNullable(assignmentVO.getRoleId())
+                .orElseThrow(() -> new ServiceException("未传入需要授权的角色ID"));
+        List<Long> userIds = userRoleMapper.selectList(new LambdaQueryWrapper<SysUserRole>()
+                        .select(SysUserRole::getUserId)
+                        .eq(SysUserRole::getRoleId, assignmentVO.getRoleId())).stream()
+                .map(SysUserRole::getUserId)
+                .collect(Collectors.toList());
+        if (CollectionUtils.isEmpty(userIds)) {
+            return new PageResult<>(0, null);
+        }
+        // 存在用户
+        List<SysUserAssignmentDTO> assignmentUserDTOS = userMapper.listAssignmentUserDTOs(userIds,
+                PageUtils.getLimitFormatCurrent(),
+                PageUtils.getSize(),
+                assignmentVO.getUsername(),
+                assignmentVO.getNickname(),
+                assignmentVO.getEmail(),
+                assignmentVO.getIsDisabled());
+        return new PageResult<>(assignmentUserDTOS.size(), assignmentUserDTOS);
     }
 
     private List<SysResourceTree> buildResourceTree(List<SysResourceTree> allResources) {

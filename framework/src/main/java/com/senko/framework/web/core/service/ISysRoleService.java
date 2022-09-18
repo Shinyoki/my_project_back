@@ -4,8 +4,10 @@ package com.senko.framework.web.core.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.senko.common.core.dto.SysRoleDTO;
 import com.senko.common.core.dto.SysRoleMenuResourceDTO;
+import com.senko.common.core.dto.SysUserAssignmentDTO;
 import com.senko.common.core.entity.PageResult;
 import com.senko.common.core.entity.SysRole;
+import com.senko.common.core.vo.RoleAssignmentVO;
 import com.senko.common.core.vo.SysRoleVO;
 
 import java.util.List;
@@ -72,5 +74,11 @@ public interface ISysRoleService extends IService<SysRole> {
      * 新增或修改角色，包括其可访资源/菜单
      */
     void saveOrUpdateRole(SysRoleVO roleVO);
+
+    /**
+     * 获取授权角色 集合
+     * @param assignmentVO  参数：角色ID，用户名、昵称、状态、、
+     */
+    PageResult<SysUserAssignmentDTO> listRoleAssignmentList(RoleAssignmentVO assignmentVO);
 
 }

@@ -13,6 +13,46 @@
         <result column="update_time" property="updateTime" jdbcType="DATE"/>
     </resultMap>
 
+    <resultMap id="assignmentUserList" type="com.senko.common.core.dto.SysUserAssignmentDTO">
+        <id property="id" column="id"/>
+        <result property="username" column="username"/>
+        <result property="nickname" column="nickname"/>
+        <result property="avatar" column="avatar"/>
+        <result property="email" column="email"/>
+        <result property="isDisabled" column="is_disabled"/>
+    </resultMap>
+
+    <select id="listAssignmentUserDTOs" resultMap="assignmentUserList">
+        SELECT ua.id, ua.username, tui.avatar, tui.nickname, ua.is_disabled, ua.email
+        FROM (
+        SELECT tua.id, tua.username, tua.is_disabled, tua.email, tua.user_info_id
+        FROM tb_user_auth tua
+        <where>
+            tua.id IN
+            <foreach collection="userIds" item="userId" open="(" separator="," close=")">
+                #{userId}
+            </foreach>
+            <if test="isDisabled != null">
+                AND tua.is_disabled = #{isDisabled}
+            </if>
+            <if test="email != null">
+                AND IFNULL(tua.email, '') LIKE CONCAT('%', #{email}, '%')
+            </if>
+            <if test="username != null">
+                AND tua.username LIKE CONCAT('%', #{username}, '%')
+            </if>
+        </where>
+        LIMIT #{current}, #{size}
+        ) ua
+        LEFT JOIN tb_user_info tui ON tui.id = ua.user_info_id
+        <where>
+            <if test="nickname != null">
+                tui.nickname LIKE CONCAT('%', #{nickname}, '%')
+            </if>
+        </where>
+        ORDER BY ua.id DESC
+    </select>
+
 
 </mapper>
 

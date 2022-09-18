@@ -3,6 +3,7 @@ package com.senko.system.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.senko.common.core.dto.SysRoleDTO;
+import com.senko.common.core.dto.SysUserAssignmentDTO;
 import com.senko.common.core.entity.SysRole;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
