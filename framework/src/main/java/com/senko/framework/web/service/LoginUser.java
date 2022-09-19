@@ -79,6 +79,11 @@ public class LoginUser implements UserDetails {
      */
     private String ip;
 
+    /**
+     * 登录地址
+     */
+    private String location;
+
     // ===============jwt=================
     /**
      * uuid
@@ -120,6 +125,7 @@ public class LoginUser implements UserDetails {
         this.ip = userInfo.getIp();
         this.nickname = userInfo.getNickname();
         this.avatar = userInfo.getAvatar();
+        this.location = userInfo.getLocation();
     }
 
     public void setSysUser(SysUser user) {

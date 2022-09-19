@@ -51,8 +51,45 @@
             </if>
         </where>
     </select>
-    <select id="listUnAssignmentUserDTOs" resultMap="assignmentUserList">
 
+    <resultMap id="sysUserDTO" type="com.senko.common.core.dto.SysUserDTO">
+
+    </resultMap>
+
+    <select id="listBackUsers" resultMap="sysUserDTO">
+        SELECT tua.id,
+        tua.username,
+        tui.nickname,
+        tui.avatar,
+        tua.email,
+        tua.is_disabled,
+        tua.create_time,
+        tui.last_login_time,
+        tui.browser,
+        tui.os,
+        tui.ip,
+        tui.location
+        FROM (SELECT tua.id, tua.username, tua.email, tua.user_info_id, tua.create_time, tua.is_disabled
+        FROM tb_user_auth tua
+        <where>
+            <if test="userVO.isDisabled != null">
+                tua.is_disabled = #{userVO.isDisabled}
+            </if>
+            <if test="userVO.email != null">
+                AND IFNULL(tua.email, '') LIKE CONCAT('%', #{userVO.email}, '%')
+            </if>
+            <if test="userVO.username != null">
+                AND tua.username LIKE CONCAT('%', #{userVO.username}, '%')
+            </if>
+        </where>
+        ) tua
+        LEFT JOIN tb_user_info tui ON tui.id = tua.user_info_id
+        <where>
+            <if test="userVO.nickname != null">
+                tui.nickname LIKE CONCAT('%', #{userVO.nickname}, '%')
+            </if>
+        </where>
+        LIMIT #{current}, #{size}
     </select>
 
 

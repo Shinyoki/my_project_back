@@ -172,5 +172,14 @@ public class SysRoleController {
         return Result.ok("新增授权的角色成功！");
     }
 
+    /**
+     * 获取该用户的角色信息
+     * @param userId    用户ID
+     */
+    @ApiOperation("获取该用户的角色信息")
+    @GetMapping("/admin/user/{userId}/role")
+    public Result<SysRoleDTO> getRoleByUserId(@PathVariable("userId") Long userId) {
+        return Result.ok(roleService.getRoleByUserId(userId));
+    }
 
 }

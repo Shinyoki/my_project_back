@@ -78,6 +78,12 @@ public class SysUserDTO {
     private String ip;
 
     /**
+     * 登录地址
+     */
+    @ApiModelProperty("登录地址")
+    private String location;
+
+    /**
      * 用户状态 0: 正常，1: 禁用
      */
     @ApiModelProperty("禁用状态, 0: 正常，1: 禁用")

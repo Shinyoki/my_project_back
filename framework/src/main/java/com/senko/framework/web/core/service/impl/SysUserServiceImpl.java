@@ -9,9 +9,10 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.senko.common.constants.CommonConstants;
 import com.senko.common.constants.RedisConstants;
 import com.senko.common.core.dto.LoginUserDTO;
-import com.senko.common.core.entity.SysUser;
-import com.senko.common.core.entity.SysUserInfo;
-import com.senko.common.core.entity.SysUserRole;
+import com.senko.common.core.dto.SysUserDTO;
+import com.senko.common.core.entity.*;
+import com.senko.common.core.vo.RequestParamsVO;
+import com.senko.common.core.vo.SysBackUserVO;
 import com.senko.common.exceptions.service.ServiceException;
 import com.senko.common.exceptions.user.UserDisabledException;
 import com.senko.common.exceptions.user.UserExistedException;
@@ -19,6 +20,7 @@ import com.senko.common.exceptions.user.UserPasswordRetryLimitException;
 import com.senko.common.exceptions.user.UsernamePasswordException;
 import com.senko.common.utils.http.ServletUtils;
 import com.senko.common.utils.ip.IpUtils;
+import com.senko.common.utils.page.PageUtils;
 import com.senko.framework.config.SenkoConfig;
 import com.senko.framework.config.redis.RedisHandler;
 import com.senko.framework.web.service.LoginUser;
@@ -40,6 +42,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -200,6 +203,43 @@ public class SysUserServiceImpl extends ServiceImpl<ISysUserMapper, SysUser> imp
                 .nickname(userInfo.getNickname())
                 .avatar(userInfo.getAvatar())
                 .build();
+    }
+
+    /**
+     * 获取后台用户集合
+     * @param sysUserVO   分页参数、查询条件
+     */
+    @Override
+    public PageResult<SysUserDTO> listBackUsers(SysUserVO sysUserVO) {
+        List<SysUserDTO> sysUserDTOList = userMapper.listBackUsers(PageUtils.getLimitFormatCurrent(),
+                PageUtils.getSize(),
+                sysUserVO);
+        return new PageResult<>(sysUserDTOList.size(), sysUserDTOList);
+    }
+
+    /**
+     * 添加或删除用户
+     */
+    @Override
+    public void saveOrUpdateSysUser(SysBackUserVO sysBackUserVO) {
+        SysUser sysUser = SysUser.builder()
+                .id(sysBackUserVO.getId())
+                .isDisabled(sysBackUserVO.getIsDisabled())
+                .email(sysBackUserVO.getEmail())
+                .username(sysBackUserVO.getUsername())
+                .build();
+        this.saveOrUpdate(sysUser);
+
+        // 添加用户角色
+        if (Objects.nonNull(sysBackUserVO.getRoleId())) {
+            userRoleMapper.delete(new LambdaQueryWrapper<SysUserRole>()
+                    .eq(SysUserRole::getUserId, sysUser.getId()));
+            SysUserRole sysUserRole = SysUserRole.builder()
+                    .userId(sysUser.getId())
+                    .roleId(sysBackUserVO.getRoleId())
+                    .build();
+            userRoleMapper.insert(sysUserRole);
+        }
     }
 
 }

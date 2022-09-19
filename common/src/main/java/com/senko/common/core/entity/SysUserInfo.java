@@ -56,6 +56,11 @@ public class SysUserInfo {
     private String ip;
 
     /**
+     * 登录地址
+     */
+    private String location;
+
+    /**
      * 创建时间
      */
     @TableField(fill = FieldFill.INSERT)

@@ -93,4 +93,10 @@ public interface ISysRoleService extends IService<SysRole> {
      */
     PageResult<SysUserAssignmentDTO> listUnAssignmentUsers(RoleAssignmentVO assignmentVO);
 
+    /**
+     * 获取该用户的角色信息
+     * @param userId    用户ID
+     */
+    SysRoleDTO getRoleByUserId(Long userId);
+
 }

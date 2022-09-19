@@ -2,8 +2,12 @@ package com.senko.controller.system;
 
 import com.senko.common.core.dto.LoginUserDTO;
 import com.senko.common.core.dto.SysMenusDTO;
+import com.senko.common.core.dto.SysUserDTO;
+import com.senko.common.core.entity.PageResult;
 import com.senko.common.core.entity.Result;
+import com.senko.common.core.entity.SysUserVO;
 import com.senko.common.core.vo.RequestParamsVO;
+import com.senko.common.core.vo.SysBackUserVO;
 import com.senko.common.core.vo.UserLoginVO;
 import com.senko.common.core.vo.UserRegisterVO;
 import com.senko.framework.config.security.SecurityUtils;
@@ -101,6 +105,29 @@ public class SysUserController {
         List<SysMenusDTO> result = menuService.listMenusForUser(loginUser.getId());
         return Result.ok("查询菜单成功！", result);
 
+    }
+
+    /**
+     * 获取后台用户集合
+     * @param sysUserVO   分页参数、查询条件
+     */
+    @ApiOperation("获取后台用户集合")
+    @GetMapping("/admin/users")
+    public Result<PageResult<SysUserDTO>> listBackUsers(SysUserVO sysUserVO) {
+
+        PageResult<SysUserDTO> result = sysUserService.listBackUsers(sysUserVO);
+        return Result.ok("查询用户成功！", result);
+
+    }
+
+    /**
+     * 添加或删除用户
+     */
+    @ApiOperation("添加或删除用户")
+    @PostMapping("/admin/user")
+    public Result<?> saveOrUpdateUser(@RequestBody SysBackUserVO sysBackUserVO) {
+        sysUserService.saveOrUpdateSysUser(sysBackUserVO);
+        return Result.ok("添加或删除用户成功！");
     }
 
 }

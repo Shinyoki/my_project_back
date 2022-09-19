@@ -343,6 +343,22 @@ public class SysRoleServiceImpl extends ServiceImpl<ISysRoleMapper, SysRole> imp
         return new PageResult<>(assignmentUserDTOS.size(), assignmentUserDTOS);
     }
 
+    /**
+     * 获取该用户的角色信息
+     * @param userId    用户ID
+     */
+    @Override
+    public SysRoleDTO getRoleByUserId(Long userId) {
+        SysUserRole sysUserRole = userRoleMapper.selectOne(new LambdaQueryWrapper<SysUserRole>()
+                .select(SysUserRole::getRoleId)
+                .eq(SysUserRole::getUserId, userId));
+        if (Objects.isNull(sysUserRole)) {
+            return null;
+        }
+        SysRole sysRole = roleMapper.selectById(sysUserRole.getRoleId());
+        return BeanCopyUtils.copyObj(sysRole, SysRoleDTO.class);
+    }
+
     private List<SysResourceTree> buildResourceTree(List<SysResourceTree> allResources) {
         ArrayList<SysResourceTree> returnList = new ArrayList<>();
         ArrayList<Long> temp = new ArrayList<>();

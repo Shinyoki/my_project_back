@@ -1,20 +1,36 @@
 package com.senko.common.utils.ip;
 
 
+import cn.hutool.core.text.StrBuilder;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
+import com.senko.common.exceptions.service.ServiceException;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.net.InetAddress;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.net.UnknownHostException;
 import java.util.Objects;
+import java.util.concurrent.CompletableFuture;
 
 /**
  * 获取IP方法
  * 
  * @author ruoyi
  */
+@Component
 public class IpUtils
 {
+    private static final Logger logger = org.slf4j.LoggerFactory.getLogger(IpUtils.class);
+
     /**
      * 获取客户端IP
      * 
@@ -263,5 +279,51 @@ public class IpUtils
     public static boolean isUnknown(String checkString)
     {
         return StringUtils.isBlank(checkString) || "unknown".equalsIgnoreCase(checkString);
+    }
+
+    /**
+     * 解析IP归属地
+     */
+    @Async
+    public CompletableFuture<String> getCityInfo(String ip) {
+
+        String result = null;
+        if (StringUtils.isNotBlank(ip)) {
+            if (internalIp(ip)) {
+                // 内网
+                result = "内网IP";
+            } else {
+                ip = new StrBuilder("http://opendata.baidu.com/api.php?query=")
+                        .append(ip)
+                        .append("&co=&resource_id=6006&oe=utf8").toString();
+                try {
+                    // 获取Reader字符的Buffer
+                    URL url = new URL(ip);
+                    BufferedReader br = new BufferedReader(new InputStreamReader(url.openConnection().getInputStream()));
+
+                    // 转换流为字符串
+                    String line;
+                    StringBuilder sb = new StringBuilder();
+                    while ((line = br.readLine()) != null) {
+                        sb.append(line);
+                    }
+
+                    br.close();
+                    // 解析JSON
+                    result = JSON.parseObject(sb.toString())
+                            // 获取data数组，得到第0个元素
+                            .getJSONArray("data").getJSONObject(0)
+                            // 获取location字段
+                            .getString("location");
+
+                } catch (Exception e) {
+                    logger.error("解析IP归属地异常:{}", e.getMessage());
+                    return CompletableFuture.completedFuture("");
+                }
+            }
+        }
+        // 返回结果
+        return CompletableFuture.completedFuture(result);
+
     }
 }
