@@ -50,7 +50,9 @@
                 tui.nickname LIKE CONCAT('%', #{nickname}, '%')
             </if>
         </where>
-        ORDER BY ua.id DESC
+    </select>
+    <select id="listUnAssignmentUserDTOs" resultMap="assignmentUserList">
+
     </select>
 
 

@@ -81,4 +81,16 @@ public interface ISysRoleService extends IService<SysRole> {
      */
     PageResult<SysUserAssignmentDTO> listRoleAssignmentList(RoleAssignmentVO assignmentVO);
 
+    /**
+     * 批量删除已授权的用户
+     * @param userIds    用户ID集合
+     */
+    void deleteRoleAssignment(Long roleId, List<Long> userIds);
+
+    /**
+     * 查询未授权的用户
+     * @param assignmentVO  参数：角色ID，用户名、昵称、状态、、
+     */
+    PageResult<SysUserAssignmentDTO> listUnAssignmentUsers(RoleAssignmentVO assignmentVO);
+
 }

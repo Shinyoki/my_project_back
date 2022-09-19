@@ -3,6 +3,7 @@ package com.senko.controller.system;
 import com.senko.common.core.dto.SysRoleDTO;
 import com.senko.common.core.dto.SysRoleMenuResourceDTO;
 import com.senko.common.core.dto.SysUserAssignmentDTO;
+import com.senko.common.core.dto.SysUserDTO;
 import com.senko.common.core.entity.PageResult;
 import com.senko.common.core.entity.Result;
 import com.senko.common.core.vo.RequestParamsVO;
@@ -10,6 +11,8 @@ import com.senko.common.core.vo.RoleAssignmentVO;
 import com.senko.common.core.vo.RoleIsDisabledVO;
 import com.senko.common.core.vo.SysRoleVO;
 import com.senko.framework.web.core.service.ISysRoleService;
+import com.senko.framework.web.core.service.ISysUserRoleService;
+import com.senko.system.mapper.ISysUserRoleMapper;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -19,7 +22,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.*;
-import javax.websocket.server.PathParam;
 import java.util.List;
 
 /**
@@ -32,6 +34,9 @@ public class SysRoleController {
 
     @Autowired
     private ISysRoleService roleService;
+
+    @Autowired
+    private ISysUserRoleService userRoleService;
 
     /**
      * 查询后台角色集合
@@ -133,5 +138,39 @@ public class SysRoleController {
     public Result<PageResult<SysUserAssignmentDTO>> listSysUserAssignmentDTOs(@Valid RoleAssignmentVO assignmentVO) {
         return Result.ok(roleService.listRoleAssignmentList(assignmentVO));
     }
+
+    /**
+     * 删除角色授权的用户
+     * @param roleId    角色ID
+     * @param userIds   用户ID集合
+     */
+    @ApiOperation("删除角色授权的用户")
+    @DeleteMapping("/admin/role/assignment/{roleId}")
+    public Result<?> deleteRoleAssignment(@PathVariable("roleId") Long roleId, @RequestBody List<Long> userIds) {
+        roleService.deleteRoleAssignment(roleId, userIds);
+        return Result.ok("删除授权的角色成功！");
+    }
+
+    /**
+     * 查询未授权用户
+     */
+    @ApiOperation("查询未授权用户")
+    @GetMapping("/admin/role/unassignment")
+    public Result<PageResult<SysUserAssignmentDTO>> listUnAssignmentUsers(RoleAssignmentVO assignmentVO) {
+        return Result.ok(roleService.listUnAssignmentUsers(assignmentVO));
+    }
+
+    /**
+     * 新增角色授权的用户
+     * @param roleId    角色ID
+     * @param userIds   用户ID集合
+     */
+    @ApiOperation("新增角色授权的用户")
+    @PostMapping("/admin/role/assignment/{roleId}")
+    public Result<?> saveRoleAssignment(@PathVariable("roleId") Long roleId, @RequestBody List<Long> userIds) {
+        userRoleService.saveRoleAssignment(roleId, userIds);
+        return Result.ok("新增授权的角色成功！");
+    }
+
 
 }

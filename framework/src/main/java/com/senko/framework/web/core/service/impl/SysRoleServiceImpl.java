@@ -274,7 +274,8 @@ public class SysRoleServiceImpl extends ServiceImpl<ISysRoleMapper, SysRole> imp
 
     /**
      * 获取授权角色 集合
-     * @param assignmentVO  参数：角色ID，用户名、昵称、状态、、
+     *
+     * @param assignmentVO 参数：角色ID，用户名、昵称、状态、、
      */
     @Override
     public PageResult<SysUserAssignmentDTO> listRoleAssignmentList(RoleAssignmentVO assignmentVO) {
@@ -290,6 +291,49 @@ public class SysRoleServiceImpl extends ServiceImpl<ISysRoleMapper, SysRole> imp
         }
         // 存在用户
         List<SysUserAssignmentDTO> assignmentUserDTOS = userMapper.listAssignmentUserDTOs(userIds,
+                PageUtils.getLimitFormatCurrent(),
+                PageUtils.getSize(),
+                assignmentVO.getUsername(),
+                assignmentVO.getNickname(),
+                assignmentVO.getEmail(),
+                assignmentVO.getIsDisabled());
+        return new PageResult<>(assignmentUserDTOS.size(), assignmentUserDTOS);
+    }
+
+    /**
+     * 批量删除已授权的用户
+     *
+     * @param userIds 用户ID集合
+     */
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public void deleteRoleAssignment(Long roleId, List<Long> userIds) {
+        logger.info("需要删除的用户ID集合：{}", JSON.toJSONString(userIds));
+        userRoleMapper.delete(new LambdaQueryWrapper<SysUserRole>()
+                .eq(SysUserRole::getRoleId, roleId)
+                .in(SysUserRole::getUserId, userIds));
+    }
+
+    /**
+     * 查询未授权的用户
+     * @param assignmentVO  参数：角色ID，用户名、昵称、状态、、
+     */
+    @Override
+    public PageResult<SysUserAssignmentDTO> listUnAssignmentUsers(RoleAssignmentVO assignmentVO) {
+        /**
+         * SELECT tua.id
+         * FROM tb_user_auth tua
+         * LEFT JOIN tb_user_role tur ON tur.user_id = tua.id
+         * WHERE tur.id IS NULL
+         */
+        // 查询是否有还没有被指定角色的用户
+        List<Long> unAssignmentUserIds = userRoleMapper.listUnAssignedUserIds();
+        if (CollectionUtils.isEmpty(unAssignmentUserIds)) {
+            return new PageResult<>(0, null);
+        }
+
+        // 查询对应用户
+        List<SysUserAssignmentDTO> assignmentUserDTOS = userMapper.listAssignmentUserDTOs(unAssignmentUserIds,
                 PageUtils.getLimitFormatCurrent(),
                 PageUtils.getSize(),
                 assignmentVO.getUsername(),

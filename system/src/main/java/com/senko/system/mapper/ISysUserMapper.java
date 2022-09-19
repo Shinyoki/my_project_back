@@ -4,7 +4,6 @@ package com.senko.system.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.senko.common.core.dto.SysUserAssignmentDTO;
 import com.senko.common.core.entity.SysUser;
-import com.senko.common.core.vo.RoleAssignmentVO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -31,5 +30,4 @@ public interface ISysUserMapper extends BaseMapper<SysUser> {
                                                       @Param("nickname") String nickname,
                                                       @Param("email") String email,
                                                       @Param("isDisabled") Integer isDisabled);
-
 }
