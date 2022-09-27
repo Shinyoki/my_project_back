@@ -3,12 +3,16 @@ package com.senko.framework.web.core.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.senko.common.core.dto.LoginUserDTO;
+import com.senko.common.core.dto.OnlineUserDTO;
 import com.senko.common.core.dto.SysUserDTO;
 import com.senko.common.core.entity.PageResult;
 import com.senko.common.core.entity.SysUser;
 import com.senko.common.core.entity.SysUserVO;
 import com.senko.common.core.vo.RequestParamsVO;
 import com.senko.common.core.vo.SysBackUserVO;
+
+import java.util.List;
+import java.util.Set;
 
 /**
  * 用户Service
@@ -43,5 +47,17 @@ public interface ISysUserService extends IService<SysUser> {
      * 添加或删除用户
      */
     void saveOrUpdateSysUser(SysBackUserVO sysBackUserVO);
+
+    /**
+     * 获取在线用户集合
+     * @param username  用户名
+     */
+    List<OnlineUserDTO> listOnlineUsers(String username);
+
+    /**
+     * 强制下线
+     * @param sessionUIDList    sessionUID集合
+     */
+    void kickOutOnlineUsers(Set<String> sessionUIDList);
 
 }

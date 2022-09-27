@@ -1,6 +1,8 @@
 package com.senko.controller.system;
 
+import com.alibaba.fastjson.JSON;
 import com.senko.common.core.dto.LoginUserDTO;
+import com.senko.common.core.dto.OnlineUserDTO;
 import com.senko.common.core.dto.SysMenusDTO;
 import com.senko.common.core.dto.SysUserDTO;
 import com.senko.common.core.entity.PageResult;
@@ -19,10 +21,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -128,6 +127,29 @@ public class SysUserController {
     public Result<?> saveOrUpdateUser(@RequestBody SysBackUserVO sysBackUserVO) {
         sysUserService.saveOrUpdateSysUser(sysBackUserVO);
         return Result.ok("添加或删除用户成功！");
+    }
+
+    /**
+     * 获取在线用户集合
+     * @param username  用户名
+     */
+    @ApiOperation("获取在线用户列表")
+    @GetMapping("/admin/online/users")
+    public Result<List<OnlineUserDTO>> listOnlineUsers(String username) {
+        List<OnlineUserDTO> onlineUsers = sysUserService.listOnlineUsers(username);
+        return Result.ok("获取在线用户列表成功！", onlineUsers);
+    }
+
+    /**
+     * 强制下线
+     * @param sessionUIDList    sessionUID集合
+     */
+    @ApiOperation("批量踢出在线用户")
+    @DeleteMapping("/admin/online/users")
+    public Result<?> kickOutOnlineUsers(@RequestBody Set<String> sessionUIDList) {
+        logger.info("需要被踢出的用户sessionUID集合为：{}", JSON.toJSONString(sessionUIDList));
+        sysUserService.kickOutOnlineUsers(sessionUIDList);
+        return Result.ok("批量踢出在线用户成功！");
     }
 
 }

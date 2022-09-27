@@ -26,7 +26,7 @@ public class SysMenuController {
 
     @Autowired
     private ISysMenuService menuService;
-
+    
     /**
      * 获取后台路由信息
      *

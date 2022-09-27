@@ -4,11 +4,14 @@ package com.senko.framework.web.core.service.impl;
 import cn.hutool.core.lang.UUID;
 import cn.hutool.http.useragent.UserAgent;
 import cn.hutool.http.useragent.UserAgentUtil;
+import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.senko.common.constants.CommonConstants;
 import com.senko.common.constants.RedisConstants;
 import com.senko.common.core.dto.LoginUserDTO;
+import com.senko.common.core.dto.OnlineUserDTO;
 import com.senko.common.core.dto.SysUserDTO;
 import com.senko.common.core.entity.*;
 import com.senko.common.core.vo.RequestParamsVO;
@@ -42,8 +45,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * 系统用户Service
@@ -207,7 +210,8 @@ public class SysUserServiceImpl extends ServiceImpl<ISysUserMapper, SysUser> imp
 
     /**
      * 获取后台用户集合
-     * @param sysUserVO   分页参数、查询条件
+     *
+     * @param sysUserVO 分页参数、查询条件
      */
     @Override
     public PageResult<SysUserDTO> listBackUsers(SysUserVO sysUserVO) {
@@ -239,6 +243,55 @@ public class SysUserServiceImpl extends ServiceImpl<ISysUserMapper, SysUser> imp
                     .roleId(sysBackUserVO.getRoleId())
                     .build();
             userRoleMapper.insert(sysUserRole);
+        }
+    }
+
+    /**
+     * 获取在线用户集合
+     *
+     * @param username 用户名
+     */
+    @Override
+    public List<OnlineUserDTO> listOnlineUsers(String username) {
+        Collection<String> keys = redisHandler.keys(RedisConstants.USER_LOGIN_TOKEN_PREFIX + "*");
+        List<OnlineUserDTO> onlineUserDTOList = new ArrayList<>();
+        for (String redisKey : keys) {
+            try {
+                LoginUser loginUser = (LoginUser) redisHandler.get(redisKey);
+                // 有约束 但是不符合
+                if (StringUtils.isNotBlank(username) &&
+                        !StringUtils.contains(loginUser.getUsername(), username)) {
+                    continue;
+                }
+                OnlineUserDTO onlineUserDTO = OnlineUserDTO.builder()
+                        .sessionUID(loginUser.getUuid())
+                        .username(loginUser.getUsername())
+                        .nickname(loginUser.getNickname())
+                        .ip(loginUser.getIp())
+                        .os(loginUser.getOs())
+                        .browser(loginUser.getBrowser())
+                        .loginTime(loginUser.getLastLoginTime())
+                        .build();
+                onlineUserDTOList.add(onlineUserDTO);
+
+            } catch (ClassCastException ignored) {
+            }
+        }
+        return onlineUserDTOList;
+    }
+
+    /**
+     * 强制下线
+     * @param sessionUIDList    sessionUID集合
+     */
+    @Override
+    public void kickOutOnlineUsers(Set<String> sessionUIDList) {
+        if (CollectionUtils.isNotEmpty(sessionUIDList)) {
+            Set<String> keys = sessionUIDList.stream()
+                    .map(uid -> RedisConstants.USER_LOGIN_TOKEN_PREFIX + uid)
+                    .collect(Collectors.toSet());
+            Long count = redisHandler.deleteBath(keys);
+            ServletUtils.renderJSONResult("成功下线 " + count + " 个用户");
         }
     }
 

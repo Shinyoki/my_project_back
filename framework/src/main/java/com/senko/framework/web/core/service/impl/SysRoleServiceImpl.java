@@ -153,6 +153,7 @@ public class SysRoleServiceImpl extends ServiceImpl<ISysRoleMapper, SysRole> imp
     /**
      * 获取角色的资源封装
      *
+     * 为了方便，封装成只有一层深度的树
      * @param roleId 角色ID
      */
     @Override
@@ -160,7 +161,8 @@ public class SysRoleServiceImpl extends ServiceImpl<ISysRoleMapper, SysRole> imp
 
         // 所有资源
         List<SysResourceTree> rawResources = resourceMapper.selectList(new LambdaQueryWrapper<SysResource>()
-                        .select(SysResource::getId, SysResource::getResourceName, SysResource::getParentId)).stream()
+                        .select(SysResource::getId, SysResource::getResourceName, SysResource::getParentId)
+                ).stream()
                 .map(sysResource -> SysResourceTree.builder()
                         .id(sysResource.getId())
                         .label(sysResource.getResourceName())
@@ -168,11 +170,18 @@ public class SysRoleServiceImpl extends ServiceImpl<ISysRoleMapper, SysRole> imp
                         .build())
                 .collect(Collectors.toList());
 
-        // 角色拥有的资源
+        // 父节点
+        Set<Long> categoryIds = rawResources.stream()
+                .filter(sysResourceTree -> sysResourceTree.getParentId() == null)
+                .map(SysResourceTree::getId)
+                .collect(Collectors.toSet());
+
+        // 角色拥有的资源 同时过滤掉父节点，防止element ui tree组件全选对应的子元素
         List<Long> checkedIds = resourceRoleMapper.selectList(new LambdaQueryWrapper<SysResourceRole>()
                         .select(SysResourceRole::getResourceId)
                         .eq(SysResourceRole::getRoleId, roleId)).stream()
                 .map(SysResourceRole::getResourceId)
+                .filter(id -> !categoryIds.contains(id))
                 .collect(Collectors.toList());
 
         rawResources = buildResourceTree(rawResources);
@@ -316,7 +325,8 @@ public class SysRoleServiceImpl extends ServiceImpl<ISysRoleMapper, SysRole> imp
 
     /**
      * 查询未授权的用户
-     * @param assignmentVO  参数：角色ID，用户名、昵称、状态、、
+     *
+     * @param assignmentVO 参数：角色ID，用户名、昵称、状态、、
      */
     @Override
     public PageResult<SysUserAssignmentDTO> listUnAssignmentUsers(RoleAssignmentVO assignmentVO) {
@@ -345,7 +355,8 @@ public class SysRoleServiceImpl extends ServiceImpl<ISysRoleMapper, SysRole> imp
 
     /**
      * 获取该用户的角色信息
-     * @param userId    用户ID
+     *
+     * @param userId 用户ID
      */
     @Override
     public SysRoleDTO getRoleByUserId(Long userId) {

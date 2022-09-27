@@ -27,6 +27,13 @@ public class RedisHandler {
     // ===========键值对===============
 
     /**
+     * 获取符合要求的值集合
+     */
+    public Collection<String> keys(String pattern) {
+        return redisTemplate.keys(pattern);
+    }
+
+    /**
      * 是否存在
      * @param key   键
      * @return      是否存在
