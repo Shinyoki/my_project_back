@@ -34,6 +34,11 @@ public class CommonConstants {
     public static final String CT_APPLICATION_JSON = "application/json";
 
     /**
+     * User-Agent header
+     */
+    public static final String USER_AGENT = "User-Agent";
+
+    /**
      * Page分页参数：current
      */
     public static final String PAGE_CURRENT = "current";

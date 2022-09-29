@@ -5,6 +5,7 @@ import java.lang.annotation.*;
 /**
  * 记录日志切面注解
  *
+ * 只用在 已登录用户 才操作的注解上
  * @author senko
  * @date 2022/8/26 19:41
  */

@@ -60,4 +60,9 @@ public interface ISysUserService extends IService<SysUser> {
      */
     void kickOutOnlineUsers(Set<String> sessionUIDList);
 
+    /**
+     * 批量删除用户
+     * @param userIds   用户ID集合
+     */
+    void deleteUsers(Set<Long> userIds);
 }

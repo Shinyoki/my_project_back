@@ -29,8 +29,14 @@ public class SysBackUserVO {
     /**
      * 用户名
      */
-    @ApiModelProperty("用户名")
+    @ApiModelProperty(value = "用户名",required = true)
     private String username;
+
+    /**
+     * 密码
+     */
+    @ApiModelProperty(value = "密码",required = true)
+    private String password;
 
     /**
      * 邮箱

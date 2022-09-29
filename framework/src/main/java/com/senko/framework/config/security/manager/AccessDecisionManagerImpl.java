@@ -1,7 +1,6 @@
 package com.senko.framework.config.security.manager;
 
 import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
-import com.senko.common.exceptions.user.UserRoleDisabledException;
 import com.senko.framework.config.security.SecurityUtils;
 import com.senko.framework.web.core.service.ISysRoleService;
 import org.springframework.beans.factory.annotation.Autowired;

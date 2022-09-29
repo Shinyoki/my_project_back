@@ -83,7 +83,6 @@ public class SysUserServiceImpl extends ServiceImpl<ISysUserMapper, SysUser> imp
     @Autowired
     private ISysUserRoleMapper userRoleMapper;
 
-
     /**
      * 注册用户
      *
@@ -229,6 +228,7 @@ public class SysUserServiceImpl extends ServiceImpl<ISysUserMapper, SysUser> imp
         SysUser sysUser = SysUser.builder()
                 .id(sysBackUserVO.getId())
                 .isDisabled(sysBackUserVO.getIsDisabled())
+                .password(StringUtils.isNotBlank(sysBackUserVO.getPassword()) ? passwordEncoder.encode(sysBackUserVO.getPassword()) : null)
                 .email(sysBackUserVO.getEmail())
                 .username(sysBackUserVO.getUsername())
                 .build();
@@ -282,7 +282,8 @@ public class SysUserServiceImpl extends ServiceImpl<ISysUserMapper, SysUser> imp
 
     /**
      * 强制下线
-     * @param sessionUIDList    sessionUID集合
+     *
+     * @param sessionUIDList sessionUID集合
      */
     @Override
     public void kickOutOnlineUsers(Set<String> sessionUIDList) {
@@ -292,6 +293,32 @@ public class SysUserServiceImpl extends ServiceImpl<ISysUserMapper, SysUser> imp
                     .collect(Collectors.toSet());
             Long count = redisHandler.deleteBath(keys);
             ServletUtils.renderJSONResult("成功下线 " + count + " 个用户");
+        }
+    }
+
+    /**
+     * 批量删除用户
+     *
+     * @param userIds 用户ID集合
+     */
+    @Override
+    public void deleteUsers(Set<Long> userIds) {
+        if (CollectionUtils.isNotEmpty(userIds)) {
+            if (userIds.contains(CommonConstants.ADMIN_ID)) {
+                throw new ServiceException("不允许删除超级管理员");
+            }
+            Set<Long> userInfoIds = userMapper.selectList(new LambdaQueryWrapper<SysUser>()
+                            .select(SysUser::getUserInfoId)
+                            .in(SysUser::getId, userIds))
+                    .stream().map(SysUser::getUserInfoId).collect(Collectors.toSet());
+            // 删除用户
+            this.removeByIds(userIds);
+            // 删除用户角色映射
+            userRoleMapper.delete(new LambdaQueryWrapper<SysUserRole>()
+                    .in(SysUserRole::getUserId, userIds));
+            // 删除用户信息
+            userInfoMapper.delete(new LambdaQueryWrapper<SysUserInfo>()
+                    .in(SysUserInfo::getId, userInfoIds));
         }
     }
 

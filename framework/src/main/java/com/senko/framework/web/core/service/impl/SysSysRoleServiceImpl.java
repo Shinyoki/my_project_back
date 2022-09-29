@@ -39,7 +39,7 @@ import java.util.stream.Collectors;
  * @date 2022/8/31 16:04
  */
 @Service
-public class SysRoleServiceImpl extends ServiceImpl<ISysRoleMapper, SysRole> implements ISysRoleService {
+public class SysSysRoleServiceImpl extends ServiceImpl<ISysRoleMapper, SysRole> implements ISysRoleService {
 
     @Autowired
     private ISysRoleMapper roleMapper;
@@ -71,7 +71,7 @@ public class SysRoleServiceImpl extends ServiceImpl<ISysRoleMapper, SysRole> imp
     @Autowired
     private ISysUserMapper userMapper;
 
-    private final Logger logger = LoggerFactory.getLogger(SysRoleServiceImpl.class);
+    private final Logger logger = LoggerFactory.getLogger(SysSysRoleServiceImpl.class);
 
     /**
      * 查询 被禁止的角色集合
@@ -241,6 +241,7 @@ public class SysRoleServiceImpl extends ServiceImpl<ISysRoleMapper, SysRole> imp
             switch (roleVO.getOperateMode()) {
                 case 3:
                     // 编辑角色可访菜单
+                    // TODO 修改可访菜单顺序没效果
                     // 删除角色菜单关联
                     menuRoleMapper.delete(new LambdaQueryWrapper<SysMenuRole>()
                             .eq(SysMenuRole::getRoleId, entityToUpdate.getId()));

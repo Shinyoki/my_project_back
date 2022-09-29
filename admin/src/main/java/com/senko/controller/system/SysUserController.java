@@ -1,6 +1,8 @@
 package com.senko.controller.system;
 
 import com.alibaba.fastjson.JSON;
+import com.senko.common.annotations.LogOperation;
+import com.senko.common.annotations.OptType;
 import com.senko.common.core.dto.LoginUserDTO;
 import com.senko.common.core.dto.OnlineUserDTO;
 import com.senko.common.core.dto.SysMenusDTO;
@@ -23,6 +25,7 @@ import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.Set;
@@ -69,6 +72,7 @@ public class SysUserController {
      * @param userRegisterVO    用户名、密码
      * @return                  注册结果
      */
+    @LogOperation(value = OptType.SAVE)
     @PostMapping("/register")
     @ApiOperation("用户注册")
     public Result<?> doRegister(@Valid UserRegisterVO userRegisterVO) {
@@ -85,7 +89,7 @@ public class SysUserController {
      */
     @PostMapping(value = "/login")
     @ApiOperation("用户登录")
-    public Result<LoginUserDTO> login(@Valid @RequestBody UserLoginVO loginVO) {
+    public Result<LoginUserDTO> login(@Valid @RequestBody UserLoginVO loginVO, HttpServletRequest request) {
 
         // 处理登录、并提供TOKEN
         LoginUserDTO loginUserDTO = sysUserService.doLogin(loginVO.getUsername(), loginVO.getPassword());
@@ -120,13 +124,26 @@ public class SysUserController {
     }
 
     /**
-     * 添加或删除用户
+     * 添加或更新用户成功
      */
-    @ApiOperation("添加或删除用户")
+    @LogOperation(OptType.SAVE_OR_UPDATE)
+    @ApiOperation("添加或更新用户")
     @PostMapping("/admin/user")
     public Result<?> saveOrUpdateUser(@RequestBody SysBackUserVO sysBackUserVO) {
         sysUserService.saveOrUpdateSysUser(sysBackUserVO);
-        return Result.ok("添加或删除用户成功！");
+        return Result.ok("添加或更新用户成功！");
+    }
+
+    /**
+     * 批量删除用户
+     * @param userIds   用户ID集合
+     */
+    @LogOperation(OptType.REMOVE)
+    @ApiOperation("批量删除用户")
+    @DeleteMapping("/admin/user")
+    public Result<?> deleteUsers(@RequestBody Set<Long> userIds) {
+        sysUserService.deleteUsers(userIds);
+        return Result.ok("批量删除用户成功！");
     }
 
     /**
@@ -144,10 +161,10 @@ public class SysUserController {
      * 强制下线
      * @param sessionUIDList    sessionUID集合
      */
+    @LogOperation(OptType.REMOVE)
     @ApiOperation("批量踢出在线用户")
     @DeleteMapping("/admin/online/users")
     public Result<?> kickOutOnlineUsers(@RequestBody Set<String> sessionUIDList) {
-        logger.info("需要被踢出的用户sessionUID集合为：{}", JSON.toJSONString(sessionUIDList));
         sysUserService.kickOutOnlineUsers(sessionUIDList);
         return Result.ok("批量踢出在线用户成功！");
     }

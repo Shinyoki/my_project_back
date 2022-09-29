@@ -1,5 +1,7 @@
 package com.senko.controller.system;
 
+import com.senko.common.annotations.LogOperation;
+import com.senko.common.annotations.OptType;
 import com.senko.common.core.dto.SysMenusDTO;
 import com.senko.common.core.dto.SysRoleDTO;
 import com.senko.common.core.entity.Result;
@@ -49,6 +51,7 @@ public class SysMenuController {
      *
      * @param menuId 菜单ID
      */
+    @LogOperation(OptType.REMOVE)
     @ApiOperation("删除菜单")
     @DeleteMapping("/admin/menu/{menuId}")
     public Result<?> deleteMenu(@PathVariable("menuId") Long menuId) {
@@ -62,6 +65,7 @@ public class SysMenuController {
      * 添加或更新菜单
      * @param sysMenuVO   需要被添加或更新的菜单
      */
+    @LogOperation(OptType.SAVE_OR_UPDATE)
     @ApiOperation("添加或更新菜单")
     @PostMapping("/admin/menu")
     public Result<?> saveOrUpdateMenu(@Valid @RequestBody SysMenuVO sysMenuVO) {
