@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.senko.common.core.entity.PageResult;
 import com.senko.common.core.entity.SysOperationLog;
-import com.senko.common.core.vo.OperationLogVO;
+import com.senko.common.core.vo.LogVO;
 import com.senko.common.utils.page.PageUtils;
 import com.senko.framework.web.core.service.ISysOperationLogService;
 import com.senko.system.mapper.ISysOperationLogMapper;
@@ -36,7 +36,7 @@ public class SysOperationLogServiceImpl extends ServiceImpl<ISysOperationLogMapp
      * @param logVO 请求参数
      */
     @Override
-    public PageResult<SysOperationLog> listOperationLogDTOList(OperationLogVO logVO) {
+    public PageResult<SysOperationLog> listOperationLogDTOList(LogVO logVO) {
 
         boolean concatTimeCondition = Objects.nonNull(logVO.getStartTime()) && Objects.nonNull(logVO.getEndTime());
         // 把endDate的time改成 23:59:59

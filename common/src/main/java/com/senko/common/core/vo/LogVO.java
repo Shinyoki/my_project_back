@@ -1,6 +1,6 @@
 package com.senko.common.core.vo;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
+
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
@@ -9,8 +9,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.Date;
 
 /**
@@ -22,7 +20,7 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class OperationLogVO {
+public class LogVO {
 
     /**
      * 操作人
@@ -40,7 +38,7 @@ public class OperationLogVO {
      * 操作状态
      */
     @ApiModelProperty("操作状态,0：失败，1：成功")
-    private String status;
+    private Integer status;
 
     /**
      * 开始时间

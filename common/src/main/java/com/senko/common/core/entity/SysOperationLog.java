@@ -54,6 +54,12 @@ public class SysOperationLog {
     private String ip;
 
     /**
+     * 操作地区
+     */
+    @ApiModelProperty("操作地区")
+    private String location;
+
+    /**
      * 操作所属模块
      */
     @ApiModelProperty(value = "操作所属模块")

@@ -3,7 +3,7 @@ package com.senko.framework.web.core.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.senko.common.core.entity.PageResult;
 import com.senko.common.core.entity.SysOperationLog;
-import com.senko.common.core.vo.OperationLogVO;
+import com.senko.common.core.vo.LogVO;
 
 
 /**
@@ -19,6 +19,6 @@ public interface ISysOperationLogService extends IService<SysOperationLog> {
      *
      * @param logVO 请求参数
      */
-    PageResult<SysOperationLog> listOperationLogDTOList(OperationLogVO logVO);
+    PageResult<SysOperationLog> listOperationLogDTOList(LogVO logVO);
 
 }

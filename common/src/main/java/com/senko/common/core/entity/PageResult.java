@@ -1,5 +1,6 @@
 package com.senko.common.core.entity;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
@@ -32,4 +33,13 @@ public class PageResult<T> {
     @ApiModelProperty("数据")
     private List<T> records;
 
+    public PageResult(List<T> records) {
+        this.records = records;
+        this.total = records.size();
+    }
+
+    public PageResult(Page<T> page) {
+        this.total = (int)page.getTotal();
+        this.records = page.getRecords();
+    }
 }

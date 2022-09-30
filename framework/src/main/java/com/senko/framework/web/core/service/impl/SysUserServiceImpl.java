@@ -195,8 +195,6 @@ public class SysUserServiceImpl extends ServiceImpl<ISysUserMapper, SysUser> imp
 
         loginUser.setUserInfo(userInfo);
 
-        // TODO Log 登录成功
-
         String token = tokenService.createToken(loginUser);
 
         return LoginUserDTO.builder()
