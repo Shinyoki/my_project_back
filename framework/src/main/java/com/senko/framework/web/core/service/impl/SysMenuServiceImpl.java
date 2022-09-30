@@ -264,6 +264,9 @@ public class SysMenuServiceImpl extends ServiceImpl<ISysMenuMapper, SysMenu> imp
                 menuRoleService.saveBatch(menuRoleList);
             }
         }
+
+        // 清除菜单缓存
+        filterInvocationSecurityMetadataSource.clearResourceRolesCache();
     }
 
     /**

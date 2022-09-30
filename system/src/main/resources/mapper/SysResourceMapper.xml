@@ -20,6 +20,8 @@
               WHERE
                     parent_id IS NOT NULL
                 AND
+                    parent_id != 0
+                AND
                     is_anonymous = 0
               ) res
                  JOIN tb_resource_role trr ON trr.resource_id = res.id

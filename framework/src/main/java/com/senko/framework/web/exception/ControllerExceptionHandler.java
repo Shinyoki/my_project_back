@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.HttpMediaTypeNotSupportedException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -31,6 +32,12 @@ import java.nio.file.AccessDeniedException;
 public class ControllerExceptionHandler {
 
     private final Logger logger = LoggerFactory.getLogger(ControllerExceptionHandler.class);
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public Result<?> methodArgumentNotValidException(MethodArgumentNotValidException e, HttpServletRequest request) {
+        logger.error("参数校验异常：{}", e.getMessage());
+        return Result.error(HttpStatus.BAD_REQUEST, e.getBindingResult().getFieldError().getDefaultMessage());
+    }
 
     @ExceptionHandler(UserRoleDisabledException.class)
     public Result<?> userRoleDisabledException(UserRoleDisabledException e, HttpServletRequest request) {

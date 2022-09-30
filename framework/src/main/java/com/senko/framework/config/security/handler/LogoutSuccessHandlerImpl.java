@@ -2,7 +2,10 @@ package com.senko.framework.config.security.handler;
 
 import com.alibaba.fastjson.JSON;
 import com.senko.common.core.entity.Result;
+import com.senko.common.core.entity.SysLoginLog;
+import com.senko.common.utils.async.AsyncManager;
 import com.senko.common.utils.http.ServletUtils;
+import com.senko.framework.web.core.service.AsyncLogService;
 import com.senko.framework.web.service.LoginUser;
 import com.senko.framework.web.service.TokenService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +38,6 @@ public class LogoutSuccessHandlerImpl implements LogoutSuccessHandler {
         LoginUser loginUser = tokenService.getUserForRequest(request);
         if (Objects.nonNull(loginUser)) {
             tokenService.deleteCacheUser(loginUser);
-            // TODO 登出 日志
         }
 
         // 返回json
