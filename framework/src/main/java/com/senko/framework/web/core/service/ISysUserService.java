@@ -10,7 +10,10 @@ import com.senko.common.core.entity.SysUser;
 import com.senko.common.core.entity.SysUserVO;
 import com.senko.common.core.vo.RequestParamsVO;
 import com.senko.common.core.vo.SysBackUserVO;
+import com.senko.common.core.vo.UpdatePasswordVO;
+import com.senko.common.core.vo.UserInfoVO;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Set;
 
@@ -65,4 +68,22 @@ public interface ISysUserService extends IService<SysUser> {
      * @param userIds   用户ID集合
      */
     void deleteUsers(Set<Long> userIds);
+
+    /**
+     * 修改当前用户信息
+     * @param userInfoVO 用户信息
+     */
+    void updateUserInfo(UserInfoVO userInfoVO);
+
+    /**
+     * 退出登录
+     */
+    void logout();
+
+    /**
+     * 更新用户密码
+     * @param updatePasswordVO  密码
+     */
+    void updatePassword(UpdatePasswordVO updatePasswordVO);
+
 }

@@ -1,25 +1,26 @@
 package com.senko.framework.web.core.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.senko.common.constants.CommonConstants;
 import com.senko.common.core.dto.ResourceRoleDTO;
+import com.senko.common.core.dto.SysRoleDTO;
 import com.senko.common.core.entity.SysResource;
 import com.senko.common.core.entity.SysResourceRole;
+import com.senko.common.core.entity.SysRole;
 import com.senko.common.core.vo.ResourceVO;
 import com.senko.common.exceptions.service.ServiceException;
 import com.senko.framework.config.security.manager.FilterInvocationSecurityMetadataSourceImpl;
 import com.senko.framework.web.core.service.ISysResourceRoleService;
 import com.senko.framework.web.core.service.ISysResourceService;
+import com.senko.framework.web.core.service.ISysRoleService;
 import com.senko.system.mapper.ISysResourceMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -39,6 +40,9 @@ public class SysResourceImpl extends ServiceImpl<ISysResourceMapper, SysResource
 
     @Autowired
     private FilterInvocationSecurityMetadataSourceImpl filterInvocationSecurityMetadataSource;
+
+    @Autowired
+    private ISysRoleService roleService;
 
     @Override
     public Set<ResourceRoleDTO> listNonAnonymousResourceRoles() {
@@ -151,10 +155,58 @@ public class SysResourceImpl extends ServiceImpl<ISysResourceMapper, SysResource
         }
 
         if (this.saveOrUpdate(entity)) {
+            List<Long> roleIds = resourceVO.getRoleIds();
+
+            if (CollectionUtils.isNotEmpty(roleIds)) {
+                if (!roleIds.contains(CommonConstants.ADMIN_ID)) {
+                    roleIds.add(CommonConstants.ADMIN_ID);
+                }
+                Long resourceId = entity.getId();
+                List<SysResourceRole> resourceRoleList = roleIds.stream()
+                        .map(roleId -> SysResourceRole.builder()
+                                .resourceId(resourceId)
+                                .roleId(roleId)
+                                .build())
+                        .collect(Collectors.toList());
+                // 删除原有的资源角色关联
+                resourceRoleService.remove(new LambdaQueryWrapper<SysResourceRole>()
+                        .eq(SysResourceRole::getResourceId, resourceId));
+                // 保存新的资源角色关联
+                resourceRoleService.saveBatch(resourceRoleList);
+            }
+
             // 更新资源权限
             filterInvocationSecurityMetadataSource.clearResourceRolesCache();
         }
 
+    }
+
+    /**
+     * 查询该资源的角色
+     * @param resourceId    资源ID
+     */
+    @Override
+    public List<SysRoleDTO> listResourceRoles(Long resourceId) {
+        List<Long> roleIds = resourceRoleService.list(new LambdaQueryWrapper<SysResourceRole>()
+                        .eq(SysResourceRole::getResourceId, resourceId))
+                .stream()
+                .map(SysResourceRole::getRoleId)
+                .collect(Collectors.toList());
+
+        if (CollectionUtils.isEmpty(roleIds)) {
+            return Collections.emptyList();
+        }
+
+        return roleService.list(new LambdaQueryWrapper<SysRole>()
+                        .select(SysRole::getId, SysRole::getRoleName, SysRole::getRoleLabel)
+                        .in(SysRole::getId, roleIds))
+                .stream()
+                .map(sysRole -> SysRoleDTO.builder()
+                        .id(sysRole.getId())
+                        .roleName(sysRole.getRoleName())
+                        .roleLabel(sysRole.getRoleLabel())
+                        .build())
+                .collect(Collectors.toList());
     }
 
     /**

@@ -2,6 +2,7 @@ package com.senko.framework.web.core.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.senko.common.core.dto.ResourceRoleDTO;
+import com.senko.common.core.dto.SysRoleDTO;
 import com.senko.common.core.entity.Result;
 import com.senko.common.core.entity.SysResource;
 import com.senko.common.core.vo.ResourceVO;
@@ -43,5 +44,11 @@ public interface ISysResourceService extends IService<SysResource> {
      * @param resourceVO    资源VO
      */
     void saveOrUpdateResource(ResourceVO resourceVO);
+
+    /**
+     * 查询该资源的角色
+     * @param resourceId    资源ID
+     */
+    List<SysRoleDTO> listResourceRoles(Long resourceId);
 
 }

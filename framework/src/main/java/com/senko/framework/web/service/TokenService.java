@@ -91,6 +91,15 @@ public class TokenService {
 
     }
 
+    /**
+     * 删除用户缓存
+     */
+    public void removeUserCache(String uuid) {
+        if (StringUtils.isNotBlank(uuid)) {
+            redisHandler.delete(getUserCacheKey(uuid));
+        }
+    }
+
     public boolean validateToken(String token) {
         if (StringUtils.isBlank(token)) {
             return false;

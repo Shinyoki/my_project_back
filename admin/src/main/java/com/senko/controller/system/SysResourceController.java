@@ -2,6 +2,7 @@ package com.senko.controller.system;
 
 import com.senko.common.annotations.LogOperation;
 import com.senko.common.annotations.OptType;
+import com.senko.common.core.dto.SysRoleDTO;
 import com.senko.common.core.entity.Result;
 import com.senko.common.core.entity.SysResource;
 import com.senko.common.core.vo.ResourceVO;
@@ -70,6 +71,16 @@ public class SysResourceController {
     public Result<?> saveOrUpdateResource(@RequestBody @Valid ResourceVO resourceVO) {
         resourceService.saveOrUpdateResource(resourceVO);
         return Result.ok("操作成功");
+    }
+
+    /**
+     * 查询该资源的角色
+     * @param resourceId    资源ID
+     */
+    @ApiOperation("查询该资源的角色")
+    @GetMapping("/{resourceId}/roles")
+    public Result<List<SysRoleDTO>> listResourceRoles(@PathVariable("resourceId") Long resourceId) {
+        return Result.ok("查询成功", resourceService.listResourceRoles(resourceId));
     }
 
 }

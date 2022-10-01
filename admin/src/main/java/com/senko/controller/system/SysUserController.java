@@ -10,10 +10,7 @@ import com.senko.common.core.dto.SysUserDTO;
 import com.senko.common.core.entity.PageResult;
 import com.senko.common.core.entity.Result;
 import com.senko.common.core.entity.SysUserVO;
-import com.senko.common.core.vo.RequestParamsVO;
-import com.senko.common.core.vo.SysBackUserVO;
-import com.senko.common.core.vo.UserLoginVO;
-import com.senko.common.core.vo.UserRegisterVO;
+import com.senko.common.core.vo.*;
 import com.senko.framework.config.security.SecurityUtils;
 import com.senko.framework.web.core.service.ISysMenuService;
 import com.senko.framework.web.core.service.ISysUserService;
@@ -167,6 +164,58 @@ public class SysUserController {
     public Result<?> kickOutOnlineUsers(@RequestBody Set<String> sessionUIDList) {
         sysUserService.kickOutOnlineUsers(sessionUIDList);
         return Result.ok("批量踢出在线用户成功！");
+    }
+
+    /**
+     * 修改当前用户信息
+     * @param userInfoVO    用户信息
+     */
+    @LogOperation(OptType.UPDATE)
+    @ApiOperation("修改当前用户信息")
+    @PutMapping("/admin/userinfo")
+    public Result<?> updateUserInfo(@RequestBody UserInfoVO userInfoVO) {
+        sysUserService.updateUserInfo(userInfoVO);
+        return Result.ok("更新用户信息成功！");
+    }
+
+    /**
+     * 获取当前用户信息
+     */
+    @ApiOperation("获取当前用户信息")
+    @GetMapping("/admin/userinfo")
+    public Result<UserInfoVO> getUserInfo() {
+        LoginUser loginUser = SecurityUtils.getLoginUser();
+        UserInfoVO userInfoVO = UserInfoVO.builder()
+                .id(loginUser.getUserInfoId())
+                .userId(loginUser.getId())
+                .nickname(loginUser.getNickname())
+                .avatar(loginUser.getAvatar())
+                .email(loginUser.getEmail())
+                .build();
+        return Result.ok("获取用户信息成功！", userInfoVO);
+    }
+
+    /**
+     * 注销登录
+     */
+    @ApiOperation("注销")
+    @PostMapping("/logout")
+    public Result<?> logout() {
+
+        sysUserService.logout();
+        return Result.ok("注销成功！");
+    }
+
+    /**
+     * 修改密码
+     * @param updatePasswordVO
+     * @return
+     */
+    @ApiOperation("修改密码")
+    @PutMapping("/admin/user/password")
+    public Result<?> updatePassword(@Valid @RequestBody UpdatePasswordVO updatePasswordVO) {
+        sysUserService.updatePassword(updatePasswordVO);
+        return Result.ok("修改密码成功！");
     }
 
 }

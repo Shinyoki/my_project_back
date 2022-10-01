@@ -16,6 +16,8 @@ import com.senko.common.core.dto.SysUserDTO;
 import com.senko.common.core.entity.*;
 import com.senko.common.core.vo.RequestParamsVO;
 import com.senko.common.core.vo.SysBackUserVO;
+import com.senko.common.core.vo.UpdatePasswordVO;
+import com.senko.common.core.vo.UserInfoVO;
 import com.senko.common.exceptions.service.ServiceException;
 import com.senko.common.exceptions.user.UserDisabledException;
 import com.senko.common.exceptions.user.UserExistedException;
@@ -26,6 +28,7 @@ import com.senko.common.utils.ip.IpUtils;
 import com.senko.common.utils.page.PageUtils;
 import com.senko.framework.config.SenkoConfig;
 import com.senko.framework.config.redis.RedisHandler;
+import com.senko.framework.config.security.SecurityUtils;
 import com.senko.framework.web.service.LoginUser;
 import com.senko.framework.web.service.TokenService;
 import com.senko.system.mapper.ISysUserInfoMapper;
@@ -202,6 +205,7 @@ public class SysUserServiceImpl extends ServiceImpl<ISysUserMapper, SysUser> imp
                 .roles(loginUser.getRoles())
                 .nickname(userInfo.getNickname())
                 .avatar(userInfo.getAvatar())
+                .email(loginUser.getEmail())
                 .build();
     }
 
@@ -318,6 +322,76 @@ public class SysUserServiceImpl extends ServiceImpl<ISysUserMapper, SysUser> imp
             userInfoMapper.delete(new LambdaQueryWrapper<SysUserInfo>()
                     .in(SysUserInfo::getId, userInfoIds));
         }
+    }
+
+    /**
+     * 修改当前用户信息
+     *
+     * @param userInfoVO 用户信息
+     */
+    @Override
+    public void updateUserInfo(UserInfoVO userInfoVO) {
+        Long id = SecurityUtils.getLoginUser().getId();
+        SysUser entity = this.getOne(new LambdaQueryWrapper<SysUser>()
+                .select(SysUser::getUserInfoId)
+                .eq(SysUser::getId, id));
+        Long userInfoId = entity.getUserInfoId();
+
+        // 修改邮箱
+        if (StringUtils.isNotBlank(userInfoVO.getEmail())) {
+            SysUser sysUser = SysUser.builder()
+                    .id(id)
+                    .email(userInfoVO.getEmail())
+                    .build();
+            this.updateById(sysUser);
+        }
+        SysUserInfo userInfo = SysUserInfo.builder()
+                .id(userInfoId)
+                .avatar(userInfoVO.getAvatar())
+                .nickname(userInfoVO.getNickname())
+                .build();
+
+        // 修改用户信息
+        userInfoMapper.updateById(userInfo);
+    }
+
+    /**
+     * 退出登录
+     */
+    @Override
+    public void logout() {
+        LoginUser loginUserIfHasLogin = SecurityUtils.getLoginUserIfHasLogin();
+        if (Objects.nonNull(loginUserIfHasLogin)) {
+            String uuid = loginUserIfHasLogin.getUuid();
+            tokenService.removeUserCache(uuid);
+        }
+    }
+
+    /**
+     * 更新用户密码
+     * @param updatePasswordVO  密码
+     */
+    @Override
+    public void updatePassword(UpdatePasswordVO updatePasswordVO) {
+        Long userId = SecurityUtils.getLoginUser().getId();
+        SysUser entity = userMapper.selectOne(new LambdaQueryWrapper<SysUser>()
+                .select(SysUser::getId, SysUser::getPassword)
+                .eq(SysUser::getId, userId));
+        if (!passwordEncoder.matches(updatePasswordVO.getOldPassword(), entity.getPassword())) {
+            // 旧密码错误
+            throw new ServiceException("旧密码错误");
+        }
+        if (passwordEncoder.matches(updatePasswordVO.getNewPassword(), entity.getPassword())) {
+            // 新密码不能与旧密码相同
+            throw new ServiceException("新密码不能与旧密码相同");
+        }
+        if (!StringUtils.equals(updatePasswordVO.getNewPassword(), updatePasswordVO.getConfirmPassword())) {
+            // 新密码与确认密码不一致
+            throw new ServiceException("新密码与确认密码不一致");
+        }
+
+        entity.setPassword(passwordEncoder.encode(updatePasswordVO.getNewPassword()));
+        userMapper.updateById(entity);
     }
 
 }

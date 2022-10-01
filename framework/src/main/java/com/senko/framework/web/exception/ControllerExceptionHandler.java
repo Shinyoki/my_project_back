@@ -88,7 +88,7 @@ public class ControllerExceptionHandler {
 
     @ExceptionHandler(ServiceException.class)
     public Result<?> serviceException(ServiceException e, HttpServletRequest request) {
-        return handlerException(e, request, "操作失败！", true);
+        return handlerException(e, request, e.getMessage(), false);
     }
 
     @ExceptionHandler(Exception.class)

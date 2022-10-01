@@ -46,4 +46,10 @@ public class LoginUserDTO {
     @ApiModelProperty("头像")
     private String avatar;
 
+    /**
+     * 邮箱
+     */
+    @ApiModelProperty("邮箱")
+    private String email;
+
 }

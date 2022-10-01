@@ -20,6 +20,12 @@ senko:
     email: 1641801056@qq.com
     # 作者
     url: https://space.bilibili.com/1041337349
+  # 上传
+  upload:
+    strategy: local
+    local:
+      url: http://localhost:83/
+      path: C:\usr\local\upload\
 
 # JWT Token
 token:

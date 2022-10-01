@@ -94,6 +94,66 @@ public class SenkoConfig {
         }
     }
 
+    public Upload upload = new Upload();
+
+    public Upload getUpload() {
+        return upload;
+    }
+
+    public static class Upload {
+
+        /**
+         * 上传策略
+         */
+        private String strategy = "local";
+
+        private Local local = new Local();
+
+        public Local getLocal() {
+            return local;
+        }
+
+        public static class Local {
+            /**
+             * 存储路径，文件的本地存储路径，以/结尾
+             */
+            private String path = "C:\\usr\\local\\upload\\";
+
+            /**
+             * 访问路径
+             * 需使用Nginx反向代理以访问资源，默认83端口
+             */
+            private String url = "http://localhost:83/";
+
+            public String getPath() {
+                return path;
+            }
+
+            public void setPath(String path) {
+                this.path = path;
+            }
+
+            public String getUrl() {
+                return url;
+            }
+
+            public void setUrl(String url) {
+                this.url = url;
+            }
+        }
+
+        public String getStrategy() {
+            return strategy;
+        }
+
+        public void setStrategy(String strategy) {
+            this.strategy = strategy;
+        }
+
+    }
+
+
+
     public Integer getRetryLimit() {
         return retryLimit;
     }

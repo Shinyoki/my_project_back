@@ -26,7 +26,7 @@ public class ResourceRoleDTO {
      * 资源ID
      */
     @ApiModelProperty("资源ID")
-    private Integer id;
+    private Long id;
 
     /**
      * 请求资源

@@ -55,7 +55,7 @@ public class AccessDecisionManagerImpl implements AccessDecisionManager {
 
         if (object instanceof FilterInvocation) {
             FilterInvocation filterInvocation = (FilterInvocation) object;
-            if (CollectionUtils.isEmpty(disabledRoles)) {
+            if (Objects.isNull(disabledRoles)) {
                 listDisabledRoles();
             }
 

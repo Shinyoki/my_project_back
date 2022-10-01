@@ -11,6 +11,7 @@ import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 /**
  * 资源VO
@@ -73,5 +74,11 @@ public class ResourceVO {
     @ApiModelProperty(value = "资源类型，0:模块，1:接口",required = true)
     @NotNull(message = "资源类型不能为空")
     private Integer resourceType;
+
+    /**
+     * 可操作的角色ID列表
+     */
+    @ApiModelProperty(value = "可操作角色ID列表",required = true)
+    private List<Long> roleIds;
 
 }
