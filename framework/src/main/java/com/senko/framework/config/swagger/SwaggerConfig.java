@@ -1,5 +1,6 @@
 package com.senko.framework.config.swagger;
 
+import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
 import com.senko.framework.config.SenkoConfig;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -9,10 +10,15 @@ import org.springframework.context.annotation.Configuration;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
-import springfox.documentation.service.ApiInfo;
-import springfox.documentation.service.Contact;
+import springfox.documentation.service.*;
 import springfox.documentation.spi.DocumentationType;
+import springfox.documentation.spi.service.contexts.SecurityContext;
 import springfox.documentation.spring.web.plugins.Docket;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * Swagger配置
@@ -38,9 +44,41 @@ public class SwaggerConfig {
                 .select()
                 .apis(RequestHandlerSelectors.withClassAnnotation(Api.class))
                 .paths(PathSelectors.any())
-                .build();
-        // TODO HEADER附带token
+                .build()
+                // 安全配置：页面上出现一个Authorization选项，可以给每次请求附带Header
+                .securityContexts(buildSecurityContexts())
+                .securitySchemes(buildSecuritySchemes());
 
+    }
+
+    /**
+     * 指定上下文
+     */
+    private List<SecurityContext> buildSecurityContexts() {
+        SecurityContext securityContext = SecurityContext.builder()
+                .securityReferences(defaultReference())
+                .operationSelector(o -> o.requestMappingPattern().matches("/.*"))
+                .build();
+        return Collections.singletonList(securityContext);
+    }
+
+
+    private List<SecurityReference> defaultReference() {
+        AuthorizationScope authorizationScope = new AuthorizationScope("global", "accessEverything");
+        AuthorizationScope[] authorizationScopes = new AuthorizationScope[1];
+        authorizationScopes[0] = authorizationScope;
+        List<SecurityReference> securityReferences = new ArrayList<>();
+        securityReferences.add(new SecurityReference("Authorization", authorizationScopes));
+        return securityReferences;
+    }
+
+    /**
+     * 生成页面里的选项
+     */
+    private List<SecurityScheme> buildSecuritySchemes() {
+        // 所属模块、key的名字、放在哪里
+        ApiKey apiKey = new ApiKey("Authorization", "Authorization", "header");
+        return Collections.singletonList(apiKey);
     }
 
     /**
