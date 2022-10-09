@@ -6,6 +6,8 @@ import cn.hutool.http.useragent.UserAgent;
 import cn.hutool.http.useragent.UserAgentUtil;
 import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.senko.common.constants.CommonConstants;
@@ -29,6 +31,7 @@ import com.senko.common.utils.page.PageUtils;
 import com.senko.framework.config.SenkoConfig;
 import com.senko.framework.config.redis.RedisHandler;
 import com.senko.framework.config.security.SecurityUtils;
+import com.senko.framework.web.core.service.ISysUserInfoService;
 import com.senko.framework.web.service.LoginUser;
 import com.senko.framework.web.service.TokenService;
 import com.senko.system.mapper.ISysUserInfoMapper;
@@ -47,6 +50,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
+import java.awt.font.TextHitInfo;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -85,6 +89,9 @@ public class SysUserServiceImpl extends ServiceImpl<ISysUserMapper, SysUser> imp
 
     @Autowired
     private ISysUserRoleMapper userRoleMapper;
+
+    @Autowired
+    private ISysUserInfoService userInfoService;
 
     /**
      * 注册用户
@@ -225,6 +232,7 @@ public class SysUserServiceImpl extends ServiceImpl<ISysUserMapper, SysUser> imp
     /**
      * 添加或删除用户
      */
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public void saveOrUpdateSysUser(SysBackUserVO sysBackUserVO) {
         SysUser sysUser = SysUser.builder()
@@ -234,7 +242,27 @@ public class SysUserServiceImpl extends ServiceImpl<ISysUserMapper, SysUser> imp
                 .email(sysBackUserVO.getEmail())
                 .username(sysBackUserVO.getUsername())
                 .build();
+
         this.saveOrUpdate(sysUser);
+        SysUser one = this.getOne(new LambdaQueryWrapper<SysUser>()
+                .select(SysUser::getUserInfoId)
+                .eq(SysUser::getId, sysUser.getId()));
+        String nickname = StringUtils.isBlank(sysBackUserVO.getNickname()) ? "用户" + UUID.fastUUID().toString().substring(0, 11) : sysBackUserVO.getNickname();
+        if (Objects.isNull(one) || Objects.isNull(one.getUserInfoId())) {
+            SysUserInfo userInfo = SysUserInfo.builder()
+                    .nickname(nickname)
+                    .build();
+            userInfoService.save(userInfo);
+            this.update(new LambdaUpdateWrapper<SysUser>()
+                    .set(SysUser::getUserInfoId, userInfo.getId())
+                    .eq(SysUser::getId, sysUser.getId()));
+        } else {
+            SysUserInfo userInfo = SysUserInfo.builder()
+                    .id(sysUser.getUserInfoId())
+                    .nickname(nickname)
+                    .build();
+            userInfoService.updateById(userInfo);
+        }
 
         // 添加用户角色
         if (Objects.nonNull(sysBackUserVO.getRoleId())) {

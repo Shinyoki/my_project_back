@@ -33,6 +33,12 @@ public class SysBackUserVO {
     private String username;
 
     /**
+     * 用户昵称
+     */
+    @ApiModelProperty(value = "用户昵称", required = true)
+    private String nickname;
+
+    /**
      * 密码
      */
     @ApiModelProperty(value = "密码",required = true)

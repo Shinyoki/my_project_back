@@ -30,7 +30,7 @@
 
 **后端Github地址：**[https://github.com/Shinyoki/my_project_back](https://github.com/Shinyoki/my_project_back)
 
-**后台Github地址：**[/Shinyoki/my_project_admin](https://github.com/Shinyoki/my_project_admin)
+**后台Github地址：**[https://github.com/Shinyoki/my_project_admin](https://github.com/Shinyoki/my_project_admin)
 
 
 
@@ -119,7 +119,7 @@ TODO ...
 
 # 项目结构
 
-
+<pre>
 ├─project.sql   				sql文件
 ├─system						系统模块：存放数据库操作的mappers & services
 |   ├─pom.xml
@@ -255,3 +255,4 @@ TODO ...
 |   |   |    |  |   |     |   ├─SysRoleController.class
 |   |   |    |  |   |     |   ├─SysUploadController.class
 |   |   |    |  |   |     |   └SysUserController.class
+</pre>
