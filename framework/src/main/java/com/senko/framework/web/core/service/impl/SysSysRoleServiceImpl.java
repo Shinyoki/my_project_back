@@ -172,7 +172,7 @@ public class SysSysRoleServiceImpl extends ServiceImpl<ISysRoleMapper, SysRole> 
 
         // 父节点
         Set<Long> categoryIds = rawResources.stream()
-                .filter(sysResourceTree -> sysResourceTree.getParentId() == null)
+                .filter(sysResourceTree -> sysResourceTree.getParentId() == null || sysResourceTree.getParentId() == 0)
                 .map(SysResourceTree::getId)
                 .collect(Collectors.toSet());
 
@@ -445,9 +445,16 @@ public class SysSysRoleServiceImpl extends ServiceImpl<ISysRoleMapper, SysRole> 
                         .parentId(sysMenu.getParentId())
                         .build())
                 .collect(Collectors.toList());
+        // 父id
+        List<Long> parentIds = rawMenus.stream()
+                .filter(sysMenuTree -> sysMenuTree.getParentId() != null)
+                .map(SysMenuTree::getParentId)
+                .collect(Collectors.toList());
+
         List<Long> checkedIds = menuRoleMapper.selectList(new LambdaQueryWrapper<SysMenuRole>()
                         .select(SysMenuRole::getMenuId, SysMenuRole::getRoleId)
                         .eq(SysMenuRole::getRoleId, roleId)).stream()
+                .filter(sysMenuRole -> !parentIds.contains(sysMenuRole.getMenuId()))
                 .map(SysMenuRole::getMenuId)
                 .collect(Collectors.toList());
         rawMenus = buildMenuTree(rawMenus);
