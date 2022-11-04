@@ -158,8 +158,8 @@ public class SysResourceImpl extends ServiceImpl<ISysResourceMapper, SysResource
             List<Long> roleIds = resourceVO.getRoleIds();
 
             if (CollectionUtils.isNotEmpty(roleIds)) {
-                if (!roleIds.contains(CommonConstants.ADMIN_ID)) {
-                    roleIds.add(CommonConstants.ADMIN_ID);
+                if (!roleIds.contains(CommonConstants.ADMIN_ROLE_ID)) {
+                    roleIds.add(CommonConstants.ADMIN_ROLE_ID);
                 }
                 Long resourceId = entity.getId();
                 List<SysResourceRole> resourceRoleList = roleIds.stream()

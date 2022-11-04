@@ -48,6 +48,11 @@ public class SysUser {
     private String email;
 
     /**
+     * 逻辑删除 0-未删除 1-已删除
+     */
+    private Integer isDelete;
+
+    /**
      * 禁用状态，0: 正常，1: 禁用
      */
     private Integer isDisabled;

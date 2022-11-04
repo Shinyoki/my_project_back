@@ -96,7 +96,7 @@ public class SysMenuServiceImpl extends ServiceImpl<ISysMenuMapper, SysMenu> imp
         }
 
         List<SysMenusDTO> rawMenus = null;
-        if (Objects.equals(userId, CommonConstants.ADMIN_ID)) {
+        if (Objects.equals(userId, CommonConstants.ADMIN_USER_ID)) {
             // 超级管理员
             rawMenus = menuMapper.listMenusForAdmin();
         } else {
@@ -250,8 +250,8 @@ public class SysMenuServiceImpl extends ServiceImpl<ISysMenuMapper, SysMenu> imp
             // 添加菜单角色关联
             if (CollectionUtils.isNotEmpty(sysMenuVO.getRoles())) {
 
-                if (!sysMenuVO.getRoles().contains(CommonConstants.ADMIN_ID)) {
-                    sysMenuVO.getRoles().add(CommonConstants.ADMIN_ID);
+                if (!sysMenuVO.getRoles().contains(CommonConstants.ADMIN_ROLE_ID)) {
+                    sysMenuVO.getRoles().add(CommonConstants.ADMIN_ROLE_ID);
                 }
 
                 List<SysMenuRole> menuRoleList = sysMenuVO.getRoles().stream()

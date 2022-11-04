@@ -86,7 +86,7 @@ public class SysUserController {
      */
     @PostMapping(value = "/login")
     @ApiOperation("用户登录")
-    public Result<LoginUserDTO> login(@Valid @RequestBody UserLoginVO loginVO, HttpServletRequest request) {
+    public Result<LoginUserDTO> login(@Valid @RequestBody UserLoginVO loginVO) {
 
         // 处理登录、并提供TOKEN
         LoginUserDTO loginUserDTO = sysUserService.doLogin(loginVO.getUsername(), loginVO.getPassword());

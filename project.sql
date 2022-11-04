@@ -11,7 +11,7 @@
  Target Server Version : 80029
  File Encoding         : 65001
 
- Date: 21/10/2022 11:57:08
+ Date: 04/11/2022 16:20:31
 */
 
 SET NAMES utf8mb4;
@@ -38,46 +38,6 @@ CREATE TABLE `tb_login_log`  (
 -- ----------------------------
 -- Records of tb_login_log
 -- ----------------------------
-INSERT INTO `tb_login_log` VALUES (1575503951119556610, 'admin', '1234567', '登录成功', 1, '127.0.0.1', 'Unknown', 'Unknown', '2022-09-29 23:13:08', NULL);
-INSERT INTO `tb_login_log` VALUES (1575637425453277185, 'admin', '1234567', '登录成功', 1, '10.0.0.2', 'Chrome', 'Windows 10 or Windows Server 2016', '2022-09-30 08:03:31', '内网IP');
-INSERT INTO `tb_login_log` VALUES (1575638352788725762, 'admin', '12345672', '用户名或密码错误！', 0, '127.0.0.1', 'Unknown', 'Unknown', '2022-09-30 08:07:12', '内网IP');
-INSERT INTO `tb_login_log` VALUES (1575638357398265857, 'admin', '12345672', '用户名或密码错误！', 0, '127.0.0.1', 'Unknown', 'Unknown', '2022-09-30 08:07:13', '内网IP');
-INSERT INTO `tb_login_log` VALUES (1575638360720154626, 'admin', '12345672', '用户名或密码错误！', 0, '127.0.0.1', 'Unknown', 'Unknown', '2022-09-30 08:07:14', '内网IP');
-INSERT INTO `tb_login_log` VALUES (1575638363605835778, 'admin', '12345672', '用户名或密码错误！', 0, '127.0.0.1', 'Unknown', 'Unknown', '2022-09-30 08:07:14', '内网IP');
-INSERT INTO `tb_login_log` VALUES (1575638367263268865, 'admin', '12345672', '用户名或密码错误！', 0, '127.0.0.1', 'Unknown', 'Unknown', '2022-09-30 08:07:15', '内网IP');
-INSERT INTO `tb_login_log` VALUES (1575638370794872834, 'admin', '12345672', '密码错误次数过多，请稍后再试！', 0, '127.0.0.1', 'Unknown', 'Unknown', '2022-09-30 08:07:16', '内网IP');
-INSERT INTO `tb_login_log` VALUES (1575638384724156417, 'admin', '12345672', '密码错误次数过多，请稍后再试！', 0, '127.0.0.1', 'Unknown', 'Unknown', '2022-09-30 08:07:20', '内网IP');
-INSERT INTO `tb_login_log` VALUES (1575651067754270721, 'admin', '1234567', '登录成功', 1, '10.0.0.2', 'Chrome', 'Windows 10 or Windows Server 2016', '2022-09-30 08:57:43', '内网IP');
-INSERT INTO `tb_login_log` VALUES (1575665503407816705, 'admin', '1234567', '登录成功', 1, '10.0.0.2', 'Chrome', 'Windows 10 or Windows Server 2016', '2022-09-30 09:55:05', '内网IP');
-INSERT INTO `tb_login_log` VALUES (1575676710676135937, 'admin', '1234567', '登录成功', 1, '10.0.0.2', 'Chrome', 'Windows 10 or Windows Server 2016', '2022-09-30 10:39:37', '内网IP');
-INSERT INTO `tb_login_log` VALUES (1575686627285856258, 'admin', '12345672', '用户名或密码错误！', 0, '127.0.0.1', 'Unknown', 'Unknown', '2022-09-30 11:19:01', '内网IP');
-INSERT INTO `tb_login_log` VALUES (1575686639071850498, 'admin', '1234567', '登录成功', 1, '127.0.0.1', 'Unknown', 'Unknown', '2022-09-30 11:19:04', '内网IP');
-INSERT INTO `tb_login_log` VALUES (1575709724500094977, 'admin', '1234567', '登录成功', 1, '10.0.0.2', 'Chrome', 'Windows 10 or Windows Server 2016', '2022-09-30 12:50:48', '内网IP');
-INSERT INTO `tb_login_log` VALUES (1575725435087810561, 'admin', '1234567', '登录成功', 1, '10.0.0.2', 'Chrome', 'Windows 10 or Windows Server 2016', '2022-09-30 13:53:14', '内网IP');
-INSERT INTO `tb_login_log` VALUES (1575761935024320514, 'admin', '1234567', '登录成功', 1, '10.0.0.2', 'Chrome', 'Windows 10 or Windows Server 2016', '2022-09-30 16:18:16', '内网IP');
-INSERT INTO `tb_login_log` VALUES (1576000569287643138, 'admin', '1234567', '登录成功', 1, '127.0.0.1', 'Chrome', 'Windows 10 or Windows Server 2016', '2022-10-01 08:06:31', '内网IP');
-INSERT INTO `tb_login_log` VALUES (1576044698667405313, 'admin', '1234567', '登录成功', 1, '127.0.0.1', 'Chrome', 'Windows 10 or Windows Server 2016', '2022-10-01 11:01:52', '内网IP');
-INSERT INTO `tb_login_log` VALUES (1576059550349729794, 'admin', '1234567', '登录成功', 1, '127.0.0.1', 'Chrome', 'Windows 10 or Windows Server 2016', '2022-10-01 12:00:53', '内网IP');
-INSERT INTO `tb_login_log` VALUES (1576061398699847681, 'admin', '1234567', '登录成功', 1, '127.0.0.1', 'Unknown', 'Unknown', '2022-10-01 12:08:14', '内网IP');
-INSERT INTO `tb_login_log` VALUES (1576102194559901697, 'admin', '1234567', '登录成功', 1, '127.0.0.1', 'Unknown', 'Unknown', '2022-10-01 14:50:20', '内网IP');
-INSERT INTO `tb_login_log` VALUES (1576102680394555394, 'admin', '1234567', '登录成功', 1, '127.0.0.1', 'Unknown', 'Unknown', '2022-10-01 14:52:16', '内网IP');
-INSERT INTO `tb_login_log` VALUES (1576103492000768002, 'admin', '1234567', '登录成功', 1, '127.0.0.1', 'Chrome', 'Windows 10 or Windows Server 2016', '2022-10-01 14:55:30', '内网IP');
-INSERT INTO `tb_login_log` VALUES (1576107027685765122, 'admin', '1234567', '登录成功', 1, '127.0.0.1', 'Chrome', 'Windows 10 or Windows Server 2016', '2022-10-01 15:09:33', '内网IP');
-INSERT INTO `tb_login_log` VALUES (1576110159316717570, 'admin', '1234567', '登录成功', 1, '127.0.0.1', 'Chrome', 'Windows 10 or Windows Server 2016', '2022-10-01 15:21:59', '内网IP');
-INSERT INTO `tb_login_log` VALUES (1576124212755894274, 'admin', '1234567', '登录成功', 1, '127.0.0.1', 'Chrome', 'Windows 10 or Windows Server 2016', '2022-10-01 16:17:50', '内网IP');
-INSERT INTO `tb_login_log` VALUES (1576137297839296514, 'admin', '1234567', '登录成功', 1, '127.0.0.1', 'Chrome', 'Windows 10 or Windows Server 2016', '2022-10-01 17:09:50', '内网IP');
-INSERT INTO `tb_login_log` VALUES (1576165521566769153, 'admin', '1234567', '登录成功', 1, '127.0.0.1', 'Chrome', 'Windows 10 or Windows Server 2016', '2022-10-01 19:01:59', '内网IP');
-INSERT INTO `tb_login_log` VALUES (1576166841497485314, 'admin', '134567', '登录成功', 1, '127.0.0.1', 'Chrome', 'Windows 10 or Windows Server 2016', '2022-10-01 19:07:13', '内网IP');
-INSERT INTO `tb_login_log` VALUES (1576166961110646785, 'admin', '123456', '登录成功', 1, '127.0.0.1', 'Chrome', 'Windows 10 or Windows Server 2016', '2022-10-01 19:07:42', '内网IP');
-INSERT INTO `tb_login_log` VALUES (1576853026515460098, 'admin', '123456', '用户名或密码错误！', 0, '127.0.0.1', 'Chrome', 'Windows 10 or Windows Server 2016', '2022-10-03 16:33:53', '内网IP');
-INSERT INTO `tb_login_log` VALUES (1576853043942793218, 'admin', '1234567', '登录成功', 1, '127.0.0.1', 'Chrome', 'Windows 10 or Windows Server 2016', '2022-10-03 16:33:57', '内网IP');
-INSERT INTO `tb_login_log` VALUES (1579114297604448257, 'admin', '1234567', '登录成功', 1, '10.0.0.2', 'Chrome', 'Windows 10 or Windows Server 2016', '2022-10-09 22:19:22', '内网IP');
-INSERT INTO `tb_login_log` VALUES (1579122068076908546, 'admin', '1234567', '登录成功', 1, '10.0.0.2', 'Chrome', 'Windows 10 or Windows Server 2016', '2022-10-09 22:50:14', '内网IP');
-INSERT INTO `tb_login_log` VALUES (1583277450332553217, 'admin', '1234567', '登录成功', 1, '10.0.0.2', 'Chrome', 'Windows 10 or Windows Server 2016', '2022-10-21 10:02:15', '内网IP');
-INSERT INTO `tb_login_log` VALUES (1583289717589622785, 'admin', '1234567', '登录成功', 1, '10.0.0.2', 'Chrome', 'Windows 10 or Windows Server 2016', '2022-10-21 10:50:59', '内网IP');
-INSERT INTO `tb_login_log` VALUES (1583303677013434369, 'admin', '1234567', '登录成功', 1, '127.0.0.1', 'Chrome', 'Windows 10 or Windows Server 2016', '2022-10-21 11:46:28', '内网IP');
-INSERT INTO `tb_login_log` VALUES (1583305829899345921, 'test', '1234567', '用户名或密码错误！', 0, '127.0.0.1', 'Chrome', 'Windows 10 or Windows Server 2016', '2022-10-21 11:55:01', '内网IP');
-INSERT INTO `tb_login_log` VALUES (1583305900028108801, 'test', '123456', '登录成功', 1, '127.0.0.1', 'Chrome', 'Windows 10 or Windows Server 2016', '2022-10-21 11:55:18', '内网IP');
 
 -- ----------------------------
 -- Table structure for tb_menu
@@ -96,7 +56,7 @@ CREATE TABLE `tb_menu`  (
   `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
   `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1569327626948227076 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1569327626948227075 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of tb_menu
@@ -134,26 +94,34 @@ INSERT INTO `tb_menu_role` VALUES (5, 5, -1);
 INSERT INTO `tb_menu_role` VALUES (6, 6, -1);
 INSERT INTO `tb_menu_role` VALUES (8, 8, -1);
 INSERT INTO `tb_menu_role` VALUES (9, 9, -1);
-INSERT INTO `tb_menu_role` VALUES (10, 1, 0);
-INSERT INTO `tb_menu_role` VALUES (11, 3, 0);
 INSERT INTO `tb_menu_role` VALUES (1569302282048409602, 7, -1);
 INSERT INTO `tb_menu_role` VALUES (1574585924236623873, 2, -1);
-INSERT INTO `tb_menu_role` VALUES (1574585924236623874, 2, 0);
 INSERT INTO `tb_menu_role` VALUES (1574585971250577410, 4, -1);
-INSERT INTO `tb_menu_role` VALUES (1574585971250577411, 4, 0);
 INSERT INTO `tb_menu_role` VALUES (1574586264625365003, 10, -1);
-INSERT INTO `tb_menu_role` VALUES (1574586264625365004, 10, 0);
-INSERT INTO `tb_menu_role` VALUES (1583304627589550081, 1, 1570946257658322946);
-INSERT INTO `tb_menu_role` VALUES (1583304627589550082, 2, 1570946257658322946);
-INSERT INTO `tb_menu_role` VALUES (1583304627589550083, 4, 1570946257658322946);
-INSERT INTO `tb_menu_role` VALUES (1583304627589550084, 5, 1570946257658322946);
-INSERT INTO `tb_menu_role` VALUES (1583304627589550085, 6, 1570946257658322946);
-INSERT INTO `tb_menu_role` VALUES (1583304627589550086, 7, 1570946257658322946);
-INSERT INTO `tb_menu_role` VALUES (1583304627589550087, 8, 1570946257658322946);
-INSERT INTO `tb_menu_role` VALUES (1583304627589550088, 9, 1570946257658322946);
-INSERT INTO `tb_menu_role` VALUES (1583304627589550089, 11, 1570946257658322946);
-INSERT INTO `tb_menu_role` VALUES (1583304627589550090, 12, 1570946257658322946);
-INSERT INTO `tb_menu_role` VALUES (1583304627589550091, 3, 1570946257658322946);
+INSERT INTO `tb_menu_role` VALUES (1588445176323706882, 1, 0);
+INSERT INTO `tb_menu_role` VALUES (1588445176323706883, 2, 0);
+INSERT INTO `tb_menu_role` VALUES (1588445176323706884, 4, 0);
+INSERT INTO `tb_menu_role` VALUES (1588445176323706885, 5, 0);
+INSERT INTO `tb_menu_role` VALUES (1588445176323706886, 6, 0);
+INSERT INTO `tb_menu_role` VALUES (1588445176323706887, 7, 0);
+INSERT INTO `tb_menu_role` VALUES (1588445176323706888, 8, 0);
+INSERT INTO `tb_menu_role` VALUES (1588445176323706889, 9, 0);
+INSERT INTO `tb_menu_role` VALUES (1588445176323706890, 10, 0);
+INSERT INTO `tb_menu_role` VALUES (1588445176323706891, 11, 0);
+INSERT INTO `tb_menu_role` VALUES (1588445176323706892, 12, 0);
+INSERT INTO `tb_menu_role` VALUES (1588445176323706893, 3, 0);
+INSERT INTO `tb_menu_role` VALUES (1588445808803778562, 1, 1);
+INSERT INTO `tb_menu_role` VALUES (1588445808803778563, 2, 1);
+INSERT INTO `tb_menu_role` VALUES (1588445808803778564, 4, 1);
+INSERT INTO `tb_menu_role` VALUES (1588445808803778565, 5, 1);
+INSERT INTO `tb_menu_role` VALUES (1588445808803778566, 6, 1);
+INSERT INTO `tb_menu_role` VALUES (1588445808803778567, 7, 1);
+INSERT INTO `tb_menu_role` VALUES (1588445808803778568, 8, 1);
+INSERT INTO `tb_menu_role` VALUES (1588445808803778569, 9, 1);
+INSERT INTO `tb_menu_role` VALUES (1588445808803778570, 10, 1);
+INSERT INTO `tb_menu_role` VALUES (1588445808803778571, 11, 1);
+INSERT INTO `tb_menu_role` VALUES (1588445808803778572, 12, 1);
+INSERT INTO `tb_menu_role` VALUES (1588445808803778573, 3, 1);
 
 -- ----------------------------
 -- Table structure for tb_operation_log
@@ -184,66 +152,6 @@ CREATE TABLE `tb_operation_log`  (
 -- ----------------------------
 -- Records of tb_operation_log
 -- ----------------------------
-INSERT INTO `tb_operation_log` VALUES (1575492310105661441, 'admin', '角色Controller', '/admin/role', 'POST', '新增或修改角色，包括其可访资源/菜单', NULL, 'SAVE_OR_UPDATE', 1, '127.0.0.1', '{\"code\":200,\"flag\":true,\"message\":\"操作成功！\"}', '操作成功！', -1, 'com.senko.controller.system.SysRoleController#saveOrUpdateRole', 'Chrome', 'Windows 10 or Windows Server 2016', NULL, '2022-09-29 22:26:53');
-INSERT INTO `tb_operation_log` VALUES (1575492419245645825, 'admin', '角色Controller', '/admin/roles', 'DELETE', '删除角色', NULL, 'REMOVE', 1, '127.0.0.1', '{\"code\":200,\"flag\":true,\"message\":\"删除角色成功！\"}', '删除角色成功！', -1, 'com.senko.controller.system.SysRoleController#deleteBathByIds', 'Chrome', 'Windows 10 or Windows Server 2016', NULL, '2022-09-29 22:27:19');
-INSERT INTO `tb_operation_log` VALUES (1575637583167496193, 'admin', '角色Controller', '/admin/role', 'POST', '新增或修改角色，包括其可访资源/菜单', NULL, 'SAVE_OR_UPDATE', 1, '10.0.0.2', '{\"code\":200,\"flag\":true,\"message\":\"操作成功！\"}', '操作成功！', -1, 'com.senko.controller.system.SysRoleController#saveOrUpdateRole', 'Chrome', 'Windows 10 or Windows Server 2016', '内网IP', '2022-09-30 08:04:08');
-INSERT INTO `tb_operation_log` VALUES (1575637590285230081, 'admin', '角色Controller', '/admin/roles', 'DELETE', '删除角色', NULL, 'REMOVE', 1, '10.0.0.2', '{\"code\":200,\"flag\":true,\"message\":\"删除角色成功！\"}', '删除角色成功！', -1, 'com.senko.controller.system.SysRoleController#deleteBathByIds', 'Chrome', 'Windows 10 or Windows Server 2016', '内网IP', '2022-09-30 08:04:10');
-INSERT INTO `tb_operation_log` VALUES (1575686804180582401, 'admin', '资源Controller', '/admin/resource/-1', 'DELETE', '删除资源', NULL, 'REMOVE', 1, '127.0.0.1', '{\"code\":200,\"flag\":true,\"message\":\"删除资源成功\"}', '删除资源成功', -1, 'com.senko.controller.system.SysResourceController#deleteResource', 'Unknown', 'Unknown', '内网IP', '2022-09-30 11:19:44');
-INSERT INTO `tb_operation_log` VALUES (1575686949710393345, 'admin', '资源Controller', '/admin/resource/-1', 'DELETE', '删除资源', NULL, 'REMOVE', 1, '127.0.0.1', '{\"code\":200,\"flag\":true,\"message\":\"删除资源成功\"}', '删除资源成功', -1, 'com.senko.controller.system.SysResourceController#deleteResource', 'Unknown', 'Unknown', '内网IP', '2022-09-30 11:20:18');
-INSERT INTO `tb_operation_log` VALUES (1575709813482254338, 'admin', '资源Controller', '/admin/resource/anonymous/0', 'PUT', '更新资源匿名状态', NULL, 'UPDATE', 1, '10.0.0.2', '{\"code\":200,\"flag\":true,\"message\":\"更新匿名状态成功\"}', '更新匿名状态成功', -1, 'com.senko.controller.system.SysResourceController#updateAnonymousStatus', 'Chrome', 'Windows 10 or Windows Server 2016', '内网IP', '2022-09-30 12:51:09');
-INSERT INTO `tb_operation_log` VALUES (1575709832067215361, 'admin', '资源Controller', '/admin/resource/anonymous/1', 'PUT', '更新资源匿名状态', NULL, 'UPDATE', 1, '10.0.0.2', '{\"code\":200,\"flag\":true,\"message\":\"更新匿名状态成功\"}', '更新匿名状态成功', -1, 'com.senko.controller.system.SysResourceController#updateAnonymousStatus', 'Chrome', 'Windows 10 or Windows Server 2016', '内网IP', '2022-09-30 12:51:14');
-INSERT INTO `tb_operation_log` VALUES (1575730231949717505, 'admin', '资源Controller', '/admin/resource/anonymous/1', 'PUT', '更新资源匿名状态', NULL, 'UPDATE', 1, '10.0.0.2', '{\"code\":200,\"flag\":true,\"message\":\"更新匿名状态成功\"}', '更新匿名状态成功', -1, 'com.senko.controller.system.SysResourceController#updateAnonymousStatus', 'Chrome', 'Windows 10 or Windows Server 2016', '内网IP', '2022-09-30 14:12:18');
-INSERT INTO `tb_operation_log` VALUES (1575730241118466050, 'admin', '资源Controller', '/admin/resource/anonymous/0', 'PUT', '更新资源匿名状态', NULL, 'UPDATE', 1, '10.0.0.2', '{\"code\":200,\"flag\":true,\"message\":\"更新匿名状态成功\"}', '更新匿名状态成功', -1, 'com.senko.controller.system.SysResourceController#updateAnonymousStatus', 'Chrome', 'Windows 10 or Windows Server 2016', '内网IP', '2022-09-30 14:12:20');
-INSERT INTO `tb_operation_log` VALUES (1575769591961198593, 'admin', '资源Controller', '/admin/resource', 'POST', '保存或更新资源', NULL, 'SAVE_OR_UPDATE', 0, '10.0.0.2', 'null', 'Cannot invoke \"com.senko.common.core.entity.SysResource.getResourceType()\" because \"sysResource\" is null', -1, 'com.senko.controller.system.SysResourceController#saveOrUpdateResource', 'Chrome', 'Windows 10 or Windows Server 2016', '内网IP', '2022-09-30 16:48:42');
-INSERT INTO `tb_operation_log` VALUES (1575770069113565186, 'admin', '资源Controller', '/admin/resource', 'POST', '保存或更新资源', NULL, 'SAVE_OR_UPDATE', 0, '10.0.0.2', 'null', 'Cannot invoke \"com.senko.common.core.entity.SysResource.getResourceType()\" because \"sysResource\" is null', -1, 'com.senko.controller.system.SysResourceController#saveOrUpdateResource', 'Chrome', 'Windows 10 or Windows Server 2016', '内网IP', '2022-09-30 16:50:36');
-INSERT INTO `tb_operation_log` VALUES (1575770692294922241, 'admin', '资源Controller', '/admin/resource', 'POST', '保存或更新资源', NULL, 'SAVE_OR_UPDATE', 0, '10.0.0.2', 'null', 'Cannot invoke \"com.senko.common.core.entity.SysResource.getResourceType()\" because \"sysResource\" is null', -1, 'com.senko.controller.system.SysResourceController#saveOrUpdateResource', 'Chrome', 'Windows 10 or Windows Server 2016', '内网IP', '2022-09-30 16:53:04');
-INSERT INTO `tb_operation_log` VALUES (1575770790735167490, 'admin', '资源Controller', '/admin/resource', 'POST', '保存或更新资源', NULL, 'SAVE_OR_UPDATE', 1, '10.0.0.2', '{\"code\":200,\"flag\":true,\"message\":\"操作成功\"}', '操作成功', -1, 'com.senko.controller.system.SysResourceController#saveOrUpdateResource', 'Chrome', 'Windows 10 or Windows Server 2016', '内网IP', '2022-09-30 16:53:28');
-INSERT INTO `tb_operation_log` VALUES (1575772329646276609, 'admin', '资源Controller', '/admin/resource/1575770790538035202', 'DELETE', '删除资源', NULL, 'REMOVE', 1, '10.0.0.2', '{\"code\":200,\"flag\":true,\"message\":\"删除资源成功\"}', '删除资源成功', -1, 'com.senko.controller.system.SysResourceController#deleteResource', 'Chrome', 'Windows 10 or Windows Server 2016', '内网IP', '2022-09-30 16:59:34');
-INSERT INTO `tb_operation_log` VALUES (1575773313025982465, 'admin', '资源Controller', '/admin/resource', 'POST', '保存或更新资源', NULL, 'SAVE_OR_UPDATE', 1, '10.0.0.2', '{\"code\":200,\"flag\":true,\"message\":\"操作成功\"}', '操作成功', -1, 'com.senko.controller.system.SysResourceController#saveOrUpdateResource', 'Chrome', 'Windows 10 or Windows Server 2016', '内网IP', '2022-09-30 17:03:29');
-INSERT INTO `tb_operation_log` VALUES (1575773573332877313, 'admin', '资源Controller', '/admin/resource/1575773312782712833', 'DELETE', '删除资源', NULL, 'REMOVE', 1, '10.0.0.2', '{\"code\":200,\"flag\":true,\"message\":\"删除资源成功\"}', '删除资源成功', -1, 'com.senko.controller.system.SysResourceController#deleteResource', 'Chrome', 'Windows 10 or Windows Server 2016', '内网IP', '2022-09-30 17:04:31');
-INSERT INTO `tb_operation_log` VALUES (1575773716773879810, 'admin', '资源Controller', '/admin/resource', 'POST', '保存或更新资源', NULL, 'SAVE_OR_UPDATE', 1, '10.0.0.2', '{\"code\":200,\"flag\":true,\"message\":\"操作成功\"}', '操作成功', -1, 'com.senko.controller.system.SysResourceController#saveOrUpdateResource', 'Chrome', 'Windows 10 or Windows Server 2016', '内网IP', '2022-09-30 17:05:05');
-INSERT INTO `tb_operation_log` VALUES (1575773938388320258, 'admin', '资源Controller', '/admin/resource/1575773716643856386', 'DELETE', '删除资源', NULL, 'REMOVE', 1, '10.0.0.2', '{\"code\":200,\"flag\":true,\"message\":\"删除资源成功\"}', '删除资源成功', -1, 'com.senko.controller.system.SysResourceController#deleteResource', 'Chrome', 'Windows 10 or Windows Server 2016', '内网IP', '2022-09-30 17:05:58');
-INSERT INTO `tb_operation_log` VALUES (1575773960081260546, 'admin', '资源Controller', '/admin/resource', 'POST', '保存或更新资源', NULL, 'SAVE_OR_UPDATE', 1, '10.0.0.2', '{\"code\":200,\"flag\":true,\"message\":\"操作成功\"}', '操作成功', -1, 'com.senko.controller.system.SysResourceController#saveOrUpdateResource', 'Chrome', 'Windows 10 or Windows Server 2016', '内网IP', '2022-09-30 17:06:03');
-INSERT INTO `tb_operation_log` VALUES (1575774020194021377, 'admin', '资源Controller', '/admin/resource/1575773959884128258', 'DELETE', '删除资源', NULL, 'REMOVE', 1, '10.0.0.2', '{\"code\":200,\"flag\":true,\"message\":\"删除资源成功\"}', '删除资源成功', -1, 'com.senko.controller.system.SysResourceController#deleteResource', 'Chrome', 'Windows 10 or Windows Server 2016', '内网IP', '2022-09-30 17:06:18');
-INSERT INTO `tb_operation_log` VALUES (1575774160355078146, 'admin', '资源Controller', '/admin/resource', 'POST', '保存或更新资源', NULL, 'SAVE_OR_UPDATE', 1, '10.0.0.2', '{\"code\":200,\"flag\":true,\"message\":\"操作成功\"}', '操作成功', -1, 'com.senko.controller.system.SysResourceController#saveOrUpdateResource', 'Chrome', 'Windows 10 or Windows Server 2016', '内网IP', '2022-09-30 17:06:51');
-INSERT INTO `tb_operation_log` VALUES (1575774330207682562, 'admin', '资源Controller', '/admin/resource', 'POST', '保存或更新资源', NULL, 'SAVE_OR_UPDATE', 1, '10.0.0.2', '{\"code\":200,\"flag\":true,\"message\":\"操作成功\"}', '操作成功', -1, 'com.senko.controller.system.SysResourceController#saveOrUpdateResource', 'Chrome', 'Windows 10 or Windows Server 2016', '内网IP', '2022-09-30 17:07:31');
-INSERT INTO `tb_operation_log` VALUES (1575774503180779522, 'admin', '资源Controller', '/admin/resource', 'POST', '保存或更新资源', NULL, 'SAVE_OR_UPDATE', 1, '10.0.0.2', '{\"code\":200,\"flag\":true,\"message\":\"操作成功\"}', '操作成功', -1, 'com.senko.controller.system.SysResourceController#saveOrUpdateResource', 'Chrome', 'Windows 10 or Windows Server 2016', '内网IP', '2022-09-30 17:08:13');
-INSERT INTO `tb_operation_log` VALUES (1575774532117282818, 'admin', '资源Controller', '/admin/resource/1575774160250220546', 'DELETE', '删除资源', NULL, 'REMOVE', 1, '10.0.0.2', '{\"code\":200,\"flag\":true,\"message\":\"删除资源成功\"}', '删除资源成功', -1, 'com.senko.controller.system.SysResourceController#deleteResource', 'Chrome', 'Windows 10 or Windows Server 2016', '内网IP', '2022-09-30 17:08:20');
-INSERT INTO `tb_operation_log` VALUES (1575774552862310402, 'admin', '资源Controller', '/admin/resource/1575774503054950402', 'DELETE', '删除资源', NULL, 'REMOVE', 1, '10.0.0.2', '{\"code\":200,\"flag\":true,\"message\":\"删除资源成功\"}', '删除资源成功', -1, 'com.senko.controller.system.SysResourceController#deleteResource', 'Chrome', 'Windows 10 or Windows Server 2016', '内网IP', '2022-09-30 17:08:25');
-INSERT INTO `tb_operation_log` VALUES (1575774561116700673, 'admin', '资源Controller', '/admin/resource/1575774329951830018', 'DELETE', '删除资源', NULL, 'REMOVE', 1, '10.0.0.2', '{\"code\":200,\"flag\":true,\"message\":\"删除资源成功\"}', '删除资源成功', -1, 'com.senko.controller.system.SysResourceController#deleteResource', 'Chrome', 'Windows 10 or Windows Server 2016', '内网IP', '2022-09-30 17:08:27');
-INSERT INTO `tb_operation_log` VALUES (1576044801008422913, 'admin', '资源Controller', '/admin/resource', 'POST', '保存或更新资源', NULL, 'SAVE_OR_UPDATE', 1, '127.0.0.1', '{\"code\":200,\"flag\":true,\"message\":\"操作成功\"}', '操作成功', -1, 'com.senko.controller.system.SysResourceController#saveOrUpdateResource', 'Chrome', 'Windows 10 or Windows Server 2016', '内网IP', '2022-10-01 11:02:17');
-INSERT INTO `tb_operation_log` VALUES (1576045207138684929, 'admin', '资源Controller', '/admin/resource', 'POST', '保存或更新资源', NULL, 'SAVE_OR_UPDATE', 1, '127.0.0.1', '{\"code\":200,\"flag\":true,\"message\":\"操作成功\"}', '操作成功', -1, 'com.senko.controller.system.SysResourceController#saveOrUpdateResource', 'Chrome', 'Windows 10 or Windows Server 2016', '内网IP', '2022-10-01 11:03:54');
-INSERT INTO `tb_operation_log` VALUES (1576065003649531906, 'admin', '资源Controller', '/admin/resource', 'POST', '保存或更新资源', NULL, 'SAVE_OR_UPDATE', 1, '127.0.0.1', '{\"code\":200,\"flag\":true,\"message\":\"操作成功\"}', '操作成功', -1, 'com.senko.controller.system.SysResourceController#saveOrUpdateResource', 'Chrome', 'Windows 10 or Windows Server 2016', '内网IP', '2022-10-01 12:22:33');
-INSERT INTO `tb_operation_log` VALUES (1576065102538637314, 'admin', '资源Controller', '/admin/resource', 'POST', '保存或更新资源', NULL, 'SAVE_OR_UPDATE', 1, '127.0.0.1', '{\"code\":200,\"flag\":true,\"message\":\"操作成功\"}', '操作成功', -1, 'com.senko.controller.system.SysResourceController#saveOrUpdateResource', 'Chrome', 'Windows 10 or Windows Server 2016', '内网IP', '2022-10-01 12:22:57');
-INSERT INTO `tb_operation_log` VALUES (1576065241781141506, 'admin', '资源Controller', '/admin/resource/1576065003217518594', 'DELETE', '删除资源', NULL, 'REMOVE', 1, '127.0.0.1', '{\"code\":200,\"flag\":true,\"message\":\"删除资源成功\"}', '删除资源成功', -1, 'com.senko.controller.system.SysResourceController#deleteResource', 'Chrome', 'Windows 10 or Windows Server 2016', '内网IP', '2022-10-01 12:23:30');
-INSERT INTO `tb_operation_log` VALUES (1576065271485202434, 'admin', '资源Controller', '/admin/resource', 'POST', '保存或更新资源', NULL, 'SAVE_OR_UPDATE', 1, '127.0.0.1', '{\"code\":200,\"flag\":true,\"message\":\"操作成功\"}', '操作成功', -1, 'com.senko.controller.system.SysResourceController#saveOrUpdateResource', 'Chrome', 'Windows 10 or Windows Server 2016', '内网IP', '2022-10-01 12:23:37');
-INSERT INTO `tb_operation_log` VALUES (1576065528906416130, 'admin', '资源Controller', '/admin/resource/1576065271355179009', 'DELETE', '删除资源', NULL, 'REMOVE', 1, '127.0.0.1', '{\"code\":200,\"flag\":true,\"message\":\"删除资源成功\"}', '删除资源成功', -1, 'com.senko.controller.system.SysResourceController#deleteResource', 'Chrome', 'Windows 10 or Windows Server 2016', '内网IP', '2022-10-01 12:24:39');
-INSERT INTO `tb_operation_log` VALUES (1576065539090186242, 'admin', '资源Controller', '/admin/resource', 'POST', '保存或更新资源', NULL, 'SAVE_OR_UPDATE', 1, '127.0.0.1', '{\"code\":200,\"flag\":true,\"message\":\"操作成功\"}', '操作成功', -1, 'com.senko.controller.system.SysResourceController#saveOrUpdateResource', 'Chrome', 'Windows 10 or Windows Server 2016', '内网IP', '2022-10-01 12:24:41');
-INSERT INTO `tb_operation_log` VALUES (1576065635076833282, 'admin', '资源Controller', '/admin/resource', 'POST', '保存或更新资源', NULL, 'SAVE_OR_UPDATE', 1, '127.0.0.1', '{\"code\":200,\"flag\":true,\"message\":\"操作成功\"}', '操作成功', -1, 'com.senko.controller.system.SysResourceController#saveOrUpdateResource', 'Chrome', 'Windows 10 or Windows Server 2016', '内网IP', '2022-10-01 12:25:04');
-INSERT INTO `tb_operation_log` VALUES (1576065978703601666, 'admin', '资源Controller', '/admin/resource/1576065634946809857', 'DELETE', '删除资源', NULL, 'REMOVE', 1, '127.0.0.1', '{\"code\":200,\"flag\":true,\"message\":\"删除资源成功\"}', '删除资源成功', -1, 'com.senko.controller.system.SysResourceController#deleteResource', 'Chrome', 'Windows 10 or Windows Server 2016', '内网IP', '2022-10-01 12:26:26');
-INSERT INTO `tb_operation_log` VALUES (1576066017165369346, 'admin', '资源Controller', '/admin/resource', 'POST', '保存或更新资源', NULL, 'SAVE_OR_UPDATE', 1, '127.0.0.1', '{\"code\":200,\"flag\":true,\"message\":\"操作成功\"}', '操作成功', -1, 'com.senko.controller.system.SysResourceController#saveOrUpdateResource', 'Chrome', 'Windows 10 or Windows Server 2016', '内网IP', '2022-10-01 12:26:35');
-INSERT INTO `tb_operation_log` VALUES (1576066852263878657, 'admin', '资源Controller', '/admin/resource/1576066016972431361', 'DELETE', '删除资源', NULL, 'REMOVE', 1, '127.0.0.1', '{\"code\":200,\"flag\":true,\"message\":\"删除资源成功\"}', '删除资源成功', -1, 'com.senko.controller.system.SysResourceController#deleteResource', 'Chrome', 'Windows 10 or Windows Server 2016', '内网IP', '2022-10-01 12:29:54');
-INSERT INTO `tb_operation_log` VALUES (1576066862007246849, 'admin', '资源Controller', '/admin/resource/1576065102417002497', 'DELETE', '删除资源', NULL, 'REMOVE', 1, '127.0.0.1', '{\"code\":200,\"flag\":true,\"message\":\"删除资源成功\"}', '删除资源成功', -1, 'com.senko.controller.system.SysResourceController#deleteResource', 'Chrome', 'Windows 10 or Windows Server 2016', '内网IP', '2022-10-01 12:29:56');
-INSERT INTO `tb_operation_log` VALUES (1576107092370321410, 'admin', '资源Controller', '/admin/resource', 'POST', '保存或更新资源', NULL, 'SAVE_OR_UPDATE', 1, '127.0.0.1', '{\"code\":200,\"flag\":true,\"message\":\"操作成功\"}', '操作成功', -1, 'com.senko.controller.system.SysResourceController#saveOrUpdateResource', 'Chrome', 'Windows 10 or Windows Server 2016', '内网IP', '2022-10-01 15:09:48');
-INSERT INTO `tb_operation_log` VALUES (1576107587608571906, 'admin', '资源Controller', '/admin/resource', 'POST', '保存或更新资源', NULL, 'SAVE_OR_UPDATE', 1, '127.0.0.1', '{\"code\":200,\"flag\":true,\"message\":\"操作成功\"}', '操作成功', -1, 'com.senko.controller.system.SysResourceController#saveOrUpdateResource', 'Chrome', 'Windows 10 or Windows Server 2016', '内网IP', '2022-10-01 15:11:46');
-INSERT INTO `tb_operation_log` VALUES (1576110802630676481, 'admin', '角色Controller', '/admin/role', 'POST', '新增或修改角色，包括其可访资源/菜单', NULL, 'SAVE_OR_UPDATE', 1, '127.0.0.1', '{\"code\":200,\"flag\":true,\"message\":\"操作成功！\"}', '操作成功！', -1, 'com.senko.controller.system.SysRoleController#saveOrUpdateRole', 'Chrome', 'Windows 10 or Windows Server 2016', '内网IP', '2022-10-01 15:24:33');
-INSERT INTO `tb_operation_log` VALUES (1576110825430913026, 'admin', '角色Controller', '/admin/roles', 'DELETE', '删除角色', NULL, 'REMOVE', 1, '127.0.0.1', '{\"code\":200,\"flag\":true,\"message\":\"删除角色成功！\"}', '删除角色成功！', -1, 'com.senko.controller.system.SysRoleController#deleteBathByIds', 'Chrome', 'Windows 10 or Windows Server 2016', '内网IP', '2022-10-01 15:24:38');
-INSERT INTO `tb_operation_log` VALUES (1576133437800361986, 'admin', '资源Controller', '/admin/resource', 'POST', '保存或更新资源', NULL, 'SAVE_OR_UPDATE', 1, '127.0.0.1', '{\"code\":200,\"flag\":true,\"message\":\"操作成功\"}', '操作成功', -1, 'com.senko.controller.system.SysResourceController#saveOrUpdateResource', 'Chrome', 'Windows 10 or Windows Server 2016', '内网IP', '2022-10-01 16:54:29');
-INSERT INTO `tb_operation_log` VALUES (1576133741912563713, 'admin', '系统用户模块', '/admin/userinfo', 'PUT', '修改当前用户信息', NULL, 'UPDATE', 1, '127.0.0.1', '{\"code\":200,\"flag\":true,\"message\":\"更新用户信息成功！\"}', '更新用户信息成功！', -1, 'com.senko.controller.system.SysUserController#updateUserInfo', 'Chrome', 'Windows 10 or Windows Server 2016', '内网IP', '2022-10-01 16:55:42');
-INSERT INTO `tb_operation_log` VALUES (1576135095196356609, 'admin', '系统用户模块', '/admin/userinfo', 'PUT', '修改当前用户信息', NULL, 'UPDATE', 1, '127.0.0.1', '{\"code\":200,\"flag\":true,\"message\":\"更新用户信息成功！\"}', '更新用户信息成功！', -1, 'com.senko.controller.system.SysUserController#updateUserInfo', 'Chrome', 'Windows 10 or Windows Server 2016', '内网IP', '2022-10-01 17:01:05');
-INSERT INTO `tb_operation_log` VALUES (1579114352432390146, 'admin', '系统用户模块', '/admin/user', 'DELETE', '批量删除用户', NULL, 'REMOVE', 1, '10.0.0.2', '{\"code\":200,\"flag\":true,\"message\":\"批量删除用户成功！\"}', '批量删除用户成功！', -1, 'com.senko.controller.system.SysUserController#deleteUsers', 'Chrome', 'Windows 10 or Windows Server 2016', '内网IP', '2022-10-09 22:19:35');
-INSERT INTO `tb_operation_log` VALUES (1579114362117038082, 'admin', '系统用户模块', '/admin/user', 'DELETE', '批量删除用户', NULL, 'REMOVE', 1, '10.0.0.2', '{\"code\":200,\"flag\":true,\"message\":\"批量删除用户成功！\"}', '批量删除用户成功！', -1, 'com.senko.controller.system.SysUserController#deleteUsers', 'Chrome', 'Windows 10 or Windows Server 2016', '内网IP', '2022-10-09 22:19:37');
-INSERT INTO `tb_operation_log` VALUES (1579122241469435905, 'admin', '角色Controller', '/admin/role', 'POST', '新增或修改角色，包括其可访资源/菜单', NULL, 'SAVE_OR_UPDATE', 1, '10.0.0.2', '{\"code\":200,\"flag\":true,\"message\":\"操作成功！\"}', '操作成功！', -1, 'com.senko.controller.system.SysRoleController#saveOrUpdateRole', 'Chrome', 'Windows 10 or Windows Server 2016', '内网IP', '2022-10-09 22:50:56');
-INSERT INTO `tb_operation_log` VALUES (1579122445543297025, 'admin', '角色Controller', '/admin/role', 'POST', '新增或修改角色，包括其可访资源/菜单', NULL, 'SAVE_OR_UPDATE', 1, '10.0.0.2', '{\"code\":200,\"flag\":true,\"message\":\"操作成功！\"}', '操作成功！', -1, 'com.senko.controller.system.SysRoleController#saveOrUpdateRole', 'Chrome', 'Windows 10 or Windows Server 2016', '内网IP', '2022-10-09 22:51:44');
-INSERT INTO `tb_operation_log` VALUES (1579127681016262657, 'admin', '系统用户模块', '/admin/user', 'POST', '添加或更新用户', NULL, 'SAVE_OR_UPDATE', 1, '10.0.0.2', '{\"code\":200,\"flag\":true,\"message\":\"添加或更新用户成功！\"}', '添加或更新用户成功！', -1, 'com.senko.controller.system.SysUserController#saveOrUpdateUser', 'Chrome', 'Windows 10 or Windows Server 2016', '内网IP', '2022-10-09 23:12:33');
-INSERT INTO `tb_operation_log` VALUES (1579128915437572097, 'admin', '系统用户模块', '/admin/user', 'POST', '添加或更新用户', NULL, 'SAVE_OR_UPDATE', 0, '10.0.0.2', 'null', 'Cannot invoke \"com.senko.common.core.entity.SysUser.getUserInfoId()\" because \"one\" is null', -1, 'com.senko.controller.system.SysUserController#saveOrUpdateUser', 'Chrome', 'Windows 10 or Windows Server 2016', '内网IP', '2022-10-09 23:17:27');
-INSERT INTO `tb_operation_log` VALUES (1579130928254681089, 'admin', '系统用户模块', '/admin/user', 'POST', '添加或更新用户', NULL, 'SAVE_OR_UPDATE', 0, '10.0.0.2', 'null', 'Cannot invoke \"com.senko.common.core.entity.SysUser.getUserInfoId()\" because \"one\" is null', -1, 'com.senko.controller.system.SysUserController#saveOrUpdateUser', 'Chrome', 'Windows 10 or Windows Server 2016', '内网IP', '2022-10-09 23:25:27');
-INSERT INTO `tb_operation_log` VALUES (1579131397614100481, 'admin', '系统用户模块', '/admin/user', 'POST', '添加或更新用户', NULL, 'SAVE_OR_UPDATE', 1, '10.0.0.2', '{\"code\":200,\"flag\":true,\"message\":\"添加或更新用户成功！\"}', '添加或更新用户成功！', -1, 'com.senko.controller.system.SysUserController#saveOrUpdateUser', 'Chrome', 'Windows 10 or Windows Server 2016', '内网IP', '2022-10-09 23:27:19');
-INSERT INTO `tb_operation_log` VALUES (1579131601092370433, 'admin', '系统用户模块', '/admin/user', 'POST', '添加或更新用户', NULL, 'SAVE_OR_UPDATE', 1, '10.0.0.2', '{\"code\":200,\"flag\":true,\"message\":\"添加或更新用户成功！\"}', '添加或更新用户成功！', -1, 'com.senko.controller.system.SysUserController#saveOrUpdateUser', 'Chrome', 'Windows 10 or Windows Server 2016', '内网IP', '2022-10-09 23:28:07');
-INSERT INTO `tb_operation_log` VALUES (1583277805699153922, 'admin', '系统用户模块', '/admin/user', 'POST', '添加或更新用户', NULL, 'SAVE_OR_UPDATE', 1, '10.0.0.2', '{\"code\":200,\"flag\":true,\"message\":\"添加或更新用户成功！\"}', '添加或更新用户成功！', -1, 'com.senko.controller.system.SysUserController#saveOrUpdateUser', 'Chrome', 'Windows 10 or Windows Server 2016', '内网IP', '2022-10-21 10:03:39');
-INSERT INTO `tb_operation_log` VALUES (1583278164614135810, 'admin', '角色Controller', '/admin/role', 'POST', '新增或修改角色，包括其可访资源/菜单', NULL, 'SAVE_OR_UPDATE', 1, '10.0.0.2', '{\"code\":200,\"flag\":true,\"message\":\"操作成功！\"}', '操作成功！', -1, 'com.senko.controller.system.SysRoleController#saveOrUpdateRole', 'Chrome', 'Windows 10 or Windows Server 2016', '内网IP', '2022-10-21 10:05:05');
-INSERT INTO `tb_operation_log` VALUES (1583304627816042497, 'admin', '角色Controller', '/admin/role', 'POST', '新增或修改角色，包括其可访资源/菜单', NULL, 'SAVE_OR_UPDATE', 1, '127.0.0.1', '{\"code\":200,\"flag\":true,\"message\":\"操作成功！\"}', '操作成功！', -1, 'com.senko.controller.system.SysRoleController#saveOrUpdateRole', 'Chrome', 'Windows 10 or Windows Server 2016', '内网IP', '2022-10-21 11:50:14');
-INSERT INTO `tb_operation_log` VALUES (1583305945121071106, 'test', '角色Controller', '/admin/roles', 'DELETE', '删除角色', NULL, 'REMOVE', 0, '127.0.0.1', 'null', '角色已被用户绑定，无法删除', 10, 'com.senko.controller.system.SysRoleController#deleteBathByIds', 'Chrome', 'Windows 10 or Windows Server 2016', '内网IP', '2022-10-21 11:55:28');
 
 -- ----------------------------
 -- Table structure for tb_resource
@@ -260,7 +168,7 @@ CREATE TABLE `tb_resource`  (
   `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
   `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1576133437523537923 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1576133437523537922 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of tb_resource
@@ -366,65 +274,65 @@ INSERT INTO `tb_resource_role` VALUES (1574586467944251431, 44, -1);
 INSERT INTO `tb_resource_role` VALUES (1574586467944251433, 47, -1);
 INSERT INTO `tb_resource_role` VALUES (1576107587403051010, 46, -1);
 INSERT INTO `tb_resource_role` VALUES (1576133437573869569, 1576133437523537921, -1);
-INSERT INTO `tb_resource_role` VALUES (1579122445354553345, 3, 1570946257658322946);
-INSERT INTO `tb_resource_role` VALUES (1579122445354553346, 4, 1570946257658322946);
-INSERT INTO `tb_resource_role` VALUES (1579122445354553347, 5, 1570946257658322946);
-INSERT INTO `tb_resource_role` VALUES (1579122445354553348, 16, 1570946257658322946);
-INSERT INTO `tb_resource_role` VALUES (1579122445354553349, 9, 1570946257658322946);
-INSERT INTO `tb_resource_role` VALUES (1579122445354553350, 10, 1570946257658322946);
-INSERT INTO `tb_resource_role` VALUES (1579122445354553351, 14, 1570946257658322946);
-INSERT INTO `tb_resource_role` VALUES (1579122445354553352, 17, 1570946257658322946);
-INSERT INTO `tb_resource_role` VALUES (1579122445354553353, 6, 1570946257658322946);
-INSERT INTO `tb_resource_role` VALUES (1579122445354553354, 8, 1570946257658322946);
-INSERT INTO `tb_resource_role` VALUES (1579122445354553355, 12, 1570946257658322946);
-INSERT INTO `tb_resource_role` VALUES (1579122445354553356, 28, 1570946257658322946);
-INSERT INTO `tb_resource_role` VALUES (1579122445354553357, 30, 1570946257658322946);
-INSERT INTO `tb_resource_role` VALUES (1579122445354553358, 18, 1570946257658322946);
-INSERT INTO `tb_resource_role` VALUES (1579122445354553359, 13, 1570946257658322946);
-INSERT INTO `tb_resource_role` VALUES (1579122445354553360, 19, 1570946257658322946);
-INSERT INTO `tb_resource_role` VALUES (1579122445354553361, 21, 1570946257658322946);
-INSERT INTO `tb_resource_role` VALUES (1579122445354553362, 22, 1570946257658322946);
-INSERT INTO `tb_resource_role` VALUES (1579122445354553363, 24, 1570946257658322946);
-INSERT INTO `tb_resource_role` VALUES (1579122445354553364, 26, 1570946257658322946);
-INSERT INTO `tb_resource_role` VALUES (1579122445354553365, 29, 1570946257658322946);
-INSERT INTO `tb_resource_role` VALUES (1579122445354553366, 32, 1570946257658322946);
-INSERT INTO `tb_resource_role` VALUES (1579122445354553367, 33, 1570946257658322946);
-INSERT INTO `tb_resource_role` VALUES (1579122445354553368, 37, 1570946257658322946);
-INSERT INTO `tb_resource_role` VALUES (1579122445354553369, 39, 1570946257658322946);
-INSERT INTO `tb_resource_role` VALUES (1579122445354553370, 40, 1570946257658322946);
-INSERT INTO `tb_resource_role` VALUES (1579122445413273601, 41, 1570946257658322946);
-INSERT INTO `tb_resource_role` VALUES (1579122445413273602, 47, 1570946257658322946);
-INSERT INTO `tb_resource_role` VALUES (1579122445413273603, 45, 1570946257658322946);
-INSERT INTO `tb_resource_role` VALUES (1579122445413273604, 46, 1570946257658322946);
-INSERT INTO `tb_resource_role` VALUES (1583278164417003521, 3, 0);
-INSERT INTO `tb_resource_role` VALUES (1583278164417003522, 4, 0);
-INSERT INTO `tb_resource_role` VALUES (1583278164417003523, 5, 0);
-INSERT INTO `tb_resource_role` VALUES (1583278164417003524, 16, 0);
-INSERT INTO `tb_resource_role` VALUES (1583278164417003525, 9, 0);
-INSERT INTO `tb_resource_role` VALUES (1583278164417003526, 10, 0);
-INSERT INTO `tb_resource_role` VALUES (1583278164417003527, 14, 0);
-INSERT INTO `tb_resource_role` VALUES (1583278164417003528, 17, 0);
-INSERT INTO `tb_resource_role` VALUES (1583278164417003529, 6, 0);
-INSERT INTO `tb_resource_role` VALUES (1583278164417003530, 8, 0);
-INSERT INTO `tb_resource_role` VALUES (1583278164417003531, 12, 0);
-INSERT INTO `tb_resource_role` VALUES (1583278164417003532, 28, 0);
-INSERT INTO `tb_resource_role` VALUES (1583278164417003533, 30, 0);
-INSERT INTO `tb_resource_role` VALUES (1583278164417003534, 18, 0);
-INSERT INTO `tb_resource_role` VALUES (1583278164417003535, 13, 0);
-INSERT INTO `tb_resource_role` VALUES (1583278164417003536, 19, 0);
-INSERT INTO `tb_resource_role` VALUES (1583278164417003537, 22, 0);
-INSERT INTO `tb_resource_role` VALUES (1583278164417003538, 24, 0);
-INSERT INTO `tb_resource_role` VALUES (1583278164417003539, 26, 0);
-INSERT INTO `tb_resource_role` VALUES (1583278164417003540, 29, 0);
-INSERT INTO `tb_resource_role` VALUES (1583278164417003541, 32, 0);
-INSERT INTO `tb_resource_role` VALUES (1583278164417003542, 33, 0);
-INSERT INTO `tb_resource_role` VALUES (1583278164417003543, 37, 0);
-INSERT INTO `tb_resource_role` VALUES (1583278164417003544, 39, 0);
-INSERT INTO `tb_resource_role` VALUES (1583278164417003545, 40, 0);
-INSERT INTO `tb_resource_role` VALUES (1583278164417003546, 41, 0);
-INSERT INTO `tb_resource_role` VALUES (1583278164417003547, 47, 0);
-INSERT INTO `tb_resource_role` VALUES (1583278164417003548, 45, 0);
-INSERT INTO `tb_resource_role` VALUES (1583278164417003549, 46, 0);
+INSERT INTO `tb_resource_role` VALUES (1588445509213032449, 3, 0);
+INSERT INTO `tb_resource_role` VALUES (1588445509213032450, 4, 0);
+INSERT INTO `tb_resource_role` VALUES (1588445509213032451, 5, 0);
+INSERT INTO `tb_resource_role` VALUES (1588445509213032452, 16, 0);
+INSERT INTO `tb_resource_role` VALUES (1588445509213032453, 9, 0);
+INSERT INTO `tb_resource_role` VALUES (1588445509213032454, 10, 0);
+INSERT INTO `tb_resource_role` VALUES (1588445509213032455, 14, 0);
+INSERT INTO `tb_resource_role` VALUES (1588445509213032456, 17, 0);
+INSERT INTO `tb_resource_role` VALUES (1588445509213032457, 6, 0);
+INSERT INTO `tb_resource_role` VALUES (1588445509213032458, 8, 0);
+INSERT INTO `tb_resource_role` VALUES (1588445509213032459, 12, 0);
+INSERT INTO `tb_resource_role` VALUES (1588445509213032460, 28, 0);
+INSERT INTO `tb_resource_role` VALUES (1588445509213032461, 1576133437523537921, 0);
+INSERT INTO `tb_resource_role` VALUES (1588445509213032462, 1576133437523537922, 0);
+INSERT INTO `tb_resource_role` VALUES (1588445509213032463, 18, 0);
+INSERT INTO `tb_resource_role` VALUES (1588445509213032464, 13, 0);
+INSERT INTO `tb_resource_role` VALUES (1588445509213032465, 19, 0);
+INSERT INTO `tb_resource_role` VALUES (1588445509213032466, 21, 0);
+INSERT INTO `tb_resource_role` VALUES (1588445509213032467, 22, 0);
+INSERT INTO `tb_resource_role` VALUES (1588445509213032468, 24, 0);
+INSERT INTO `tb_resource_role` VALUES (1588445509213032469, 26, 0);
+INSERT INTO `tb_resource_role` VALUES (1588445509213032470, 29, 0);
+INSERT INTO `tb_resource_role` VALUES (1588445509213032471, 32, 0);
+INSERT INTO `tb_resource_role` VALUES (1588445509213032472, 33, 0);
+INSERT INTO `tb_resource_role` VALUES (1588445509213032473, 37, 0);
+INSERT INTO `tb_resource_role` VALUES (1588445509213032474, 39, 0);
+INSERT INTO `tb_resource_role` VALUES (1588445509213032475, 40, 0);
+INSERT INTO `tb_resource_role` VALUES (1588445509213032476, 41, 0);
+INSERT INTO `tb_resource_role` VALUES (1588445509213032477, 47, 0);
+INSERT INTO `tb_resource_role` VALUES (1588445509213032478, 45, 0);
+INSERT INTO `tb_resource_role` VALUES (1588445509213032479, 46, 0);
+INSERT INTO `tb_resource_role` VALUES (1588445793842696193, 3, 1);
+INSERT INTO `tb_resource_role` VALUES (1588445793905610754, 4, 1);
+INSERT INTO `tb_resource_role` VALUES (1588445793905610755, 5, 1);
+INSERT INTO `tb_resource_role` VALUES (1588445793905610756, 16, 1);
+INSERT INTO `tb_resource_role` VALUES (1588445793905610757, 9, 1);
+INSERT INTO `tb_resource_role` VALUES (1588445793905610758, 10, 1);
+INSERT INTO `tb_resource_role` VALUES (1588445793905610759, 14, 1);
+INSERT INTO `tb_resource_role` VALUES (1588445793905610760, 17, 1);
+INSERT INTO `tb_resource_role` VALUES (1588445793905610761, 6, 1);
+INSERT INTO `tb_resource_role` VALUES (1588445793905610762, 8, 1);
+INSERT INTO `tb_resource_role` VALUES (1588445793905610763, 12, 1);
+INSERT INTO `tb_resource_role` VALUES (1588445793905610764, 28, 1);
+INSERT INTO `tb_resource_role` VALUES (1588445793905610765, 30, 1);
+INSERT INTO `tb_resource_role` VALUES (1588445793905610766, 18, 1);
+INSERT INTO `tb_resource_role` VALUES (1588445793905610767, 13, 1);
+INSERT INTO `tb_resource_role` VALUES (1588445793905610768, 19, 1);
+INSERT INTO `tb_resource_role` VALUES (1588445793905610769, 21, 1);
+INSERT INTO `tb_resource_role` VALUES (1588445793905610770, 22, 1);
+INSERT INTO `tb_resource_role` VALUES (1588445793905610771, 24, 1);
+INSERT INTO `tb_resource_role` VALUES (1588445793905610772, 26, 1);
+INSERT INTO `tb_resource_role` VALUES (1588445793905610773, 29, 1);
+INSERT INTO `tb_resource_role` VALUES (1588445793905610774, 32, 1);
+INSERT INTO `tb_resource_role` VALUES (1588445793905610775, 33, 1);
+INSERT INTO `tb_resource_role` VALUES (1588445793905610776, 37, 1);
+INSERT INTO `tb_resource_role` VALUES (1588445793905610777, 39, 1);
+INSERT INTO `tb_resource_role` VALUES (1588445793905610778, 40, 1);
+INSERT INTO `tb_resource_role` VALUES (1588445793905610779, 41, 1);
+INSERT INTO `tb_resource_role` VALUES (1588445793905610780, 47, 1);
 
 -- ----------------------------
 -- Table structure for tb_role
@@ -444,8 +352,8 @@ CREATE TABLE `tb_role`  (
 -- Records of tb_role
 -- ----------------------------
 INSERT INTO `tb_role` VALUES (-1, '管理员', 'admin', 0, '2022-08-31 16:06:55', '2022-08-31 16:06:56');
-INSERT INTO `tb_role` VALUES (0, '普通用户', 'user', 0, '2022-08-31 16:07:11', '2022-10-21 10:05:05');
-INSERT INTO `tb_role` VALUES (1570946257658322946, '测试角色', 'test', 0, '2022-09-17 09:22:29', '2022-10-21 11:50:13');
+INSERT INTO `tb_role` VALUES (0, '普通用户', 'user', 0, '2022-08-31 16:07:11', '2022-11-04 16:18:16');
+INSERT INTO `tb_role` VALUES (1, '测试角色', 'test', 0, '2022-09-17 09:22:29', '2022-11-04 16:19:27');
 
 -- ----------------------------
 -- Table structure for tb_user_auth
@@ -457,19 +365,20 @@ CREATE TABLE `tb_user_auth`  (
   `username` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '用户名（登录账号名）',
   `password` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '用户密码',
   `email` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '绑定邮箱',
-  `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
+  `is_delete` tinyint(1) NULL DEFAULT 0 COMMENT '逻辑删除',
   `is_disabled` tinyint(1) NULL DEFAULT 0,
+  `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
   `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `tb_user_auth_username_uindex`(`username`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 12 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 13 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of tb_user_auth
 -- ----------------------------
-INSERT INTO `tb_user_auth` VALUES (-1, -1, 'admin', '$2a$10$EukevBvrfQMBfn3M/Uz6Nu2uqEAqKsKMm3wtnI96xw5rXJ69C0r76', '', '2022-09-03 19:32:22', 0, '2022-10-01 19:07:38');
-INSERT INTO `tb_user_auth` VALUES (10, 1579131397341470722, 'test', '$2a$10$A8.Fhfj/9LCQXWzu7sV1Me1kzT8x7nVVVjrwoD236pq86Gap3UvwG', '', '2022-10-09 23:27:19', 0, '2022-10-09 23:28:07');
-INSERT INTO `tb_user_auth` VALUES (11, 1583277805510410242, '普通用户', '$2a$10$uOcHiSbXwj6sytSgZhA.8uDsRT.0bqOXGMQHYumESgDJIvwOiQ8zK', '', '2022-10-21 10:03:39', 0, '2022-10-21 10:03:39');
+INSERT INTO `tb_user_auth` VALUES (-1, -1, 'admin', '$2a$10$EukevBvrfQMBfn3M/Uz6Nu2uqEAqKsKMm3wtnI96xw5rXJ69C0r76', '', 0, 0, '2022-09-03 19:32:22', '2022-10-01 19:07:38');
+INSERT INTO `tb_user_auth` VALUES (0, 0, '普通用户', '$2a$10$uOcHiSbXwj6sytSgZhA.8uDsRT.0bqOXGMQHYumESgDJIvwOiQ8zK', '', 0, 0, '2022-10-21 10:03:39', '2022-11-04 16:16:45');
+INSERT INTO `tb_user_auth` VALUES (10, 1, 'test', '$2a$10$A8.Fhfj/9LCQXWzu7sV1Me1kzT8x7nVVVjrwoD236pq86Gap3UvwG', '', 0, 0, '2022-10-09 23:27:19', '2022-10-09 23:28:07');
 
 -- ----------------------------
 -- Table structure for tb_user_info
@@ -487,14 +396,14 @@ CREATE TABLE `tb_user_info`  (
   `location` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '登录地址',
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `tb_user_info_nickname_uindex`(`nickname`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1583277805510410243 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1584801082724622338 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of tb_user_info
 -- ----------------------------
-INSERT INTO `tb_user_info` VALUES (-1, '管理员', 'https://gcore.jsdelivr.net/gh/Shinyoki/images_repository/blog_images/user.png', '2022-09-03 20:01:11', '2022-10-21 11:46:28', 'Chrome', 'Windows 10 or Windows Server 2016', '10.0.0.2', '');
-INSERT INTO `tb_user_info` VALUES (1579131397341470722, '测试用户', 'https://gcore.jsdelivr.net/gh/Shinyoki/images_repository/blog_images/user.png', '2022-10-09 23:27:19', '2022-10-21 11:55:18', 'Chrome', 'Windows 10 or Windows Server 2016', '10.0.0.2', NULL);
-INSERT INTO `tb_user_info` VALUES (1583277805510410242, '普通用户', 'https://gcore.jsdelivr.net/gh/Shinyoki/images_repository/blog_images/user.png', '2022-10-21 10:03:39', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `tb_user_info` VALUES (-1, '管理员', 'https://gcore.jsdelivr.net/gh/Shinyoki/images_repository/blog_images/user.png', '2022-09-03 20:01:11', '2022-11-04 16:15:04', 'Chrome', 'Windows 10 or Windows Server 2016', '10.0.0.2', '');
+INSERT INTO `tb_user_info` VALUES (0, '普通用户', 'https://gcore.jsdelivr.net/gh/Shinyoki/images_repository/blog_images/user.png', '2022-10-21 10:03:39', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `tb_user_info` VALUES (1, '测试用户', 'https://gcore.jsdelivr.net/gh/Shinyoki/images_repository/blog_images/user.png', '2022-10-09 23:27:19', '2022-10-21 11:55:18', 'Chrome', 'Windows 10 or Windows Server 2016', '10.0.0.2', NULL);
 
 -- ----------------------------
 -- Table structure for tb_user_role
@@ -514,5 +423,6 @@ CREATE TABLE `tb_user_role`  (
 INSERT INTO `tb_user_role` VALUES (1, -1, -1);
 INSERT INTO `tb_user_role` VALUES (1579131600966541313, 10, 1570946257658322946);
 INSERT INTO `tb_user_role` VALUES (1583277805510410243, 11, 0);
+INSERT INTO `tb_user_role` VALUES (1588445126784782337, 0, 0);
 
 SET FOREIGN_KEY_CHECKS = 1;

@@ -235,6 +235,7 @@ public class SysUserServiceImpl extends ServiceImpl<ISysUserMapper, SysUser> imp
     @Transactional(rollbackFor = Exception.class)
     @Override
     public void saveOrUpdateSysUser(SysBackUserVO sysBackUserVO) {
+        // 封装tb_user_auth实体
         SysUser sysUser = SysUser.builder()
                 .id(sysBackUserVO.getId())
                 .isDisabled(sysBackUserVO.getIsDisabled())
@@ -244,11 +245,13 @@ public class SysUserServiceImpl extends ServiceImpl<ISysUserMapper, SysUser> imp
                 .build();
 
         this.saveOrUpdate(sysUser);
+        // 获取用户实体
         SysUser one = this.getOne(new LambdaQueryWrapper<SysUser>()
                 .select(SysUser::getUserInfoId)
                 .eq(SysUser::getId, sysUser.getId()));
         String nickname = StringUtils.isBlank(sysBackUserVO.getNickname()) ? "用户" + UUID.fastUUID().toString().substring(0, 11) : sysBackUserVO.getNickname();
-        if (Objects.isNull(one) || Objects.isNull(one.getUserInfoId())) {
+        if (Objects.isNull(one.getUserInfoId())) {
+            // 如果用户实体的用户信息ID不存在，则新增用户信息
             SysUserInfo userInfo = SysUserInfo.builder()
                     .nickname(nickname)
                     .build();
@@ -257,6 +260,7 @@ public class SysUserServiceImpl extends ServiceImpl<ISysUserMapper, SysUser> imp
                     .set(SysUser::getUserInfoId, userInfo.getId())
                     .eq(SysUser::getId, sysUser.getId()));
         } else {
+            // 如果用户实体的用户信息ID存在，则修改用户信息
             SysUserInfo userInfo = SysUserInfo.builder()
                     .id(sysUser.getUserInfoId())
                     .nickname(nickname)
@@ -264,15 +268,29 @@ public class SysUserServiceImpl extends ServiceImpl<ISysUserMapper, SysUser> imp
             userInfoService.updateById(userInfo);
         }
 
-        // 添加用户角色
+        SysUserRole sysUserRole = userRoleMapper.selectOne(new LambdaQueryWrapper<SysUserRole>()
+                .eq(SysUserRole::getUserId, sysUser.getId()));
+
+        // 判断是否已经存在在用户角色关联
         if (Objects.nonNull(sysBackUserVO.getRoleId())) {
+            // 已经存在，则删除并插入，以更新
             userRoleMapper.delete(new LambdaQueryWrapper<SysUserRole>()
                     .eq(SysUserRole::getUserId, sysUser.getId()));
-            SysUserRole sysUserRole = SysUserRole.builder()
+            sysUserRole = SysUserRole.builder()
                     .userId(sysUser.getId())
                     .roleId(sysBackUserVO.getRoleId())
                     .build();
             userRoleMapper.insert(sysUserRole);
+        } else {
+            // 不存在，则添加
+            if (Objects.isNull(sysUserRole)) {
+                sysUserRole = SysUserRole.builder()
+                        .userId(sysUser.getId())
+                        // 如果没有传入角色ID，则默认为普通用户
+                        .roleId(sysBackUserVO.getRoleId() == null ? CommonConstants.NORMAL_USER_ROLE_ID : sysBackUserVO.getRoleId())
+                        .build();
+                userRoleMapper.insert(sysUserRole);
+            }
         }
     }
 
@@ -334,21 +352,25 @@ public class SysUserServiceImpl extends ServiceImpl<ISysUserMapper, SysUser> imp
     @Override
     public void deleteUsers(Set<Long> userIds) {
         if (CollectionUtils.isNotEmpty(userIds)) {
-            if (userIds.contains(CommonConstants.ADMIN_ID)) {
+            if (userIds.contains(CommonConstants.ADMIN_USER_ID)) {
                 throw new ServiceException("不允许删除超级管理员");
             }
-            Set<Long> userInfoIds = userMapper.selectList(new LambdaQueryWrapper<SysUser>()
-                            .select(SysUser::getUserInfoId)
-                            .in(SysUser::getId, userIds))
-                    .stream().map(SysUser::getUserInfoId).collect(Collectors.toSet());
-            // 删除用户
-            this.removeByIds(userIds);
-            // 删除用户角色映射
-            userRoleMapper.delete(new LambdaQueryWrapper<SysUserRole>()
-                    .in(SysUserRole::getUserId, userIds));
-            // 删除用户信息
-            userInfoMapper.delete(new LambdaQueryWrapper<SysUserInfo>()
-                    .in(SysUserInfo::getId, userInfoIds));
+//            Set<Long> userInfoIds = userMapper.selectList(new LambdaQueryWrapper<SysUser>()
+//                            .select(SysUser::getUserInfoId)
+//                            .in(SysUser::getId, userIds))
+//                    .stream().map(SysUser::getUserInfoId).collect(Collectors.toSet());
+//            // 删除用户
+//            this.removeByIds(userIds);
+//            // 删除用户角色映射
+//            userRoleMapper.delete(new LambdaQueryWrapper<SysUserRole>()
+//                    .in(SysUserRole::getUserId, userIds));
+//            // 删除用户信息
+//            userInfoMapper.delete(new LambdaQueryWrapper<SysUserInfo>()
+//                    .in(SysUserInfo::getId, userInfoIds));
+            // 不再物理删除，改用逻辑删除
+            this.update(new LambdaUpdateWrapper<SysUser>()
+                    .set(SysUser::getIsDelete, CommonConstants.TRUE)
+                    .in(SysUser::getId, userIds));
         }
     }
 

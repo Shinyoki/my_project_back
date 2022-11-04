@@ -29,6 +29,36 @@ public class CommonConstants {
     public static final Long NORMAL_USER_ROLE_ID = 0L;
 
     /**
+     * 普通用户ID
+     */
+    public static final Long NORMAL_USER_ID = 0L;
+
+    /**
+     * 测试用户角色ID
+     */
+    public static final Long TEST_USER_ROLE_ID = 1L;
+
+    /**
+     * 测试用户ID
+     */
+    public static final Long TEST_USER_ID = 1L;
+
+    /**
+     * 管理员角色ID
+     */
+    public static final Long ADMIN_ROLE_ID = -1L;
+
+    /**
+     * 管理员的ID
+     */
+    public static final Long ADMIN_USER_ID = -1L;
+
+    /**
+     * 管理员Label
+     */
+    public static final String ADMIN_LABEL = "admin";
+
+    /**
      * Content-Type: JSON
      */
     public static final String CT_APPLICATION_JSON = "application/json";
@@ -52,16 +82,6 @@ public class CommonConstants {
      * Page分页默认值：size => 10
      */
     public static final Long PAGE_SIZE_VALUE = 10L;
-
-    /**
-     * 管理员的ID （role_id也是）
-     */
-    public static final Long ADMIN_ID = -1L;
-
-    /**
-     * 管理员Label
-     */
-    public static final String ADMIN_LABEL = "admin";
 
     /**
      * true 的数字形式
